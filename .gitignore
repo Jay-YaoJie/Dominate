@@ -26,3 +26,9 @@ proguard/
 # Log Files
 *.log
 TelinkMesh/.idea/
+Dominate/.idea/
+Dominate/gradle/wrapper/
+TelinkMesh/TelinkMesh.iml
+TelinkMesh/BluetoothLightDemo/BluetoothLightDemo.iml
+TelinkMesh/BluetoothLightLib/BluetoothLightLib.iml
+TelinkMesh/gradle/wrapper/
