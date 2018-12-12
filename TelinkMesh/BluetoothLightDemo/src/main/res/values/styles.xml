@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppBaseTheme" parent="android:Theme.Light.NoTitleBar"/>
+
+    <style name="AppTheme" parent="AppBaseTheme"/>
+
+
+    <style name="CommonButton">
+
+        <item name="android:background">@drawable/btn_radius</item>
+        <item name="android:textColor">@drawable/color_radius_btn</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+</resources>

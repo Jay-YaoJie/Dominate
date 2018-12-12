@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RadioGroup
+        android:id="@+id/tabs"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_height"
+        android:background="@color/theme_positive_color"
+        android:gravity="center"
+        android:layoutMode="clipBounds"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/tab_devices"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/tab_device"
+            android:gravity="center_horizontal|bottom"
+            android:paddingTop="5dp" />
+
+        <RadioButton
+            android:id="@+id/tab_groups"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_group"
+            android:gravity="center_horizontal|bottom"
+            android:paddingTop="5dp" />
+
+        <RadioButton
+            android:id="@+id/tab_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_account"
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp" />
+
+
+        <RadioButton
+            android:id="@+id/tab_test"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_model"
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp" />
+    </RadioGroup>
+
+</LinearLayout>

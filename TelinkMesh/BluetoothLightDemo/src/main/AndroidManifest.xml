@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.telink.bluetooth.light">
+
+    <!-- 蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--震动-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--mesh ota 悬浮窗-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <application
+        android:name=".TelinkLightApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <service
+            android:name=".TelinkLightService"
+            android:enabled="true" />
+        <service
+            android:name=".MeshOTAService"
+            android:enabled="true" />
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.DeviceSettingActivity"
+            android:label="@string/activity_device_setting_label"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DeviceScanningActivity"
+            android:label="@string/activity_device_scanning_label"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DeviceBatchScanningActivity"
+            android:label="@string/activity_device_scanning_label"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddMeshActivity"
+            android:label="@string/activity_mesh_add_lable"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DeviceGroupingActivity"
+            android:label="@string/activity_device_grouping"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GroupSettingActivity"
+            android:label="@string/activity_group_setting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OtaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OtaDeviceListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BatchOtaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LogInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- <activity
+             android:name=".activity.OTAPrepareActivity"
+             android:screenOrientation="portrait" />-->
+        <activity
+            android:name=".activity.MeshOTAActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FileSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UserAllActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.OnlineStatusTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".qrcode.QRCodeScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".qrcode.QRCodeShareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ModelTestSettingActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".activity.DeviceMeshScanningActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity android:name=".activity.TempTestActivity" />
+    </application>
+
+</manifest>
