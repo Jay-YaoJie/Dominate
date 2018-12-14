@@ -9,9 +9,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import com.telink.bluetooth.TelinkLog;
-
 /**
- * Created by kee on 2018/4/24.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
  */
 
 public class ProgressViewManager implements View.OnClickListener {

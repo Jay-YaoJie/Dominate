@@ -38,7 +38,11 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * 演示mesh ota相关功能
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：演示mesh ota相关功能
  * 要求， 准备升级的设备必须是之前做过加灯操作的
  * 流程：
  * 1. 判断当前mesh在线状态， 如果是非在线状态，则不可操作

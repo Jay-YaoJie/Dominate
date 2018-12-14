@@ -14,9 +14,12 @@ import com.jeff.dominate.model.Light;
 import java.util.List;
 
 /**
- * Created by kee on 2017/12/19.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
  */
-
 public class OtaDeviceAdapter extends BaseRecyclerViewAdapter<OtaDeviceAdapter.ViewHolder> {
     private List<Light> models;
     private Context context;

@@ -22,7 +22,8 @@ import android.widget.Toast;
 import com.jeff.dominate.*;
 import com.jeff.dominate.fragments.DeviceListFragment;
 import com.jeff.dominate.fragments.GroupListFragment;
-import com.jeff.dominate.fragments.MainTestFragment;
+import com.jeff.dominate.fragments.MainFragment;
+import com.jeff.dominate.fragments.MeFragment;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
@@ -39,15 +40,31 @@ import com.telink.util.EventListener;
 
 import java.util.List;
 
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 public final class MainActivity extends TelinkMeshErrorDealActivity implements EventListener<String> {
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
     private static final int UPDATE_LIST = 0;
     private FragmentManager fragmentManager;
-    private DeviceListFragment deviceFragment;
+
+
+    //主页
+    private MainFragment mainFragment;
+    //分组列表
     private GroupListFragment groupFragment;
-    private MainTestFragment mainTestFragment;
+    //单个设备列表
+    private DeviceListFragment deviceFragment;
+    //我的页面
+    private MeFragment meFragment;
+
+
 
     private Fragment mContent;
 
@@ -60,12 +77,14 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-            if (checkedId == R.id.tab_devices) {
-                switchContent(mContent, deviceFragment);
+            if (checkedId == R.id.tab_main){
+                switchContent(mContent, mainFragment);
             } else if (checkedId == R.id.tab_groups) {
                 switchContent(mContent, groupFragment);
-            } else if (checkedId == R.id.tab_test) {
-                switchContent(mContent, mainTestFragment);
+            } else if (checkedId == R.id.tab_devices) {
+                switchContent(mContent, deviceFragment);
+            }else if (checkedId == R.id.tab_me){
+                switchContent(mContent, meFragment);
             }
         }
     };
@@ -121,22 +140,30 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
 
         this.fragmentManager = this.getFragmentManager();
 
-        this.deviceFragment = (DeviceListFragment) FragmentFactory
-                .createFragment(R.id.tab_devices);
+        //主页
+        this.mainFragment = (MainFragment) FragmentFactory
+                .createFragment(R.id.tab_main);
+        //分组
         this.groupFragment = (GroupListFragment) FragmentFactory
                 .createFragment(R.id.tab_groups);
-        this.mainTestFragment = (MainTestFragment) FragmentFactory
-                .createFragment(R.id.tab_test);
+        //单个设备页面
+        this.deviceFragment = (DeviceListFragment) FragmentFactory
+                .createFragment(R.id.tab_devices);
+        //我的页面
+        this.meFragment = (MeFragment) FragmentFactory
+                .createFragment(R.id.tab_me);
+
+
         this.tabs = (RadioGroup) this.findViewById(R.id.tabs);
         this.tabs.setOnCheckedChangeListener(this.checkedChangeListener);
 
         if (savedInstanceState == null) {
-
+//初始化第一个页面，主页
             FragmentTransaction transaction = this.fragmentManager
                     .beginTransaction();
-            transaction.add(R.id.content, this.deviceFragment).commit();
+            transaction.add(R.id.content, this.mainFragment).commit();
 
-            this.mContent = this.deviceFragment;
+            this.mContent = this.mainFragment;
         }
 
         this.mApplication.doInit();

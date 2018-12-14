@@ -13,7 +13,7 @@ import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.adapter.BaseRecyclerViewAdapter;
-import com.jeff.dominate.fragments.TestModelListAdapter;
+import com.jeff.dominate.adapter.TestModelListAdapter;
 import com.jeff.dominate.model.TestModel;
 import com.jeff.dominate.util.FileSystem;
 import com.telink.bluetooth.TelinkLog;
@@ -22,9 +22,12 @@ import com.telink.util.Arrays;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * Created by kee on 2018/1/11.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
  */
 
 public class ModelTestSettingActivity extends TelinkBaseActivity implements View.OnClickListener {

@@ -6,9 +6,12 @@ package com.telink.bluetooth.light;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * 分组通知解析器
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ： 分组通知解析器
  */
 public final class GetGroupNotificationParser extends NotificationParser<List<Integer>> {
 

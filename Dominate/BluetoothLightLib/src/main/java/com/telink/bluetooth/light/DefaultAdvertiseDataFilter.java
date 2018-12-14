@@ -10,7 +10,11 @@ import com.telink.bluetooth.TelinkLog;
 import com.telink.util.Arrays;
 
 /**
- * 默认的广播过滤器
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：默认的广播过滤器
  * <p>根据VendorId识别设备.
  */
 public final class DefaultAdvertiseDataFilter implements AdvertiseDataFilter<LightPeripheral> {

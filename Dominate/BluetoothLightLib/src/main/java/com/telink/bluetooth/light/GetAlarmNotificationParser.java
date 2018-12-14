@@ -6,9 +6,12 @@ package com.telink.bluetooth.light;
 
 import com.telink.bluetooth.TelinkLog;
 import com.telink.util.NumberUtils;
-
 /**
- * 闹铃通知解析器
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：  闹铃通知解析器
  */
 public final class GetAlarmNotificationParser extends NotificationParser<GetAlarmNotificationParser.AlarmInfo> {
 

@@ -15,6 +15,7 @@ import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.activity.MainActivity;
 import com.jeff.dominate.activity.ModelTestSettingActivity;
 import com.jeff.dominate.adapter.BaseRecyclerViewAdapter;
+import com.jeff.dominate.adapter.TestModelListAdapter;
 import com.jeff.dominate.model.TestModel;
 import com.jeff.dominate.util.FileSystem;
 
@@ -22,11 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 主页测试 fragment
- * Created by kee on 2018/1/8.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：主页 fragment
  */
 
-public class MainTestFragment extends Fragment implements View.OnClickListener {
+public class MainFragment extends Fragment implements View.OnClickListener {
 
     TestModelListAdapter mAdapter;
     private List<TestModel> models;
@@ -36,7 +40,7 @@ public class MainTestFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main_test, null);
+        return inflater.inflate(R.layout.fragment_main, null);
     }
 
 

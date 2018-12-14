@@ -20,7 +20,13 @@ import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.widget.ColorPicker;
 
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 public final class DeviceSettingFragment extends Fragment implements View.OnClickListener {
 
     public final static String TAG = DeviceSettingFragment.class.getSimpleName();

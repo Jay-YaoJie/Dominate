@@ -10,9 +10,12 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.telink.bluetooth.Command;
-
 /**
- * LightService是一个抽象类,封装了扫描加灯,自动重连,设备控制等方法.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：  LightService是一个抽象类,封装了扫描加灯,自动重连,设备控制等方法.
  *
  * @see LightAdapter
  * @see LeScanParameters

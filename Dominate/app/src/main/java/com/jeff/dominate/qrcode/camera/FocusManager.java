@@ -6,7 +6,12 @@ import android.os.Looper;
 import com.telink.bluetooth.TelinkLog;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
+ */
 public class FocusManager {
 
     private static final String TAG = FocusManager.class.getSimpleName();

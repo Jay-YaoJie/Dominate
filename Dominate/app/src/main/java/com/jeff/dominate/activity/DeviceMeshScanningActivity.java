@@ -34,11 +34,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * FF:FF:35:35:35:01
- */
-
-/**
- * 以mesh形式批量加灯
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：FF:FF:35:35:35:01  以mesh形式批量加灯
  * 只会添加 telink_mesh1 的设备
  * 当前处于连接状态下: 切换为默认网络 -> loop (获取device信息 -> 分配deviceId) 直到连续{TIMEOUT_CNT}次timeout -> 设置name/pwd/ltk -> 切换为正常网络
  * <p>

@@ -10,7 +10,12 @@ import android.widget.TextView;
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
+ */
 public final class QRCodeShareActivity extends TelinkBaseActivity {
 
     private ImageView qr_image;

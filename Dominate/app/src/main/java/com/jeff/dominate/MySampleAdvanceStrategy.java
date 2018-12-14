@@ -1,7 +1,13 @@
 package com.jeff.dominate;
 
 import com.telink.bluetooth.light.AdvanceStrategy;
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
+ */
 public class MySampleAdvanceStrategy extends AdvanceStrategy {
 
     public final static String TAG = "AdvanceStrategy";

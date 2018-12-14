@@ -18,6 +18,13 @@ import com.jeff.dominate.model.SharedPreferencesHelper;
 import com.jeff.dominate.qrcode.QRCodeShareActivity;
 import com.jeff.dominate.util.FileSystem;
 
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 
 
 public final class AddMeshActivity extends TelinkBaseActivity {

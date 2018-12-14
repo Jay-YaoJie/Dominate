@@ -5,7 +5,11 @@
 package com.telink.bluetooth.light;
 
 /**
- * 扫描参数类
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：扫描参数类
  * <p>{@link LeScanParameters}定义了{@link LightService#startScan(Parameters)}方法的必须要设置的几项参数.
  *
  * @see LightService#startScan(Parameters)

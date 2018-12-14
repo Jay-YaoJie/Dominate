@@ -8,6 +8,13 @@ import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 
 public final class MeshUtils {
 

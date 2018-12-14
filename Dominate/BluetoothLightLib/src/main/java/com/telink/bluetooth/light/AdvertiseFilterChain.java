@@ -9,7 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 广播过滤器链
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ： 广播过滤器链
  */
 public final class AdvertiseFilterChain {
 

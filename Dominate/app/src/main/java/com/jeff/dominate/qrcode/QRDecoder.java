@@ -9,7 +9,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
+ */
 public final class QRDecoder {
 
     private Builder mBuilder;

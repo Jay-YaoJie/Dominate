@@ -8,7 +8,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * NotificationInfo封装收到的蓝牙Notification信息
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：  NotificationInfo封装收到的蓝牙Notification信息
  */
 public final class NotificationInfo implements Parcelable {
 

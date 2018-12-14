@@ -17,7 +17,13 @@ import com.jeff.dominate.activity.GroupSettingActivity;
 import com.jeff.dominate.model.Group;
 import com.jeff.dominate.model.Groups;
 
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 public final class GroupListFragment extends Fragment {
 
     private LayoutInflater inflater;

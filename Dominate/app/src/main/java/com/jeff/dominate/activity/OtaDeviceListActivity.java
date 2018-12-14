@@ -12,6 +12,13 @@ import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.model.Light;
 
 import java.util.List;
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 
 public class OtaDeviceListActivity extends TelinkBaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 

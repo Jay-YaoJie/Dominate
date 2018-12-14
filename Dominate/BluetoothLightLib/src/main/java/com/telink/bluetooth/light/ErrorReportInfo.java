@@ -2,10 +2,14 @@ package com.telink.bluetooth.light;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 /**
- * Created by kee on 2017/10/18.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
  */
+
 
 public class ErrorReportInfo implements Parcelable {
 

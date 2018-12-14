@@ -7,7 +7,11 @@ package com.telink.bluetooth.event;
 import com.telink.bluetooth.light.DeviceInfo;
 
 /**
- * 设备事件
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：设备事件
  */
 public class DeviceEvent extends DataEvent<DeviceInfo> {
 

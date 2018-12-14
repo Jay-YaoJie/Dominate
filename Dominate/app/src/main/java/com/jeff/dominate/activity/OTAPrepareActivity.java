@@ -31,11 +31,14 @@ import java.util.Arrays;
 import java.util.List;
 
 */
-/**
- * OTA准备页，主要 选择对应bin档并获取mesh内各设备的version信息;
- * <p>
- * Created by Administrator on 2017/4/20.
- *//*
+ /**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：OTA准备页，主要 选择对应bin档并获取mesh内各设备的version信息;
+ */
+/*
 
 
 public class OTAPrepareActivity extends TelinkBaseActivity implements View.OnClickListener, EventListener<String> {

@@ -4,8 +4,13 @@ package com.jeff.dominate.util;
 import com.jeff.dominate.TelinkLightService;
 
 /**
- * Created by kee on 2018/4/28.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
  */
+
 
 public class MeshCommandUtil {
 

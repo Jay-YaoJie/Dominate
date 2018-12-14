@@ -6,10 +6,15 @@ package com.telink.bluetooth.event;
 
 import com.telink.bluetooth.light.ErrorReportInfo;
 
+
 /**
- * Error report
- *
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ： Error report
  */
+
 public class ErrorReportEvent extends DataEvent<ErrorReportInfo> {
 
     public static final String ERROR_REPORT = "com.telink.bluetooth.light.ERROR_REPORT";

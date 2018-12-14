@@ -8,7 +8,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.Formatter;
 
 /**
- * 数组工具类
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：  数组工具类
  */
 public final class Arrays {
 

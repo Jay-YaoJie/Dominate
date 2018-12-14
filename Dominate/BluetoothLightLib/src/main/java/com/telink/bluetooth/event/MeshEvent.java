@@ -5,7 +5,11 @@
 package com.telink.bluetooth.event;
 
 /**
- * 网络事件
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：网络事件
  */
 public class MeshEvent extends DataEvent<Integer> {
 

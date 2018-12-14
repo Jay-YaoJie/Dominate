@@ -68,14 +68,14 @@
     <string name="select_file">Select file(%s)</string>
     <string name="ota_prepare_title">OTA Prepare</string>
     <string name="ota_update_title">OTA Processing</string>
-    <string name="progress_ota">OTA Progress: %s </string>
+    <string name="progress_ota">OTA Progress: %s</string>
     <string name="progress_mesh_ota">Progress: %s</string>
     <string name="target_version">Target Version : %s</string>
 
     <!--main test fragment-->
     <string name="main_test_title">Model</string>
-    <string name="hex_input_digit">0123456789abcdefABCDEF </string>
-    <string name="main_test_model_setting">Setting </string>
+    <string name="hex_input_digit">0123456789abcdefABCDEF</string>
+    <string name="main_test_model_setting">Setting</string>
 
     <string-array name="model_names">
 
@@ -107,13 +107,11 @@
 
     <string name="mesh_ota_title">Mesh OTA</string>
 
-
     <string name="mesh_ota_state">State: %s</string>
-
-    <!--我的-->
-    <string name="account_manage">帐号管理</string>
-    <string name="family_management">家庭管理</string>
-    <string name="setting">设置</string>
-    <string name="help_center">帮助中心</string>
-    <string name="about">关于</string>
+    <!--me-->
+    <string name="account_manage">acttountManage</string>
+    <string name="family_management">familyManagement</string>
+    <string name="setting">setting</string>
+    <string name="help_center">helpCenter</string>
+    <string name="about">about</string>
 </resources>

@@ -6,7 +6,13 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.View;
 import com.jeff.dominate.R;
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
+ */
 
 public final class CameraCaptureView extends View {
 

@@ -5,9 +5,12 @@
 package com.telink.bluetooth.light;
 
 import android.bluetooth.BluetoothDevice;
-
 /**
- * 广播包过滤接口
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ： 广播包过滤接口
  *
  * @param <E>
  */

@@ -13,9 +13,12 @@ import com.telink.bluetooth.TelinkLog;
 import java.io.UnsupportedEncodingException;
 
 
+
 /**
- * 二维码生成器
- * Created by kee on 2016/9/14.
+ * author : Jeff  5899859876@qq.com
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：二维码生成器
  */
 public class QRCodeGenerator extends AsyncTask<Void, Void, Bitmap> {
     private QREncoder mEncoder;

@@ -11,7 +11,12 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
+ */
 public final class CameraPreviewCallback implements Camera.PreviewCallback {
 
     public static final String TAG = CameraPreviewCallback.class.getSimpleName();

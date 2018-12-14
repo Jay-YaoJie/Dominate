@@ -20,9 +20,12 @@ import com.jeff.dominate.TelinkLightApplication;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/3/22.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
  */
-
 public class LogInfoActivity extends TelinkBaseActivity {
     TextView tv_info;
 

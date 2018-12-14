@@ -31,6 +31,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 
 public final class LightController extends EventBus<Integer> implements LightPeripheral.Callback {
 

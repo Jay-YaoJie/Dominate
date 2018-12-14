@@ -14,9 +14,14 @@ import android.widget.TextView;
 import com.jeff.dominate.R;
 
 
+
 /**
- * 悬浮框
- * Created by kee on 2018/4/23.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：悬浮框
  */
 
 public class ProgressWindow extends FrameLayout {

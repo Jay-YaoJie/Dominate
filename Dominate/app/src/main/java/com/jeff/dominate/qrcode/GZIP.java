@@ -8,7 +8,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
+ */
 public class GZIP {
 
     //    public static String GZIP_ENCODE = "utf-8";

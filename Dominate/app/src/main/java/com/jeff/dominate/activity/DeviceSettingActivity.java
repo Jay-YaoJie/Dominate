@@ -14,6 +14,13 @@ import com.jeff.dominate.fragments.DeviceSettingFragment;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 
 public final class DeviceSettingActivity extends TelinkBaseActivity {
 

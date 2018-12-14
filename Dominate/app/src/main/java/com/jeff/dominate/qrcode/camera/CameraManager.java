@@ -28,12 +28,15 @@ import com.telink.bluetooth.TelinkLog;
 
 import java.io.IOException;
 
+
 /**
- * This object wraps the Camera service object and expects to be the only one talking to it. The
- * implementation encapsulates the steps needed to take preview-sized images, which are used for
- * both preview and decoding.
+ * author : Jeff  5899859876@qq.com
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：This object wraps the Camera service object and expects to be the only one talking to it. The
+ *   implementation encapsulates the steps needed to take preview-sized images, which are used for
+ *   both preview and decoding.
  *
- * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class CameraManager {
 

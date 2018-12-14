@@ -15,10 +15,14 @@ import com.jeff.dominate.TelinkBaseActivity;
 
 import java.io.File;
 import java.util.*;
-
 /**
- * Created by Administrator on 2016/10/8.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
  */
+
 public class FileSelectActivity extends TelinkBaseActivity {
     private ListView lv_file;
     private TextView tv_parent;

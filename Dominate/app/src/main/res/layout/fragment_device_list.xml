@@ -61,7 +61,8 @@
                 android:layout_centerVertical="true"
                 android:contentDescription="@null"
                 android:padding="10dp"
-                android:src="@mipmap/icon_top_tab_add" tools:ignore="RtlCompat"/>
+                android:src="@mipmap/icon_top_tab_add"
+                tools:ignore="RtlCompat"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -112,7 +113,7 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:layoutMode="clipBounds"
             android:orientation="horizontal">

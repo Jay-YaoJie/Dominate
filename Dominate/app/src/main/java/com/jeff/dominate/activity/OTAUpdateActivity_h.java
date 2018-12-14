@@ -39,7 +39,11 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * 升级页面
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：升级页面
  * 思路：
  * 1.由于demo中没有对设备持久化操作，只有通过online_status 来添加和更新设备，
  * 而online_status返回的数据中只有meshAddress能判断设备唯一性

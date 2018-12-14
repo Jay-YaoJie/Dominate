@@ -23,11 +23,13 @@ import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.qrcode.camera.Cameras;
 
 
+
 /**
- * 二维码扫描页面
- * 扫描 --> 解析 --> 同步
- *
- * @author kee
+ * author : Jeff  5899859876@qq.com
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ： 二维码扫描页面
+ *   扫描 --> 解析 --> 同步
  */
 public class QRCodeScanActivity extends TelinkBaseActivity implements ViewTreeObserver.OnGlobalLayoutListener {
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 0x12;

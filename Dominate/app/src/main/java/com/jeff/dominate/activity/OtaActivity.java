@@ -33,6 +33,13 @@ import com.telink.util.Strings;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
+ */
 
 public class OtaActivity extends TelinkBaseActivity implements EventListener<String>, View.OnClickListener {
 

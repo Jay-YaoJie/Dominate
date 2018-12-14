@@ -13,10 +13,14 @@ import com.jeff.dominate.R;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * Created by Administrator on 2016/10/8.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-13.
+ * description ：
  */
+
 public class FileListAdapter extends BaseAdapter {
 
     private Context mContext;

@@ -5,7 +5,13 @@ import android.os.Environment;
 import com.telink.bluetooth.TelinkLog;
 
 import java.io.*;
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ：
+ */
 public abstract class FileSystem {
 
     public static boolean writeAsString(String fileName, String content) {

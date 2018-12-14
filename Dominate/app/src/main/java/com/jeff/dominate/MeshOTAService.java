@@ -30,8 +30,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 通过广播形式转发
- * Created by kee on 2018/4/23.
+ * author : Jeff  5899859876@qq.com
+ * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-11-17.
+ * description ： 通过广播形式转发
  */
 
 public class MeshOTAService extends Service implements EventListener<String> {
