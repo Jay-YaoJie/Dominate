@@ -73,32 +73,25 @@
     <string name="target_version">Target Version : %s</string>
 
     <!--main test fragment-->
-    <string name="main_test_title">Model</string>
+    <string name="main_test_title">模式</string>
     <string name="hex_input_digit">0123456789abcdefABCDEF </string>
-    <string name="main_test_model_setting">Setting </string>
-
+    <string name="main_test_model_setting">设置</string>
     <string-array name="model_names">
-
-        <item>ON/OFF</item>
-
+        <item>开/关</item>
         <!--空白位置-->
         <item>placeholder</item>
-
         <!--空白位置-->
         <item>placeholder</item>
-
-        <item>Fade</item>
-        <item>Twinkling</item>
-        <item>Flash White</item>
-        <item>Dual Color</item>
-        <item>Chasing</item>
-        <item>Steady</item>
-        <item>Combo</item>
-
+        <item>平淡</item>
+        <item>闪耀</item>
+        <item>白色</item>
+        <item>双色</item>
+        <item>原型</item>
+        <item>沉着的</item>
+        <item>爵士乐队</item>
         <!--空白位置-->
         <item>placeholder</item>
-
-        <item>Auto</item>
+        <item>自动</item>
     </string-array>
 
     <string name="ota_device_info">DeviceId: %1$s \nMac:%2$s</string>

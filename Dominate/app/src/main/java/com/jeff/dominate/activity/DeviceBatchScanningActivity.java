@@ -76,7 +76,6 @@ public final class DeviceBatchScanningActivity extends TelinkBaseActivity implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_device_scanning);
 
         //监听事件

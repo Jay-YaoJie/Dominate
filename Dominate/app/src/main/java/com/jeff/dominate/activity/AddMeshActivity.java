@@ -56,8 +56,6 @@ public final class AddMeshActivity extends TelinkBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_add_mesh);
 
         this.mApplication = (TelinkLightApplication) this.getApplication();

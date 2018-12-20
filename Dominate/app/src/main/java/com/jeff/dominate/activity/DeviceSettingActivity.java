@@ -54,7 +54,6 @@ public final class DeviceSettingActivity extends TelinkBaseActivity {
 
         super.onCreate(savedInstanceState);
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_device_setting);
 
         this.meshAddress = this.getIntent().getIntExtra("meshAddress", 0);

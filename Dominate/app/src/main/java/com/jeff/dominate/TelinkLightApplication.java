@@ -90,15 +90,6 @@ public final class TelinkLightApplication extends TelinkApplication {
             setupMesh(mesh);
         }
 
-
-/*
-
-        if (FileSystem.exists("telink.meshs")) {
-            this.mesh = (Mesh) FileSystem.readAsObject("telink.meshs");
-        }
-*/
-
-
         //启动LightService
         this.startLightService(TelinkLightService.class);
     }

@@ -31,8 +31,6 @@ public final class GroupSettingActivity extends TelinkBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.activity_group_setting);
 
 		this.groupAddress = this.getIntent().getIntExtra("groupAddress", 0);

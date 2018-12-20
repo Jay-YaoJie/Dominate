@@ -79,7 +79,6 @@ public final class DeviceGroupingActivity extends TelinkBaseActivity implements 
         this.mApplication = (TelinkLightApplication) this.getApplication();
         this.mApplication.addEventListener(NotificationEvent.GET_GROUP, this);
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_device_grouping);
 
         this.meshAddress = this.getIntent().getIntExtra("meshAddress", 0);

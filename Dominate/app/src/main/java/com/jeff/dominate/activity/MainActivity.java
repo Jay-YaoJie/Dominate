@@ -64,30 +64,13 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
     //我的页面
     private MeFragment meFragment;
 
-
-
     private Fragment mContent;
 
     private RadioGroup tabs;
 
     private TelinkLightApplication mApplication;
 
-    private OnCheckedChangeListener checkedChangeListener = new OnCheckedChangeListener() {
 
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-            if (checkedId == R.id.tab_main){
-                switchContent(mContent, mainFragment);
-            } else if (checkedId == R.id.tab_groups) {
-                switchContent(mContent, groupFragment);
-            } else if (checkedId == R.id.tab_devices) {
-                switchContent(mContent, deviceFragment);
-            }else if (checkedId == R.id.tab_me){
-                switchContent(mContent, meFragment);
-            }
-        }
-    };
 
     private int connectMeshAddress;
     private Handler mHandler = new Handler() {
@@ -103,8 +86,6 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
     };
 
     private Handler mDelayHandler = new Handler();
-    private int delay = 200;
-
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -133,7 +114,6 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
 
         Log.d(TAG, "onCreate");
         //TelinkLog.ENABLE = false;
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_main);
 
         this.mApplication = (TelinkLightApplication) this.getApplication();
@@ -153,12 +133,25 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
         this.meFragment = (MeFragment) FragmentFactory
                 .createFragment(R.id.tab_me);
 
-
+        //主页 的底部按钮RadioGroup
         this.tabs = (RadioGroup) this.findViewById(R.id.tabs);
-        this.tabs.setOnCheckedChangeListener(this.checkedChangeListener);
-
+        this.tabs.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                //主页 的底部按钮RadioGroup  点击监听
+                if (checkedId == R.id.tab_main){
+                    switchContent(mContent, mainFragment);//主页
+                } else if (checkedId == R.id.tab_groups) {
+                    switchContent(mContent, groupFragment);//组
+                } else if (checkedId == R.id.tab_devices) {
+                    switchContent(mContent, deviceFragment);//设备
+                }else if (checkedId == R.id.tab_me){
+                    switchContent(mContent, meFragment);//我的
+                }
+            }
+        });
         if (savedInstanceState == null) {
-//初始化第一个页面，主页
+             //初始化第一个页面，主页
             FragmentTransaction transaction = this.fragmentManager
                     .beginTransaction();
             transaction.add(R.id.content, this.mainFragment).commit();
@@ -191,7 +184,7 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
 
 
     int PERMISSION_REQUEST_CODE = 0x10;
-
+    //检查蓝牙权限，是否打开
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -380,12 +373,8 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
         }
     }
 
-    private Handler mHanlder = new Handler();
-
     private void onDeviceStatusChanged(DeviceEvent event) {
-
         DeviceInfo deviceInfo = event.getArgs();
-
         switch (deviceInfo.status) {
             case LightAdapter.STATUS_LOGIN:
                 this.connectMeshAddress = this.mApplication.getConnectDevice().meshAddress;
