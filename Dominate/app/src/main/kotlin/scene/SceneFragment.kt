@@ -1,20 +1,20 @@
-package me
+package scene
 
 import bases.BaseFragment
 import com.jeff.dominate.R
-import main.MeFragmentDB
+import main.SceneFragmentDB
 
 /**
  * author : Jeff  5899859876@qq.com
  * CSDN ： https://blog.csdn.net/Jeff_YaoJie
  * Github: https://github.com/Jay-YaoJie
  * Created :  2018-12-21.
- * description ：meFragment
+ * description ：SceneFragment 场景模式
  */
-class MeFragment : BaseFragment<MeFragmentDB>() {
-    override fun getContentViewId(): Int= R.layout.fragment_me
+class SceneFragment:BaseFragment<SceneFragmentDB>() {
+    override fun getContentViewId(): Int= R.layout.fragment_scene
 
     override fun initViews() {
-           }
+         }
 
 }
