@@ -29,7 +29,7 @@ import com.telink.bluetooth.light.ConnectionStatus;
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
  * Github: https://github.com/Jay-YaoJie
  * Created :  2018-12-13.
- * description ：
+ * description ：设备控制
  */
 public final class DeviceListFragment extends Fragment implements OnClickListener {
 

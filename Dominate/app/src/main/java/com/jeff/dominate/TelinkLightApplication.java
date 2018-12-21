@@ -1,5 +1,7 @@
 package com.jeff.dominate;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.widget.Toast;
 import com.jeff.dominate.activity.TempTestActivity;
@@ -23,7 +25,11 @@ import java.util.Calendar;
  * description ：Application
  */
 public final class TelinkLightApplication extends TelinkApplication {
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
     private Mesh mesh;
     private StringBuilder logInfo;
     private static TelinkLightApplication thiz;

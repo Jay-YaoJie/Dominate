@@ -100,9 +100,7 @@
         <activity
                 android:name=".activity.LogInfoActivity"
                 android:screenOrientation="portrait"/>
-        <!-- <activity
-             android:name=".activity.OTAPrepareActivity"
-             android:screenOrientation="portrait" />-->
+ 
         <activity
                 android:name=".activity.MeshOTAActivity"
                 android:launchMode="singleTop"
