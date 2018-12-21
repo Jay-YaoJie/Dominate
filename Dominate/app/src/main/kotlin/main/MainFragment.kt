@@ -31,7 +31,7 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
  * CSDN ： https://blog.csdn.net/Jeff_YaoJie
  * Github: https://github.com/Jay-YaoJie
  * Created :  2018-12-20.
- * description ：MainFragment
+ * description ：MainFragment 主页显示
  */
 class MainFragment : BaseFragment<MainFragmentDB>() {
 
