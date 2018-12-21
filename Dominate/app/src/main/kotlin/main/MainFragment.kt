@@ -2,18 +2,14 @@ package main
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
-import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import bases.BaseFragment
 import beans.LightBean
 import beans.MainGroupBean
 import beans.MainTopBean
@@ -37,11 +33,11 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
  * Created :  2018-12-20.
  * description ：MainFragment
  */
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment<MainFragmentDB>() {
 
-    internal lateinit var view: View
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        view = inflater.inflate(R.layout.fragment_main2, null);
+    override fun getContentViewId(): Int = R.layout.fragment_main2
+
+    override fun initViews() {
 
         async {
             await<Unit> {
@@ -59,8 +55,6 @@ class MainFragment : Fragment() {
             bindSingleAdapter()//  //单个数据列表
         }
 
-
-        return view
     }
 
     //top 最顶的一个横向列表
@@ -69,7 +63,7 @@ class MainFragment : Fragment() {
     private lateinit var topicList: List<MainTopBean>
     //最顶层的列表
     private fun bindTopAdapter() {
-        mainFragment_DSRV_top = view.findViewById(R.id.mainFragment_DSRV_top)
+        mainFragment_DSRV_top =binding.mainFragmentDSRVTop
         mainFragment_DSRV_top.layoutManager = LinearLayoutManager(context)
         mainFragment_DSRV_top.isLongPressDragEnable = true  //// 开启长按拖拽
         // 关闭开启Swipe Dismiss
@@ -130,7 +124,7 @@ class MainFragment : Fragment() {
     //组 数据列表
     @SuppressLint("NewApi")
     private fun bindGroupAdapter() {
-        mainFragment_DSRV_group = view.findViewById(R.id.mainFragment_DSRV_group);
+        mainFragment_DSRV_group = binding.mainFragmentDSRVGroup
         mainFragment_DSRV_group.isLongPressDragEnable = true
         mainFragment_DSRV_group.isItemViewSwipeEnable = false
         mainFragment_DSRV_group.dragDirection = ItemTouchHelper.UP or ItemTouchHelper.DOWN
@@ -199,7 +193,7 @@ class MainFragment : Fragment() {
     //单个数据列表
     @SuppressLint("NewApi")
     private fun bindSingleAdapter() {
-        mainFragment_DSRV_single = view.findViewById(R.id.mainFragment_DSRV_single);
+        mainFragment_DSRV_single = binding.mainFragmentSSRVSingle
         mainFragment_DSRV_single.isLongPressDragEnable = true
         mainFragment_DSRV_single.isItemViewSwipeEnable = false
         mainFragment_DSRV_single.dragDirection = ItemTouchHelper.UP or ItemTouchHelper.DOWN
@@ -222,7 +216,7 @@ class MainFragment : Fragment() {
                         // //是否已经打开了当前单个设备的控制
                         if (topic.selected) {
                             //当前单个设备的灯已经打开
-                            val drawable: Drawable = context!!.resources.getDrawable(R.mipmap.arrow_r,null)//getResources().getDrawable(R.drawable.drawable);
+                            val drawable: Drawable = context!!.resources.getDrawable(R.mipmap.arrow_r, null)//getResources().getDrawable(R.drawable.drawable);
                             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                             this.setCompoundDrawables(drawable, null, null, null);
                         } else {

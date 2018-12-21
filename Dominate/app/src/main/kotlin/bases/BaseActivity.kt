@@ -24,11 +24,4 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
         mActivity=this;
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-//        AppUtils.transparencyBar(window)
-//        AppUtils.StatusBarLightMode(window)
-
-    }
 }
