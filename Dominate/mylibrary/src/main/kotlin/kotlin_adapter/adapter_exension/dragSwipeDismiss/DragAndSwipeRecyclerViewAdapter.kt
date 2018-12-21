@@ -1,11 +1,11 @@
-package com.wuhenzhizao.adapter.extension.dragSwipeDismiss
+package kotlin_adapter.adapter_exension.dragSwipeDismiss
 
 import android.content.Context
-import com.wuhenzhizao.adapter.RecyclerViewAdapter
-import com.wuhenzhizao.adapter.extension.getItems
-import com.wuhenzhizao.adapter.extension.removeItemAt
-import com.wuhenzhizao.adapter.holder.RecyclerViewHolder
-import com.wuhenzhizao.adapter.interfaces.Listener
+import kotlin_adapter.adapter_core.RecyclerViewAdapter
+import kotlin_adapter.adapter_core.extension.getItems
+import kotlin_adapter.adapter_core.extension.removeItemAt
+import kotlin_adapter.adapter_core.holder.RecyclerViewHolder
+import kotlin_adapter.adapter_core.interfaces.Listener
 import java.util.*
 
 /**

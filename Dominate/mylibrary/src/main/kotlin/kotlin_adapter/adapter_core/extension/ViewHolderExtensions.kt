@@ -1,4 +1,4 @@
-package com.wuhenzhizao.adapter.extension
+package kotlin_adapter.adapter_core.extension
 
 import android.graphics.Bitmap
 import android.graphics.Paint
@@ -14,7 +14,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.*
-import com.wuhenzhizao.adapter.interfaces.ViewHolderSupport
+import kotlin_adapter.adapter_core.interfaces.ViewHolderSupport
+
 
 /**************************************************************************
  *                                                                        *

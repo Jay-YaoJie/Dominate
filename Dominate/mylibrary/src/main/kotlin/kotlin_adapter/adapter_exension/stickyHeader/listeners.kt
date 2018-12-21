@@ -1,7 +1,7 @@
-package com.wuhenzhizao.adapter.extension.stickyHeader
+package kotlin_adapter.adapter_exension.stickyHeader
 
 import android.view.View
-import com.wuhenzhizao.adapter.interfaces.Listener
+import kotlin_adapter.adapter_core.interfaces.Listener
 
 /**
  * 监听Sticky header item view的创建

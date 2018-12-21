@@ -1,6 +1,7 @@
-package com.wuhenzhizao.adapter.extension.dragSwipeDismiss
+package kotlin_adapter.adapter_exension.dragSwipeDismiss
 
-import com.wuhenzhizao.adapter.interfaces.Listener
+import kotlin_adapter.adapter_core.interfaces.Listener
+
 
 /**
  * Item 被拖拽时触发

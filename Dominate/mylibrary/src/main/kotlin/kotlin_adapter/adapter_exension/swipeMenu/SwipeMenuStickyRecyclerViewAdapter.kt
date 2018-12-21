@@ -1,15 +1,15 @@
-package com.wuhenzhizao.adapter.extension.swipeMenu
+package kotlin_adapter.adapter_exension.swipeMenu
 
 import android.content.Context
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl
 import com.daimajia.swipe.interfaces.SwipeAdapterInterface
 import com.daimajia.swipe.interfaces.SwipeItemMangerInterface
-import com.jeff.mylibrary.R
 import com.daimajia.swipe.util.Attributes
-import com.wuhenzhizao.adapter.extension.stickyHeader.StickyBean
-import com.wuhenzhizao.adapter.extension.stickyHeader.StickyRecyclerViewAdapter
-import com.wuhenzhizao.adapter.holder.RecyclerViewHolder
+import com.jeff.mylibrary.R
+import kotlin_adapter.adapter_core.holder.RecyclerViewHolder
+import kotlin_adapter.adapter_exension.stickyHeader.StickyBean
+import kotlin_adapter.adapter_exension.stickyHeader.StickyRecyclerViewAdapter
 
 /**
  * Created by liufei on 2017/12/4.

@@ -1,10 +1,11 @@
-package com.wuhenzhizao.adapter.extension.dragSwipeDismiss
+package kotlin_adapter.adapter_exension.dragSwipeDismiss
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.AttributeSet
-import com.wuhenzhizao.adapter.holder.RecyclerViewHolder
+import kotlin_adapter.adapter_core.holder.RecyclerViewHolder
+
 
 /**
  * Created by liufei on 2017/12/4.

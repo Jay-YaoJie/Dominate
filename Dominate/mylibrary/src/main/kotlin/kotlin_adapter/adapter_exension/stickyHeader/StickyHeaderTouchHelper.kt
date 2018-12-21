@@ -1,4 +1,4 @@
-package com.wuhenzhizao.adapter.extension.stickyHeader
+package kotlin_adapter.adapter_exension.stickyHeader
 
 import android.graphics.Rect
 import android.support.v7.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.wuhenzhizao.adapter.interfaces
+package kotlin_adapter.adapter_core.interfaces
 
 
 interface Listener<in VH>

@@ -1,4 +1,4 @@
-package com.wuhenzhizao.adapter
+package kotlin_adapter.adapter_core
 
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -6,7 +6,7 @@ import android.databinding.OnRebindCallback
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.wuhenzhizao.adapter.holder.RecyclerViewBindingHolder
+import kotlin_adapter.adapter_core.holder.RecyclerViewBindingHolder
 import kotlin.reflect.KClass
 
 /**

@@ -1,9 +1,10 @@
-package com.wuhenzhizao.adapter
+package kotlin_adapter.adapter_core
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import com.wuhenzhizao.adapter.holder.ListViewHolder
+import kotlin_adapter.adapter_core.holder.ListViewHolder
+
 
 /**
  * Created by liufei on 2017/12/4.

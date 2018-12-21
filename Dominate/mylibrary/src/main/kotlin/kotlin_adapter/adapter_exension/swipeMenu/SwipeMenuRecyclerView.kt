@@ -1,4 +1,4 @@
-package com.wuhenzhizao.adapter.extension.swipeMenu
+package kotlin_adapter.adapter_exension.swipeMenu
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

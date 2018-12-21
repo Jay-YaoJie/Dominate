@@ -1,8 +1,9 @@
-package com.wuhenzhizao.adapter
+package kotlin_adapter.adapter_core
 
 import android.content.Context
 import android.view.ViewGroup
-import com.wuhenzhizao.adapter.holder.RecyclerViewHolder
+import kotlin_adapter.adapter_core.holder.RecyclerViewHolder
+
 
 /**
  * Created by liufei on 2017/12/3.

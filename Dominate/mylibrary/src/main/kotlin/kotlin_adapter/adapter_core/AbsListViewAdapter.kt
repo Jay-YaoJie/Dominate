@@ -1,11 +1,11 @@
-package com.wuhenzhizao.adapter
+package kotlin_adapter.adapter_core
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.AbsListView
 import android.widget.BaseAdapter
-import com.wuhenzhizao.adapter.extension.putItems
-import com.wuhenzhizao.adapter.interfaces.*
+import kotlin_adapter.adapter_core.extension.putItems
+import kotlin_adapter.adapter_core.interfaces.*
 import kotlin.reflect.KClass
 
 /**

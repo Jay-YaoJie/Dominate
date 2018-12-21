@@ -1,4 +1,4 @@
-package com.wuhenzhizao.adapter
+package kotlin_adapter.adapter_core
 
 /**
  * Created by liufei on 2017/12/3.

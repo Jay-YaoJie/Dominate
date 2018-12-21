@@ -1,4 +1,4 @@
-package com.wuhenzhizao.adapter.extension.dragSwipeDismiss
+package kotlin_adapter.adapter_exension.dragSwipeDismiss
 
 /**
  * Created by liufei on 2017/12/17.

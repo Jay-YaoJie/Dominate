@@ -1,7 +1,8 @@
-package com.wuhenzhizao.adapter.extension
+package kotlin_adapter.adapter_core.extension
 
-import com.wuhenzhizao.adapter.AbsListViewAdapter
-import com.wuhenzhizao.adapter.AbsRecyclerViewAdapter
+import kotlin_adapter.adapter_core.AbsListViewAdapter
+import kotlin_adapter.adapter_core.AbsRecyclerViewAdapter
+
 
 /***************************************************************************
  *                                                                         *

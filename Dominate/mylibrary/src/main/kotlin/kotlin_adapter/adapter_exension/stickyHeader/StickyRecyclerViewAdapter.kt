@@ -1,14 +1,14 @@
-package com.wuhenzhizao.adapter.extension.stickyHeader
+package kotlin_adapter.adapter_exension.stickyHeader
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.jeff.mylibrary.R
-import com.wuhenzhizao.adapter.ItemType
-import com.wuhenzhizao.adapter.RecyclerViewAdapter
-import com.wuhenzhizao.adapter.holder.RecyclerViewHolder
-import com.wuhenzhizao.adapter.interfaces.Listener
+import kotlin_adapter.adapter_core.ItemType
+import kotlin_adapter.adapter_core.RecyclerViewAdapter
+import kotlin_adapter.adapter_core.holder.RecyclerViewHolder
+import kotlin_adapter.adapter_core.interfaces.Listener
 import kotlin.reflect.KClass
 
 /**

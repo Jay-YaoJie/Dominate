@@ -1,8 +1,8 @@
-package com.wuhenzhizao.adapter.holder
+package kotlin_adapter.adapter_core.holder
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.wuhenzhizao.adapter.interfaces.ViewHolderSupport
+import kotlin_adapter.adapter_core.interfaces.ViewHolderSupport
 
 
 /**
