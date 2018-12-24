@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.jeff.dominate"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 200
         versionName "2.0.0"
@@ -83,6 +83,9 @@ dependencies {
 
     // 添加权限检查 https://github.com/dfqin/PermissionGrantor
     implementation 'com.github.dfqin:grantor:2.5'
+    //仿IOS圆角对话框、进度条、列表框、输入框，popup，支持横竖屏切换
+    // https://github.com/mylhyl/Android-CircleDialog
+    implementation 'com.mylhyl:circleDialog:3.0.2'
 
     implementation'com.android.support:multidex:1.0.1'
     testImplementation 'junit:junit:4.12'

@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-
 /**
- * Created by liufei on 2017/10/12.
+ * author : Jeff  5899859876@qq.com
+ * CSDN ： https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-24.
+ * description ：BaseFragment Fragment的base
  */
 abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
     protected lateinit var binding: DB
