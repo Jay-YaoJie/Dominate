@@ -2,6 +2,7 @@ package utils
 
 import android.content.Context
 import android.widget.Toast
+import bases.DominateApplication
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -33,6 +34,9 @@ object ToastUtil {
 
     fun show(context: Context){
         show(context,"")//这里可以是指定的值
+    }
+    fun show(text: CharSequence){
+        show(DominateApplication.dominate,text)
     }
 
 }

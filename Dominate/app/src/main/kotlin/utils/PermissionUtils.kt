@@ -1,7 +1,7 @@
 package utils
 
 import android.Manifest
-import android.widget.Toast
+import bases.DominateApplication.Companion.dominate
 import com.github.dfqin.grantor.PermissionListener
 import com.github.dfqin.grantor.PermissionsUtil
 
@@ -17,27 +17,27 @@ object PermissionUtils {
      * 添加权限检查
      */
     private fun requestCemera() {
-        PermissionsUtil.requestPermission(getApplication(), object : PermissionListener {
+        PermissionsUtil.requestPermission(dominate, object : PermissionListener {
             override fun permissionGranted(permissions: Array<String>) {
                 //Toast.makeText(MainActivity.this, "访问蓝牙", Toast.LENGTH_LONG).show();
             }
 
             override fun permissionDenied(permissions: Array<String>) {
-                Toast.makeText(this@MainActivity, "用户拒绝了访问蓝牙", Toast.LENGTH_LONG).show()
-            }
+                ToastUtil.show("用户拒绝了访问蓝牙")
+                   }
         }, Manifest.permission.BLUETOOTH)
 
-        PermissionsUtil.requestPermission(getApplication(), object : PermissionListener {
+        PermissionsUtil.requestPermission(dominate, object : PermissionListener {
             override fun permissionGranted(permissions: Array<String>) {
                 // Toast.makeText(MainActivity.this, "访问位置", Toast.LENGTH_LONG).show();
             }
 
             override fun permissionDenied(permissions: Array<String>) {
-                Toast.makeText(this@MainActivity, "用户拒绝了访问位置", Toast.LENGTH_LONG).show()
+                ToastUtil.show("用户拒绝了访问位置")
             }
         }, Manifest.permission.ACCESS_FINE_LOCATION)
 
-        PermissionsUtil.requestPermission(getApplication(), object : PermissionListener {
+        PermissionsUtil.requestPermission(dominate, object : PermissionListener {
             override fun permissionGranted(permissions: Array<String>) {
                 //Toast.makeText(MainActivity.this, "访问位置", Toast.LENGTH_LONG).show();
             }
@@ -46,7 +46,7 @@ object PermissionUtils {
                 // Toast.makeText(MainActivity.this, "用户拒绝了访问位置", Toast.LENGTH_LONG).show();
             }
         }, Manifest.permission.ACCESS_COARSE_LOCATION)
-        PermissionsUtil.requestPermission(getApplication(), object : PermissionListener {
+        PermissionsUtil.requestPermission(dominate, object : PermissionListener {
             override fun permissionGranted(permissions: Array<String>) {
                 //Toast.makeText(MainActivity.this, "访问网络", Toast.LENGTH_LONG).show();
             }

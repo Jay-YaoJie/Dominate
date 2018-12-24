@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightService;
-import com.jeff.dominate.activity.MainActivity;
 import com.jeff.dominate.activity.ModelTestSettingActivity;
 import com.jeff.dominate.adapter.BaseRecyclerViewAdapter;
 import com.jeff.dominate.adapter.TestModelListAdapter;
@@ -153,8 +153,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void showErrorMsg(String msg) {
-        ((MainActivity) getActivity()).showToast(msg);
+    public void showErrorMsg(String msg) {//弹出错误信息
+      //  ((MainActivity) getActivity()).showToast(msg);
     }
 
 }
