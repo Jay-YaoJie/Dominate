@@ -108,10 +108,27 @@
     <string name="mesh_ota_title">Mesh OTA</string>
 
     <string name="mesh_ota_state">State: %s</string>
+
+
+    <!--main tab-->
+    <!--主页-->
+    <string name="main">main</string>
+    <!--分组-->
+    <string name="group">group</string>
+    <!--设备-->
+    <string name="device">device</string>
+    <!--我的-->
+    <string name="me">me</string>
+
     <!--me-->
     <string name="account_manage">acttountManage</string>
     <string name="family_management">familyManagement</string>
     <string name="setting">setting</string>
     <string name="help_center">helpCenter</string>
     <string name="about">about</string>
+
+    <!--所有设备-->
+    <string name="all_device">allDevice</string>
+    <!--未分组设备-->
+    <string name="ungrouped">ungrouped</string>
 </resources>

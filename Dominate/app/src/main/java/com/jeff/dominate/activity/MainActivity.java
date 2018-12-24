@@ -6,20 +6,29 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Window;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
-import com.jeff.dominate.*;
+
+import com.jeff.dominate.MeshOTAService;
+import com.jeff.dominate.R;
+import com.jeff.dominate.TelinkLightApplication;
+import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.fragments.DeviceListFragment;
 import com.jeff.dominate.fragments.GroupListFragment;
 import com.jeff.dominate.fragments.MainFragment;
@@ -31,10 +40,22 @@ import com.jeff.dominate.util.FragmentFactory;
 import com.jeff.dominate.util.MeshCommandUtil;
 import com.telink.bluetooth.LeBluetooth;
 import com.telink.bluetooth.TelinkLog;
-import com.telink.bluetooth.event.*;
-import com.telink.bluetooth.light.*;
-
+import com.telink.bluetooth.event.DeviceEvent;
+import com.telink.bluetooth.event.ErrorReportEvent;
+import com.telink.bluetooth.event.MeshEvent;
+import com.telink.bluetooth.event.NotificationEvent;
+import com.telink.bluetooth.event.ServiceEvent;
+import com.telink.bluetooth.light.ConnectionStatus;
+import com.telink.bluetooth.light.DeviceInfo;
+import com.telink.bluetooth.light.ErrorReportInfo;
+import com.telink.bluetooth.light.GetAlarmNotificationParser;
+import com.telink.bluetooth.light.LeAutoConnectParameters;
+import com.telink.bluetooth.light.LeRefreshNotifyParameters;
+import com.telink.bluetooth.light.LightAdapter;
+import com.telink.bluetooth.light.OnlineStatusNotificationParser;
+import com.telink.bluetooth.light.Parameters;
 import com.telink.util.BuildUtils;
+import com.telink.util.ContextUtil;
 import com.telink.util.Event;
 import com.telink.util.EventListener;
 
@@ -47,13 +68,13 @@ import java.util.List;
  * Created :  2018-12-13.
  * description ：
  */
-public final class MainActivity extends TelinkMeshErrorDealActivity implements EventListener<String> {
+public final class MainActivity extends AppCompatActivity implements EventListener<String> {
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
     private static final int UPDATE_LIST = 0;
     private FragmentManager fragmentManager;
-
+    protected boolean foreground = false;
 
     //主页
     private MainFragment mainFragment;
@@ -107,11 +128,17 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
         }
     };
 
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        foreground = true;
         Log.d(TAG, "onCreate");
         //TelinkLog.ENABLE = false;
         this.setContentView(R.layout.activity_main);
@@ -234,12 +261,14 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
     @Override
     protected void onPause() {
         super.onPause();
+        foreground = false;
         Log.d(TAG, "onPause");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        foreground = true;
         //检查是否支持蓝牙设备
         if (!LeBluetooth.getInstance().isSupport(getApplicationContext())) {
             Toast.makeText(this, "ble not support", Toast.LENGTH_SHORT).show();
@@ -295,6 +324,7 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ((TelinkLightApplication) getApplication()).removeEventListener(this);
         Log.d(TAG, "onDestroy");
         unregisterReceiver(mReceiver);
         this.mApplication.doDestroy();
@@ -304,6 +334,49 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
         Lights.getInstance().clear();
     }
 
+
+    private AlertDialog mErrorDialog;
+
+    private void dismissDialog() {
+
+        if (mErrorDialog != null && mErrorDialog.isShowing()) {
+            mErrorDialog.dismiss();
+        }
+    }
+    private final  int ACTIVITY_REQUEST_CODE_LOCATION = 0x11;
+    protected void onMeshError(MeshEvent event) {
+        if (event.getArgs() == LeBluetooth.SCAN_FAILED_LOCATION_DISABLE) {
+            if (mErrorDialog == null) {
+                TelinkLightService.Instance().idleMode(true);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                dialogBuilder.setTitle("Error")
+                        .setMessage("为扫描到设备，检测到定位未开启，是否打开定位？")
+                        .setNegativeButton("忽略", null)
+                        .setPositiveButton("去打开", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent enableLocationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivityForResult(enableLocationIntent, ACTIVITY_REQUEST_CODE_LOCATION);
+                            }
+                        });
+                mErrorDialog = dialogBuilder.create();
+            }
+            mErrorDialog.show();
+        } else {
+            new AlertDialog.Builder(this).setMessage("蓝牙出问题了，重启蓝牙试试!!").show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACTIVITY_REQUEST_CODE_LOCATION) {
+            if (ContextUtil.isLocationEnable(this)) {
+                dismissDialog();
+                autoConnect();
+            }
+        }
+    }
     /**
      * 自动重连
      */
@@ -451,7 +524,7 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
      */
     private synchronized void onOnlineStatusNotify(NotificationEvent event) {
 
-        TelinkLog.i("MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().getId());
+        TelinkLog.i("bases.MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().getId());
         List<OnlineStatusNotificationParser.DeviceNotificationInfo> notificationInfoList;
         //noinspection unchecked
         notificationInfoList = (List<OnlineStatusNotificationParser.DeviceNotificationInfo>) event.parse();
@@ -570,17 +643,14 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
 
             case ErrorReportEvent.ERROR_REPORT:
                 ErrorReportInfo info = ((ErrorReportEvent) event).getArgs();
-                TelinkLog.d("MainActivity#performed#ERROR_REPORT: " + " stateCode-" + info.stateCode
+                TelinkLog.d("bases.MainActivity#performed#ERROR_REPORT: " + " stateCode-" + info.stateCode
                         + " errorCode-" + info.errorCode
                         + " deviceId-" + info.deviceId);
                 break;
         }
     }
 
-    @Override
-    protected void onLocationEnable() {
-        autoConnect();
-    }
+
 
 
     private void onNotificationEvent(NotificationEvent event) {

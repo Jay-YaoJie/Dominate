@@ -24,6 +24,7 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerViewAdapter
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.dragListener
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
+import widgets.LinearOffsetsItemDecoration
 
 
 /**
@@ -34,7 +35,6 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
  * description ：MainFragment 主页显示
  */
 class MainFragment : BaseFragment<MainFragmentDB>() {
-
     override fun getContentViewId(): Int = R.layout.fragment_main2
 
     override fun initViews() {

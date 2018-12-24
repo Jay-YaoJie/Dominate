@@ -1,4 +1,4 @@
-package main;
+package widgets;
 
 import android.graphics.Rect;
 import android.support.annotation.IntDef;
