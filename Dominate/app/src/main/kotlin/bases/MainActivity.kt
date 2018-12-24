@@ -22,6 +22,7 @@ class MainActivity : BaseActivity<MainActivityDB>() {
     override fun getContentViewId(): Int = R.layout.activity_main2
 
     override fun initViews() {
+        mTabRadioGroup()// TabRadioGroup  的点击或着滑动切换
     }
 
     var mFragments: MutableList<Fragment> = ArrayList()
@@ -61,8 +62,8 @@ class MainActivity : BaseActivity<MainActivityDB>() {
                 }
             }
         }
-
-
     }
+
+    //蓝牙相关的操作
 }
 
