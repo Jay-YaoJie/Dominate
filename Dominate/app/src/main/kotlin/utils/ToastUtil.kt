@@ -16,13 +16,12 @@ object ToastUtil {
      * 直接传入string字符串
      */
     fun show(context: Context, text: CharSequence) {
-        if (text != null) {
             if (text.length < 10) {
                 Toast.makeText(context, text, Toast.LENGTH_SHORT)
             } else {
                 Toast.makeText(context, text, Toast.LENGTH_LONG)
             }
-        }
+
     }
 
     /**

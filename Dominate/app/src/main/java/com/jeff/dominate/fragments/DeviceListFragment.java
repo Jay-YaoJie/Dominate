@@ -2,39 +2,18 @@ package com.jeff.dominate.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeff.dominate.R;
-import com.jeff.dominate.TelinkLightApplication;
-import com.jeff.dominate.TelinkLightService;
-import com.jeff.dominate.activity.AddMeshActivity;
-import com.jeff.dominate.activity.DeviceMeshScanningActivity;
-import com.jeff.dominate.activity.DeviceScanningActivity;
 import com.jeff.dominate.activity.DeviceSettingActivity;
-import com.jeff.dominate.activity.LogInfoActivity;
-import com.jeff.dominate.activity.MeshOTAActivity;
-import com.jeff.dominate.activity.OnlineStatusTestActivity;
-import com.jeff.dominate.activity.TempTestActivity;
 import com.jeff.dominate.model.Light;
-import com.jeff.dominate.model.Mesh;
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -43,52 +22,24 @@ import com.jeff.dominate.model.Mesh;
  * Created :  2018-12-13.
  * description ：设备控制
  */
-public final class DeviceListFragment extends Fragment implements OnClickListener {
-
-    private static final String TAG = DeviceListFragment.class.getSimpleName();
-    private static final int UPDATE = 1;
-    private LayoutInflater inflater;
-
-
-    private Button backView;
-    private ImageView editView;
-    private Button btnAllOn;
-    private Button btnAllOff;
-    private Button btnOta;
+public final class DeviceListFragment extends Fragment {
 
     private Activity mContext;
 
-
-    private TextView log;
-
     // interval on off test
-    private EditText et_adr, et_interval;
-    private Button btn_start_test;
     private Handler mIntervalHandler;
-    private boolean testStarted;
-    private long interval;
-    private int address;
-    private boolean onOff = false;
-    private TextView tv_test_count;
-    private int testCount;
-    private CheckBox cb_scan_mode;
 
-    private Button btn_online_status;
     //组设备，单个设备
-    ListView listView1,listView2;
+    ListView listView1, listView2;
     private BaseAdapters.DeviceListAdapter adapter2;
     private BaseAdapters.GroupListAdapter adapter1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        this.inflater = inflater;
-
         View view = inflater.inflate(R.layout.fragment_device2, null);
-
-        listView1=view.findViewById(R.id.devicelist);
-        listView2=view.findViewById(R.id.devicelist2);
+        listView1 = view.findViewById(R.id.devicelist);
+        listView2 = view.findViewById(R.id.devicelist2);
         listView2.setAdapter(this.adapter2);
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,97 +52,17 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             }
         });
 
-        this.backView = (Button) view.findViewById(R.id.img_header_menu_left);
-        this.backView.setOnClickListener(this);
-
-        this.editView = (ImageView) view
-                .findViewById(R.id.img_header_menu_right);
-        this.editView.setOnClickListener(this);
-
-        this.btnAllOn = (Button) view.findViewById(R.id.btn_on);
-        this.btnAllOn.setOnClickListener(this);
-
-        this.btnAllOff = (Button) view.findViewById(R.id.btn_off);
-        this.btnAllOff.setOnClickListener(this);
-
-        this.btnOta = (Button) view.findViewById(R.id.btn_ota);
-        this.btnOta.setOnClickListener(this);
-
-        this.log = (TextView) view.findViewById(R.id.log);
-        this.log.setOnClickListener(this);
-        view.findViewById(R.id.userAll).setOnClickListener(this);
-
-        et_adr = (EditText) view.findViewById(R.id.et_adr);
-        et_interval = (EditText) view.findViewById(R.id.et_interval);
-        btn_start_test = (Button) view.findViewById(R.id.btn_start_test);
-        btn_start_test.setOnClickListener(this);
-        btn_online_status = (Button) view.findViewById(R.id.online_status);
-        btn_online_status.setOnClickListener(this);
-
-        tv_test_count = (TextView) view.findViewById(R.id.tv_test_count);
-        cb_scan_mode = (CheckBox) view.findViewById(R.id.cb_scan_mode);
 
         return view;
     }
-
-    private void startIntervalTest() {
-        try {
-            interval = Long.parseLong(et_interval.getText().toString().trim());
-            address = Integer.parseInt(et_adr.getText().toString(), 16);
-            testStarted = true;
-            testCount = 0;
-            btn_start_test.setText("stop");
-            tv_test_count.setText(testCount + "");
-            mIntervalHandler.removeCallbacksAndMessages(null);
-            mIntervalHandler.post(intervalTask);
-
-        } catch (Exception e) {
-            Toast.makeText(mContext, "input error", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void stopIntervalTest() {
-        testStarted = false;
-        btn_start_test.setText("start");
-        mIntervalHandler.removeCallbacksAndMessages(null);
-    }
-
-    private Runnable intervalTask = new Runnable() {
-        @Override
-        public void run() {
-            if (!testStarted) return;
-            if (onOff) {
-                byte opcode = (byte) 0xD0;
-//                int address = 0xFFFF;
-                byte[] params = new byte[]{0x01, 0x00, 0x00};
-                TelinkLightService.Instance().sendCommandNoResponse(opcode, address,
-                        params);
-            } else {
-                byte opcode = (byte) 0xD0;
-//                int address = 0xFFFF;
-                byte[] params = new byte[]{0x00, 0x00, 0x00};
-                TelinkLightService.Instance().sendCommandNoResponse(opcode, address,
-                        params);
-            }
-            testCount++;
-            tv_test_count.setText(testCount + "");
-            onOff = !onOff;
-            mIntervalHandler.removeCallbacks(this);
-            mIntervalHandler.postDelayed(this, interval);
-        }
-    };
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext = this.getActivity();
-        this.adapter2 = new BaseAdapters.DeviceListAdapter(mContext,true);
+        this.adapter2 = new BaseAdapters.DeviceListAdapter(mContext, true);
         mIntervalHandler = new Handler();
-        onOff = false;
-        testStarted = false;
-        testCount = 0;
     }
 
     @Override
@@ -219,78 +90,6 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
         if (this.adapter2 != null)
             this.adapter2.notifyDataSetChanged();
     }
-
-
-    private static void hidSoftInput(Context context, IBinder token) {
-        try {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(token, 0);
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        if (v == btnAllOn) {
-            byte opcode = (byte) 0xD0;
-            int address = 0xFFFF;
-            byte[] params = new byte[]{0x01, 0x00, 0x00};
-            TelinkLightService.Instance().sendCommandNoResponse(opcode, address,
-                    params);
-        } else if (v == btnAllOff) {
-            byte opcode = (byte) 0xD0;
-            int address = 0xFFFF;
-            byte[] params = new byte[]{0x00, 0x00, 0x00};
-            TelinkLightService.Instance().sendCommandNoResponse(opcode, address,
-                    params);
-        } else if (v == backView) {
-            Intent intent = new Intent(mContext, AddMeshActivity.class);
-            startActivity(intent);
-
-        } else if (v == editView) {
-            Mesh mesh = TelinkLightApplication.getApp().getMesh();
-            if (TextUtils.isEmpty(mesh.factoryName) || TextUtils.isEmpty(mesh.factoryPassword)) {
-                Toast.makeText(mContext, "pls set mesh factory info!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            Intent intent;
-            if (cb_scan_mode.isChecked()) {
-                intent = new Intent(mContext, DeviceMeshScanningActivity.class);
-            } else {
-                intent = new Intent(mContext, DeviceScanningActivity.class);
-            }
-            startActivity(intent);
-        } else if (v == btnOta) {
-
-            Intent intent = new Intent(mContext, MeshOTAActivity.class);
-            startActivity(intent);
-            /*List<Light> lights = Lights.getInstance().get();
-            for (Light light : lights) {
-                if (light.connectionStatus != ConnectionStatus.OFFLINE) {
-                    Intent intent = new Intent(mContext, MeshOTAActivity.class);
-                    startActivity(intent);
-                    return;
-                }
-            }
-            Toast.makeText(getActivity(), "No Device Online!", Toast.LENGTH_SHORT).show();*/
-        } else if (v == log) {
-            startActivity(new Intent(getActivity(), LogInfoActivity.class));
-        } else if (v.getId() == R.id.userAll) {
-//            startActivity(new Intent(getActivity(), UserAllActivity.class));
-            startActivity(new Intent(getActivity(), TempTestActivity.class));
-        } else if (v == btn_start_test) {
-            if (!testStarted) {
-                startIntervalTest();
-            } else {
-                stopIntervalTest();
-            }
-        } else if (v == btn_online_status) {
-            startActivity(new Intent(getActivity(), OnlineStatusTestActivity.class));
-        }
-    }
-
 
 
 }

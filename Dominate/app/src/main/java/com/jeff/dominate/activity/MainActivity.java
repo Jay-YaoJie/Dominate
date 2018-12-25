@@ -1,7 +1,6 @@
 package com.jeff.dominate.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -17,10 +16,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Window;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
@@ -29,6 +28,7 @@ import com.jeff.dominate.MeshOTAService;
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightApplication;
 import com.jeff.dominate.TelinkLightService;
+import com.jeff.dominate.TelinkMeshErrorDealActivity;
 import com.jeff.dominate.fragments.DeviceListFragment;
 import com.jeff.dominate.fragments.GroupListFragment;
 import com.jeff.dominate.fragments.MainFragment;
@@ -55,7 +55,6 @@ import com.telink.bluetooth.light.LightAdapter;
 import com.telink.bluetooth.light.OnlineStatusNotificationParser;
 import com.telink.bluetooth.light.Parameters;
 import com.telink.util.BuildUtils;
-import com.telink.util.ContextUtil;
 import com.telink.util.Event;
 import com.telink.util.EventListener;
 
@@ -63,28 +62,15 @@ import java.util.List;
 
 import utils.LogUtils;
 
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
-public final class MainActivity extends Activity implements EventListener<String> {
+public final class MainActivity extends TelinkMeshErrorDealActivity implements EventListener<String> {
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
     private static final int UPDATE_LIST = 0;
     private FragmentManager fragmentManager;
-    protected boolean foreground = false;
-
-    //主页
-    private MainFragment mainFragment;
-    //分组列表
-    private GroupListFragment groupFragment;
-    //单个设备列表
     private DeviceListFragment deviceFragment;
-    //我的页面
+    private GroupListFragment groupFragment;
+    private MainFragment mainTestFragment;
     private MeFragment meFragment;
 
     private Fragment mContent;
@@ -93,7 +79,23 @@ public final class MainActivity extends Activity implements EventListener<String
 
     private TelinkLightApplication mApplication;
 
+    private OnCheckedChangeListener checkedChangeListener = new OnCheckedChangeListener() {
 
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            if (checkedId == R.id.tab_devices) {
+                switchContent(mContent, deviceFragment);
+            } else if (checkedId == R.id.tab_groups) {
+                switchContent(mContent, groupFragment);
+            } else if (checkedId == R.id.tab_main) {
+                switchContent(mContent, mainTestFragment);
+            }else if (checkedId==R.id.tab_me){
+                switchContent(mContent, meFragment);
+
+            }
+        }
+    };
 
     private int connectMeshAddress;
     private Handler mHandler = new Handler() {
@@ -109,6 +111,8 @@ public final class MainActivity extends Activity implements EventListener<String
     };
 
     private Handler mDelayHandler = new Handler();
+    private int delay = 200;
+
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -130,62 +134,38 @@ public final class MainActivity extends Activity implements EventListener<String
         }
     };
 
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        foreground = true;
+
         Log.d(TAG, "onCreate");
         //TelinkLog.ENABLE = false;
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_main);
 
         this.mApplication = (TelinkLightApplication) this.getApplication();
 
         this.fragmentManager = this.getFragmentManager();
 
-        //主页
-        this.mainFragment = (MainFragment) FragmentFactory
-                .createFragment(R.id.tab_main);
-        //分组
-        this.groupFragment = (GroupListFragment) FragmentFactory
-                .createFragment(R.id.tab_groups);
-        //单个设备页面
         this.deviceFragment = (DeviceListFragment) FragmentFactory
                 .createFragment(R.id.tab_devices);
-        //我的页面
+        this.groupFragment = (GroupListFragment) FragmentFactory
+                .createFragment(R.id.tab_groups);
+        this.mainTestFragment = (MainFragment) FragmentFactory
+                .createFragment(R.id.tab_main);
         this.meFragment = (MeFragment) FragmentFactory
                 .createFragment(R.id.tab_me);
-
-        //主页 的底部按钮RadioGroup
         this.tabs = (RadioGroup) this.findViewById(R.id.tabs);
-        this.tabs.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //主页 的底部按钮RadioGroup  点击监听
-                if (checkedId == R.id.tab_main){
-                    switchContent(mContent, mainFragment);//主页
-                } else if (checkedId == R.id.tab_groups) {
-                    switchContent(mContent, groupFragment);//组
-                } else if (checkedId == R.id.tab_devices) {
-                    switchContent(mContent, deviceFragment);//设备
-                }else if (checkedId == R.id.tab_me){
-                    switchContent(mContent, meFragment);//我的
-                }
-            }
-        });
+        this.tabs.setOnCheckedChangeListener(this.checkedChangeListener);
+
         if (savedInstanceState == null) {
-             //初始化第一个页面，主页
+
             FragmentTransaction transaction = this.fragmentManager
                     .beginTransaction();
-            transaction.add(R.id.content, this.mainFragment).commit();
+            transaction.add(R.id.content, this.deviceFragment).commit();
 
-            this.mContent = this.mainFragment;
+            this.mContent = this.deviceFragment;
         }
 
         this.mApplication.doInit();
@@ -213,7 +193,7 @@ public final class MainActivity extends Activity implements EventListener<String
 
 
     int PERMISSION_REQUEST_CODE = 0x10;
-    //检查蓝牙权限，是否打开
+
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -263,14 +243,12 @@ public final class MainActivity extends Activity implements EventListener<String
     @Override
     protected void onPause() {
         super.onPause();
-        foreground = false;
         Log.d(TAG, "onPause");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        foreground = true;
         //检查是否支持蓝牙设备
         if (!LeBluetooth.getInstance().isSupport(getApplicationContext())) {
             Toast.makeText(this, "ble not support", Toast.LENGTH_SHORT).show();
@@ -326,7 +304,6 @@ public final class MainActivity extends Activity implements EventListener<String
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((TelinkLightApplication) getApplication()).removeEventListener(this);
         Log.d(TAG, "onDestroy");
         unregisterReceiver(mReceiver);
         this.mApplication.doDestroy();
@@ -336,49 +313,6 @@ public final class MainActivity extends Activity implements EventListener<String
         Lights.getInstance().clear();
     }
 
-
-    private AlertDialog mErrorDialog;
-
-    private void dismissDialog() {
-
-        if (mErrorDialog != null && mErrorDialog.isShowing()) {
-            mErrorDialog.dismiss();
-        }
-    }
-    private final  int ACTIVITY_REQUEST_CODE_LOCATION = 0x11;
-    protected void onMeshError(MeshEvent event) {
-        if (event.getArgs() == LeBluetooth.SCAN_FAILED_LOCATION_DISABLE) {
-            if (mErrorDialog == null) {
-                TelinkLightService.Instance().idleMode(true);
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-                dialogBuilder.setTitle("Error")
-                        .setMessage("为扫描到设备，检测到定位未开启，是否打开定位？")
-                        .setNegativeButton("忽略", null)
-                        .setPositiveButton("去打开", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent enableLocationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivityForResult(enableLocationIntent, ACTIVITY_REQUEST_CODE_LOCATION);
-                            }
-                        });
-                mErrorDialog = dialogBuilder.create();
-            }
-            mErrorDialog.show();
-        } else {
-            new AlertDialog.Builder(this).setMessage("蓝牙出问题了，重启蓝牙试试!!").show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ACTIVITY_REQUEST_CODE_LOCATION) {
-            if (ContextUtil.isLocationEnable(this)) {
-                dismissDialog();
-                autoConnect();
-            }
-        }
-    }
     /**
      * 自动重连
      */
@@ -448,8 +382,12 @@ public final class MainActivity extends Activity implements EventListener<String
         }
     }
 
+    private Handler mHanlder = new Handler();
+
     private void onDeviceStatusChanged(DeviceEvent event) {
+
         DeviceInfo deviceInfo = event.getArgs();
+
         switch (deviceInfo.status) {
             case LightAdapter.STATUS_LOGIN:
                 this.connectMeshAddress = this.mApplication.getConnectDevice().meshAddress;
@@ -525,8 +463,8 @@ public final class MainActivity extends Activity implements EventListener<String
      * 处理{@link NotificationEvent#ONLINE_STATUS}事件
      */
     private synchronized void onOnlineStatusNotify(NotificationEvent event) {
-
-        TelinkLog.i("bases.MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().getId());
+        LogUtils.INSTANCE.d(TAG,"MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().getId());
+        TelinkLog.i("MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().getId());
         List<OnlineStatusNotificationParser.DeviceNotificationInfo> notificationInfoList;
         //noinspection unchecked
         notificationInfoList = (List<OnlineStatusNotificationParser.DeviceNotificationInfo>) event.parse();
@@ -539,12 +477,10 @@ public final class MainActivity extends Activity implements EventListener<String
         }*/
 
         for (OnlineStatusNotificationParser.DeviceNotificationInfo notificationInfo : notificationInfoList) {
-            LogUtils.INSTANCE.d(TAG,"获得当前蓝牙对象notificationInfo="+notificationInfo.toString());
 
             int meshAddress = notificationInfo.meshAddress;
             int brightness = notificationInfo.brightness;
-
-            //如果deviceFragment为空  get(int)' on a null object reference
+            LogUtils.INSTANCE.d(TAG,"notificationInfo.toString()"+notificationInfo.toString());
             Light light = this.deviceFragment.getDevice(meshAddress);
 
             if (light == null) {
@@ -621,6 +557,7 @@ public final class MainActivity extends Activity implements EventListener<String
      */
     @Override
     public void performed(Event<String> event) {
+        LogUtils.INSTANCE.d(TAG,"performed(Event<String> event)  event.getType()="+event.getType());
         switch (event.getType()) {
             case NotificationEvent.ONLINE_STATUS:
                 this.onOnlineStatusNotify((NotificationEvent) event);
@@ -647,14 +584,17 @@ public final class MainActivity extends Activity implements EventListener<String
 
             case ErrorReportEvent.ERROR_REPORT:
                 ErrorReportInfo info = ((ErrorReportEvent) event).getArgs();
-                TelinkLog.d("bases.MainActivity#performed#ERROR_REPORT: " + " stateCode-" + info.stateCode
+                TelinkLog.d("MainActivity#performed#ERROR_REPORT: " + " stateCode-" + info.stateCode
                         + " errorCode-" + info.errorCode
                         + " deviceId-" + info.deviceId);
                 break;
         }
     }
 
-
+    @Override
+    protected void onLocationEnable() {
+        autoConnect();
+    }
 
 
     private void onNotificationEvent(NotificationEvent event) {

@@ -100,6 +100,7 @@ public final class LeBluetooth {
      *
      * @param callback
      */
+    @SuppressLint("NewApi")
     public void setLeScanCallback(LeScanCallback callback) {
         this.mCallback = callback;
 
@@ -173,6 +174,7 @@ public final class LeBluetooth {
     }
 
 
+    @SuppressLint("NewApi")
     private void scan(final UUID[] serviceUUIDs) {
         if (isSupportM() && !ContextUtil.isLocationEnable(mContext)) {
             mDelayHandler.removeCallbacks(mLocationCheckTask);
@@ -225,6 +227,7 @@ public final class LeBluetooth {
     /**
      * 停止扫描
      */
+    @SuppressLint("NewApi")
     synchronized public void stopScan() {
         TelinkLog.w("LeBluetooth#stopScan");
         synchronized (this) {
@@ -282,7 +285,7 @@ public final class LeBluetooth {
             return true;
         return mAdapter.enable();
     }
-
+    @SuppressLint("NewApi")
     public BluetoothAdapter getAdapter(Context context) {
         synchronized (this) {
             if (mAdapter == null) {

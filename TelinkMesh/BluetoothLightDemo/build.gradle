@@ -39,4 +39,7 @@ dependencies {
     implementation 'com.google.zxing:android-core:3.2.1'
     //compile project(':BluetoothStorageLib')
     implementation 'com.google.code.gson:gson:2.8.2'
+
+    //iOS风格SwitchButton  https://github.com/iielse/SwitchButton
+    implementation 'ch.ielse:switchbutton:1.0.1'
 }

@@ -75,7 +75,8 @@ class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 
                     })
                 }
-                .clickListener { holder, position ->
+                //holder
+                .clickListener { _, position ->
                     val topic = groupAdapter.getItem(position)
 
                     Toast.makeText(context!!, "position $position, ${topic.groupName} clicked", Toast.LENGTH_LONG)
@@ -88,7 +89,8 @@ class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + BluetoothInfoList)
 
                 }
-                .swipeListener { position, direction ->
+                //direction
+                .swipeListener { position, _ ->
                     //当前移动取消数据
                     Toast.makeText(context!!, "position $position dismissed", Toast.LENGTH_LONG)
                     //移动后的items
@@ -143,7 +145,8 @@ class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 
                     })
                 }
-                .clickListener { holder, position ->
+                //holder
+                .clickListener { _, position ->
                     val topic = singleAdapter.getItem(position)
 
                     Toast.makeText(context!!, "position $position, ${topic.getLabel()} clicked", Toast.LENGTH_LONG)
@@ -156,7 +159,8 @@ class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
 
                 }
-                .swipeListener { position, direction ->
+                //direction
+                .swipeListener { position, _ ->
                     //当前移动取消数据
                     Toast.makeText(context!!, "position $position dismissed", Toast.LENGTH_LONG)
                     //移动后的items

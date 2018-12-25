@@ -42,7 +42,7 @@ class MainActivity : BaseActivity<MainActivityDB>() {
         mAdapter = MyFragmentPagerAdapter(supportFragmentManager, mFragments)
         binding.fragmentVP.adapter = mAdapter
         // register listener
-        binding.fragmentVP.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        binding.fragmentVP.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(position: Int) {
                 //("not implemented") //To change body of created functions use File | Settings | File Templates.
             }

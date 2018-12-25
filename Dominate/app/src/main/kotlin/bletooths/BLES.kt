@@ -29,7 +29,7 @@ object BLES {
     val tag: String = "Ble工具"
 
     //传入handle数据
-    private fun handlerSend(handler: Handler, any: Any) {
+    private fun handlerSend(handler: Handler?, any: Any) {
         if (handler == null) {
             return;
         }
@@ -142,7 +142,7 @@ object BLES {
                     if (boolean) {//如果已经添加过了就不用在添加了
                         var info: BluetoothInfo = BluetoothInfo()
 //                        info.bleDevice = bleDevice;
-//                        list += info
+                      list += info
                     }
                 }
             })

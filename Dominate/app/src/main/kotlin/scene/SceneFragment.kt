@@ -14,6 +14,7 @@ import kotlin_adapter.adapter_core.extension.putItems
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerViewAdapter
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.dragListener
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
+import utils.LogUtils
 import widgets.LinearOffsetsItemDecoration
 
 /**
@@ -52,6 +53,7 @@ class SceneFragment : BaseFragment<SceneFragmentDB>() {
                 }
                 .holderBindListener { holder, position ->
                     val topic = sceneAdapter.getItem(position)
+                    LogUtils.d(tag,topic.toString())
                     holder.withView<TextView>(R.id.all_single_item_tv, {
                         //   text = topic.getLabel()
                         // //是否已经打开了当前单个设备的控制
@@ -69,12 +71,14 @@ class SceneFragment : BaseFragment<SceneFragmentDB>() {
 
                     })
                 }
-                .clickListener { holder, position ->
+                //holder
+                .clickListener { _, position ->
                     val topic = sceneAdapter.getItem(position)
-
+                    LogUtils.d(tag,topic.toString())
                     //Toast.makeText(context!!, "position $position, ${topic.getLabel()} clicked", Toast.LENGTH_LONG)
                 }
-                .dragListener { from, target ->
+                //from, target
+                .dragListener { _, _ ->
                     //当前移动的数据
                     // Toast.makeText(context!!, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
                     //移动后的items
@@ -82,7 +86,8 @@ class SceneFragment : BaseFragment<SceneFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
 
                 }
-                .swipeListener { position, direction ->
+                //position, direction to _
+                .swipeListener { _, _ ->
                     //当前移动取消数据
                     //  Toast.makeText(context!!, "position $position dismissed", Toast.LENGTH_LONG)
                     //移动后的items

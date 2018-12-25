@@ -13,7 +13,6 @@ import bases.BaseFragment
 import bases.DominateApplication.Companion.blueList
 import bases.DominateApplication.Companion.seceneList
 import bletooths.BluetoothInfo
-import co.metalab.asyncawait.async
 import com.bumptech.glide.Glide
 import com.jeff.dominate.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
@@ -40,21 +39,24 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 
     override fun initViews() {
 
-        async {
-            await<Unit> {
-                //加载测试数据
-//                val json = getString(R.string.topicList)
-//                //顶部数据
-//                topicList = Gson().fromJson<TopicList>(json, TopicList::class.java).topics
-//                //组数据
-//                groupicList = Gson().fromJson<TopicList>(json, TopicList::class.java).topics
-//                //单个数据列表
-//                singleicList = Gson().fromJson<TopicList>(json, TopicList::class.java).topics
-            }
-            bindTopAdapter()//最顶层的列表
-            bindGroupAdapter()  //组 数据列表
-            bindSingleAdapter()//  //单个数据列表
-        }
+//        async {
+////            await<Unit> {
+////                //加载测试数据
+//////                val json = getString(R.string.topicList)
+//////                //顶部数据
+//////                topicList = Gson().fromJson<TopicList>(json, TopicList::class.java).topics
+//////                //组数据
+//////                groupicList = Gson().fromJson<TopicList>(json, TopicList::class.java).topics
+//////                //单个数据列表
+//////                singleicList = Gson().fromJson<TopicList>(json, TopicList::class.java).topics
+////            }
+//            bindTopAdapter()//最顶层的列表
+//            bindGroupAdapter()  //组 数据列表
+//            bindSingleAdapter()//  //单个数据列表
+//        }
+        bindTopAdapter()//最顶层的列表
+        bindGroupAdapter()  //组 数据列表
+        bindSingleAdapter()//  //单个数据列表
 
     }
 
@@ -96,7 +98,8 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
                     })
                             .withView<TextView>(R.id.fragment_main_top_item_tv, { text = topic.name })
                 }
-                .clickListener { holder, position ->
+                //holder
+                .clickListener {_ , position ->
                     val topic = topAdapter.getItem(position)
                     //点击事件
                     Toast.makeText(context!!, "position $position, ${topic.name} clicked", Toast.LENGTH_LONG)
@@ -157,7 +160,8 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 
                     })
                 }
-                .clickListener { holder, position ->
+                //holder
+                .clickListener { _, position ->
                     val topic = groupAdapter.getItem(position)
 
                     Toast.makeText(context!!, "position $position, ${topic.groupName} clicked", Toast.LENGTH_LONG)
@@ -170,7 +174,8 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + BluetoothInfoList)
 
                 }
-                .swipeListener { position, direction ->
+                //direction
+                .swipeListener { position, _ ->
                     //当前移动取消数据
                     Toast.makeText(context!!, "position $position dismissed", Toast.LENGTH_LONG)
                     //移动后的items
@@ -225,7 +230,8 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 
                     })
                 }
-                .clickListener { holder, position ->
+                //holder
+                .clickListener { _, position ->
                     val topic = singleAdapter.getItem(position)
 
                     Toast.makeText(context!!, "position $position, ${topic.getLabel()} clicked", Toast.LENGTH_LONG)
@@ -238,7 +244,8 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
 
                 }
-                .swipeListener { position, direction ->
+                //direction
+                .swipeListener { position, _ ->
                     //当前移动取消数据
                     Toast.makeText(context!!, "position $position dismissed", Toast.LENGTH_LONG)
                     //移动后的items

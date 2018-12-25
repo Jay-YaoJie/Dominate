@@ -4,6 +4,7 @@
  */
 package com.telink.bluetooth;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -33,6 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * description ：
  */
 
+@SuppressLint("NewApi")
 public class Peripheral extends BluetoothGattCallback {
 
     public static final int CONNECTION_PRIORITY_BALANCED = 0;
