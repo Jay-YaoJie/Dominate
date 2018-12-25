@@ -1,10 +1,10 @@
 package bases
 
-import adapters.MyFragmentPagerAdapter
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.widget.RadioButton
+import bases.DominateApplication.Companion.dominate
 import com.jeff.dominate.R
 import device.DeviceFragment
 import main.MainFragment
@@ -19,10 +19,14 @@ import scene.SceneFragment
  * description ：bases.MainActivity
  */
 class MainActivity : BaseActivity<MainActivityDB>() {
+
+
+    /**************************页面使用，没有功能***********************************************/
     override fun getContentViewId(): Int = R.layout.activity_main2
 
     override fun initViews() {
         mTabRadioGroup()// TabRadioGroup  的点击或着滑动切换
+        dominate.doInit();//初始化蓝牙
     }
 
     var mFragments: MutableList<Fragment> = ArrayList()
@@ -42,15 +46,16 @@ class MainActivity : BaseActivity<MainActivityDB>() {
             override fun onPageScrollStateChanged(position: Int) {
                 //("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
+
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 //("not implemented") //To change body of created functions use File | Settings | File Templates.
                 // val radioButton = mTabRadioGroup.getChildAt(position) as RadioButton
                 // radioButton.isChecked = true
-                (binding.tabsRG.getChildAt(position) as RadioButton).isChecked = true
             }
 
             override fun onPageSelected(position: Int) {
                 //("not implemented") //To change body of created functions use File | Settings | File Templates.
+                (binding.tabsRG.getChildAt(position) as RadioButton).isChecked = true
             }
 
         })
@@ -64,7 +69,6 @@ class MainActivity : BaseActivity<MainActivityDB>() {
         }
     }
 
-    //蓝牙相关的操作
 }
 
 

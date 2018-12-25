@@ -109,7 +109,8 @@
 
     <string name="mesh_ota_state">State: %s</string>
 
-
+    <!--当前系统不支持蓝牙-->
+    <string name="ble_not_support">ble not support</string>
     <!--main tab-->
     <!--主页-->
     <string name="main">main</string>

@@ -2,7 +2,9 @@ package bases
 
 import android.content.Context
 import android.support.multidex.MultiDex
+import bletooths.BluetoothInfo
 import com.telink.TelinkApplication
+
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -14,6 +16,10 @@ import com.telink.TelinkApplication
 class DominateApplication : TelinkApplication() {
  companion object {
     lateinit var dominate:DominateApplication;
+     //保存所有的蓝牙数据对象
+     var blueList:ArrayList<BluetoothInfo> = ArrayList()
+     //情景模式
+     var seceneList: ArrayList<BluetoothInfo.SceneInfo> = ArrayList()
 
  }
 
@@ -26,5 +32,11 @@ class DominateApplication : TelinkApplication() {
     override fun onCreate() {
         super.onCreate()
         dominate=this;
+
     }
+
+
+    /////////////////////////////////////////
+
+
 }

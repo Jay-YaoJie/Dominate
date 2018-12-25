@@ -34,9 +34,9 @@
             android:required="true"/>
 -->
 
-
+<!--    android:name=".TelinkLightApplication"-->
     <application
-            android:name=".TelinkLightApplication"
+        android:name="bases.DominateApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -50,8 +50,9 @@
                 android:name=".MeshOTAService"
                 android:enabled="true"/>
 
+        <!-- android:name=".activity.MainActivity"-->
         <activity
-                android:name=".activity.MainActivity"
+               android:name="bases.MainActivity"
                 android:label="@string/app_name"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="stateAlwaysHidden|adjustPan">

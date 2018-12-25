@@ -10,9 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import bases.BaseFragment
-import beans.LightBean
-import beans.MainGroupBean
-import beans.MainTopBean
+import bases.DominateApplication.Companion.blueList
+import bases.DominateApplication.Companion.seceneList
+import bletooths.BluetoothInfo
 import co.metalab.asyncawait.async
 import com.bumptech.glide.Glide
 import com.jeff.dominate.R
@@ -24,6 +24,7 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerViewAdapter
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.dragListener
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
+import utils.LogUtils
 import widgets.LinearOffsetsItemDecoration
 
 
@@ -35,7 +36,7 @@ import widgets.LinearOffsetsItemDecoration
  * description ：MainFragment 主页显示
  */
 class MainFragment : BaseFragment<MainFragmentDB>() {
-    override fun getContentViewId(): Int = R.layout.fragment_main2
+    override fun getContentViewId(): Int = R.layout.fragment_main
 
     override fun initViews() {
 
@@ -59,8 +60,8 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 
     //top 最顶的一个横向列表
     lateinit var mainFragment_DSRV_top: DragAndSwipeRecyclerView;
-    private lateinit var topAdapter: DragAndSwipeRecyclerViewAdapter<MainTopBean>
-    private lateinit var topicList: List<MainTopBean>
+    private lateinit var topAdapter: DragAndSwipeRecyclerViewAdapter<BluetoothInfo.SceneInfo>
+
     //最顶层的列表
     private fun bindTopAdapter() {
         mainFragment_DSRV_top =binding.mainFragmentDSRVTop
@@ -75,18 +76,16 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
         //可以设置为 横向，纵向，，spanCount设置的是当前行或列    orientation是横或纵
         mainFragment_DSRV_top.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
         //没有移动之前的items
-        Log.d("", "没有移动之前的items  topicList.toString()=" + topicList.toString())
-        topAdapter = DragAndSwipeRecyclerViewAdapter<MainTopBean>(context!!)
+        LogUtils.d(tag, "没有移动之前的items  topicList.toString()=" + seceneList.toString())
+        topAdapter = DragAndSwipeRecyclerViewAdapter<BluetoothInfo.SceneInfo>(context!!)
                 //加载item布局
-                .match(MainTopBean::class, R.layout.fragment_main_top_item)
-                .holderCreateListener {
-
-                }
+                .match(BluetoothInfo.SceneInfo::class, R.layout.fragment_main_top_item)
+                .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = topAdapter.getItem(position)
                     holder.withView<ImageView>(R.id.fragment_main_top_item_iv, {
                         //是否已经打开了场景的控制
-                        if (topic.isOf) {
+                        if (topic.checked) {
                             //已经打开场景
                             Glide.with(context!!).load(topic.imgUrl).into(this)
                         } else {
@@ -95,32 +94,31 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
                         }
 
                     })
-                            .withView<TextView>(R.id.fragment_main_top_item_tv, { text = topic.title })
+                            .withView<TextView>(R.id.fragment_main_top_item_tv, { text = topic.name })
                 }
                 .clickListener { holder, position ->
                     val topic = topAdapter.getItem(position)
                     //点击事件
-                    Toast.makeText(context!!, "position $position, ${topic.title} clicked", Toast.LENGTH_LONG)
+                    Toast.makeText(context!!, "position $position, ${topic.name} clicked", Toast.LENGTH_LONG)
 
                 }
                 .dragListener { from, target ->
                     //当前移动的数据
                     Toast.makeText(context!!, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
                     //移动后的items
-                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
+                    Log.d("", "移动后的items topicList.toString()=" + seceneList.toString())
                     Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
 
                 }
                 .attach(mainFragment_DSRV_top)
         //添加数据
-        topAdapter.putItems(topicList)
-        Log.d("", "未移动的items  adapter.getItems()=" + topAdapter.getItems())
+        topAdapter.putItems(seceneList)
+        LogUtils.d(tag, "未移动的items  adapter.getItems()=" + topAdapter.getItems())
     }
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
-    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<MainGroupBean>
-    private lateinit var groupicList: List<MainGroupBean>
+    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<BluetoothInfo>
     //组 数据列表
     @SuppressLint("NewApi")
     private fun bindGroupAdapter() {
@@ -128,15 +126,15 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
         mainFragment_DSRV_group.isLongPressDragEnable = true
         mainFragment_DSRV_group.isItemViewSwipeEnable = false
         mainFragment_DSRV_group.dragDirection = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        mainFragment_DSRV_group.swipeDirection = ItemTouchHelper.LEFT
+        // mainFragment_DSRV_group.swipeDirection = ItemTouchHelper.LEFT
         mainFragment_DSRV_group.layoutManager = LinearLayoutManager(context)
         val decoration = LinearOffsetsItemDecoration(LinearOffsetsItemDecoration.LINEAR_OFFSETS_VERTICAL)  //LINEAR_OFFSETS_HORIZONTAL  LINEAR_OFFSETS_VERTICAL
         //decoration.setItemOffsets(ScreenUtils.dp2PxInt(context, 10f))
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         mainFragment_DSRV_group.addItemDecoration(decoration)
-        groupAdapter = DragAndSwipeRecyclerViewAdapter<MainGroupBean>(context!!)
-                .match(MainGroupBean::class, R.layout.all_single_item)
+        groupAdapter = DragAndSwipeRecyclerViewAdapter<BluetoothInfo>(context!!)
+                .match(BluetoothInfo::class, R.layout.all_single_item)
                 .holderCreateListener {
 
                 }
@@ -145,7 +143,7 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
                     holder.withView<TextView>(R.id.all_single_item_tv, {
                         text = topic.groupName
                         // //是否已经打开了当前组的控制
-                        if (topic.isOf) {
+                        if (topic.checked) {
                             //当前组的灯已经打开
                             val drawable: Drawable = context!!.resources.getDrawable(R.mipmap.arrow_r, null)//getResources().getDrawable(R.drawable.drawable);
                             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
@@ -168,8 +166,8 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
                     //当前移动的数据
                     Toast.makeText(context!!, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
                     //移动后的items
-                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
-                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
+//                    Log.d("", "移动后的items topicList.toString()=" + BluetoothInfoList.toString())
+//                    Log.d("", "移动后的items  adapter.getItems()=" + BluetoothInfoList)
 
                 }
                 .swipeListener { position, direction ->
@@ -180,7 +178,7 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
                 }
                 .attach(mainFragment_DSRV_group)
-        groupAdapter.putItems(groupicList)
+        groupAdapter.putItems(blueList)
 
 
     }
@@ -188,8 +186,7 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 
     // single  ////单个数据列表
     lateinit var mainFragment_DSRV_single: DragAndSwipeRecyclerView;
-    private lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<LightBean>
-    private lateinit var singleicList: List<LightBean>
+    private lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<BluetoothInfo>
     //单个数据列表
     @SuppressLint("NewApi")
     private fun bindSingleAdapter() {
@@ -197,15 +194,15 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
         mainFragment_DSRV_single.isLongPressDragEnable = true
         mainFragment_DSRV_single.isItemViewSwipeEnable = false
         mainFragment_DSRV_single.dragDirection = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        mainFragment_DSRV_single.swipeDirection = ItemTouchHelper.LEFT
+        //  mainFragment_DSRV_single.swipeDirection = ItemTouchHelper.LEFT
         mainFragment_DSRV_single.layoutManager = LinearLayoutManager(context)
         val decoration = LinearOffsetsItemDecoration(LinearOffsetsItemDecoration.LINEAR_OFFSETS_VERTICAL)  //LINEAR_OFFSETS_HORIZONTAL  LINEAR_OFFSETS_VERTICAL
         decoration.setItemOffsets(ScreenUtils.dp2PxInt(context, 10f))
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         mainFragment_DSRV_single.addItemDecoration(decoration)
-        singleAdapter = DragAndSwipeRecyclerViewAdapter<LightBean>(context!!)
-                .match(LightBean::class, R.layout.all_single_item)
+        singleAdapter = DragAndSwipeRecyclerViewAdapter<BluetoothInfo>(context!!)
+                .match(BluetoothInfo::class, R.layout.all_single_item)
                 .holderCreateListener {
 
                 }
@@ -237,8 +234,8 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
                     //当前移动的数据
                     Toast.makeText(context!!, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
                     //移动后的items
-                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
-                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
+//                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
+//                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
 
                 }
                 .swipeListener { position, direction ->
@@ -249,7 +246,6 @@ class MainFragment : BaseFragment<MainFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
                 }
                 .attach(mainFragment_DSRV_single)
-        singleAdapter.putItems(singleicList)
+        singleAdapter.putItems(blueList)
     }
-
 }

@@ -102,6 +102,11 @@
 
 
     <string name="mesh_ota_state">State: %s</string>
+
+
+
+    <string name="ble_not_support">当前系统不支持蓝牙</string>
+    ble not support
     <!--main tab-->
     <string name="main">主页</string>
     <string name="group">分组</string>
@@ -117,8 +122,9 @@
 
     <!--设备-->
     <string name="all_device">所有设备</string>
-
     <string name="ungrouped">未分组设备</string>
+
+
 
 
 </resources>

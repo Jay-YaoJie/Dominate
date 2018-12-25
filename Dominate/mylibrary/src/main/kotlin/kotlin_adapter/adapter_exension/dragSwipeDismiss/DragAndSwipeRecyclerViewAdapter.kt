@@ -7,9 +7,12 @@ import kotlin_adapter.adapter_core.extension.removeItemAt
 import kotlin_adapter.adapter_core.holder.RecyclerViewHolder
 import kotlin_adapter.adapter_core.interfaces.Listener
 import java.util.*
-
 /**
- * Created by liufei on 2017/12/4.
+ * author : Jeff  5899859876@qq.com
+ * CSDN ： https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-20.
+ * description ：DragAndSwipeRecyclerViewAdapter
  */
 class DragAndSwipeRecyclerViewAdapter<T : Any>(context: Context, items: List<T>?) : RecyclerViewAdapter<T>(context, items), DragAndDismissInterface<RecyclerViewHolder> {
     internal var innerDragListener: ItemDragListener<RecyclerViewHolder>? = null

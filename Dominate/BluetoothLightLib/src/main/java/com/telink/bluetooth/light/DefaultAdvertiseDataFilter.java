@@ -4,6 +4,7 @@
  */
 package com.telink.bluetooth.light;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 
 import com.telink.bluetooth.TelinkLog;
@@ -26,6 +27,7 @@ public final class DefaultAdvertiseDataFilter implements AdvertiseDataFilter<Lig
         return new DefaultAdvertiseDataFilter();
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public LightPeripheral filter(BluetoothDevice device, int rssi, byte[] scanRecord) {
 

@@ -18,8 +18,8 @@ import android.view.ViewGroup
  */
 abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
     protected lateinit var binding: DB
-    protected lateinit var mActivity:AppCompatActivity;
-
+    protected lateinit var mActivity: AppCompatActivity;
+    internal var tag: String = "BaseFragment";
     protected abstract fun getContentViewId(): Int
 
     protected abstract fun initViews()
@@ -32,7 +32,8 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
             parent.removeView(rootView)
         }
         initViews()
-        mActivity= this.activity as AppCompatActivity
+        mActivity = this.activity as AppCompatActivity
+        tag=mActivity.localClassName
         return binding.root
     }
 

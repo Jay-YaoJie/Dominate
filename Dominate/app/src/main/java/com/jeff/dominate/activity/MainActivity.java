@@ -1,6 +1,7 @@
 package com.jeff.dominate.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -18,7 +19,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RadioGroup;
@@ -61,6 +61,8 @@ import com.telink.util.EventListener;
 
 import java.util.List;
 
+import utils.LogUtils;
+
 /**
  * author : Jeff  5899859876@qq.com
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
@@ -68,7 +70,7 @@ import java.util.List;
  * Created :  2018-12-13.
  * description ：
  */
-public final class MainActivity extends AppCompatActivity implements EventListener<String> {
+public final class MainActivity extends Activity implements EventListener<String> {
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
@@ -537,10 +539,12 @@ public final class MainActivity extends AppCompatActivity implements EventListen
         }*/
 
         for (OnlineStatusNotificationParser.DeviceNotificationInfo notificationInfo : notificationInfoList) {
+            LogUtils.INSTANCE.d(TAG,"获得当前蓝牙对象notificationInfo="+notificationInfo.toString());
 
             int meshAddress = notificationInfo.meshAddress;
             int brightness = notificationInfo.brightness;
 
+            //如果deviceFragment为空  get(int)' on a null object reference
             Light light = this.deviceFragment.getDevice(meshAddress);
 
             if (light == null) {

@@ -18,7 +18,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
 
     protected lateinit var mActivity: AppCompatActivity
     protected abstract fun getContentViewId(): Int
-
+    internal  var tag:String="BaseActivity"
     protected abstract fun initViews()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +26,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, getContentViewId())
         initViews()
         mActivity=this;
+        tag=this.localClassName
     }
 
 }

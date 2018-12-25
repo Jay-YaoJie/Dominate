@@ -15,12 +15,12 @@ object ToastUtil {
     /**
      * 直接传入string字符串
      */
-    fun show(context: Context, text:CharSequence){
-        if (text!=null){
-            if (text.length<10){
-                Toast.makeText(context,text,Toast.LENGTH_SHORT)
-            }else{
-                Toast.makeText(context,text,Toast.LENGTH_LONG)
+    fun show(context: Context, text: CharSequence) {
+        if (text != null) {
+            if (text.length < 10) {
+                Toast.makeText(context, text, Toast.LENGTH_SHORT)
+            } else {
+                Toast.makeText(context, text, Toast.LENGTH_LONG)
             }
         }
     }
@@ -28,15 +28,20 @@ object ToastUtil {
     /**
      * 可以传入@string
      */
-    fun show(context: Context, resId:Int){
-        show(context,context.getString(resId))
+    fun show(context: Context, resId: Int) {
+        show(context, context.getString(resId))
     }
 
-    fun show(context: Context){
-        show(context,"")//这里可以是指定的值
+    fun show(resId: Int) {
+        show(DominateApplication.dominate.getString(resId))
     }
-    fun show(text: CharSequence){
-        show(DominateApplication.dominate,text)
+
+    fun show(context: Context) {
+        show(context, "")//这里可以是指定的值
+    }
+
+    fun show(text: CharSequence) {
+        show(DominateApplication.dominate, text)
     }
 
 }
