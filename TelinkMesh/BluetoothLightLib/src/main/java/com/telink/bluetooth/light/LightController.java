@@ -794,6 +794,7 @@ public final class LightController extends EventBus<Integer> implements LightPer
     /********************************************************************************
      * Command API
      *******************************************************************************/
+    //这里才是发送数据的地方  commandData是发送数据
 
     private boolean sendCommand(Command.Callback callback, byte[] commandData, boolean noResponse, Object tag, int delay) {
 
