@@ -8,19 +8,18 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_weight="1"
-            android:id="@+id/all_single_item_tv"
+            android:id="@+id/all_device_item_tv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:layout_margin="@dimen/layout_margin"
-            android:background="@drawable/bg_radius_main"
-            android:drawableRight="@mipmap/arrow_r"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:paddingLeft="@dimen/text_padding"
             android:paddingRight="@dimen/text_padding"
             android:text="@string/family_management" />
 
         <ch.ielse.view.SwitchView
+            android:id="@+id/all_device_item_sv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

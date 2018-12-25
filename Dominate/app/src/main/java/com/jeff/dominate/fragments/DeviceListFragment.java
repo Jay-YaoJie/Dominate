@@ -13,17 +13,36 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightApplication;
 import com.jeff.dominate.TelinkLightService;
-import com.jeff.dominate.activity.*;
+import com.jeff.dominate.activity.AddMeshActivity;
+import com.jeff.dominate.activity.DeviceMeshScanningActivity;
+import com.jeff.dominate.activity.DeviceScanningActivity;
+import com.jeff.dominate.activity.DeviceSettingActivity;
+import com.jeff.dominate.activity.LogInfoActivity;
+import com.jeff.dominate.activity.MeshOTAActivity;
+import com.jeff.dominate.activity.OnlineStatusTestActivity;
+import com.jeff.dominate.activity.TempTestActivity;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
 import com.telink.bluetooth.light.ConnectionStatus;
+
+import ch.ielse.view.SwitchView;
+
 /**
  * author : Jeff  5899859876@qq.com
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
@@ -316,6 +335,7 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
     private static class DeviceItemHolder {
         public TextView txtName;
+        SwitchView switchView;
     }
 
 
@@ -347,13 +367,14 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
             if (convertView == null) {
 
-                convertView = inflater.inflate(R.layout.all_single_item, null);
+                convertView = inflater.inflate(R.layout.all_device_item, null);
 
                 TextView txtName = (TextView) convertView
-                        .findViewById(R.id.all_single_item_tv);
+                        .findViewById(R.id.all_device_item_tv);
 
                 holder = new DeviceItemHolder();
                 holder.txtName = txtName;
+                holder.switchView=convertView.findViewById(R.id.all_device_item_sv);
 
                 convertView.setTag(holder);
             } else {
@@ -365,13 +386,16 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             holder.txtName.setText(light.getLabel());
             holder.txtName.setTextColor(getResources().getColor(light.textColor));
 
-//            if (light.connectionStatus == ConnectionStatus.OFFLINE) {
-//                holder.statusIcon.setImageResource(R.mipmap.icon_light_offline);
-//            } else if (light.connectionStatus == ConnectionStatus.OFF) {
-//                holder.statusIcon.setImageResource(R.mipmap.icon_light_off);
-//            } else if (light.connectionStatus == ConnectionStatus.ON) {
-//                holder.statusIcon.setImageResource(R.mipmap.icon_light_on);
-//            }
+            if (light.connectionStatus == ConnectionStatus.OFFLINE) {
+               // holder.statusIcon.setImageResource(R.mipmap.icon_light_offline);
+                holder.switchView.toggleSwitch(false);
+            } else if (light.connectionStatus == ConnectionStatus.OFF) {
+               // holder.statusIcon.setImageResource(R.mipmap.icon_light_off);
+                holder.switchView.toggleSwitch(false);
+            } else if (light.connectionStatus == ConnectionStatus.ON) {
+                //holder.statusIcon.setImageResource(R.mipmap.icon_light_on);
+                holder.switchView.toggleSwitch(true);
+            }
 
             return convertView;
         }
