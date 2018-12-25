@@ -17,8 +17,6 @@ class DominateApplication : TelinkApplication() {
 
  }
 
-
-
     //分包
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)

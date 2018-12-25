@@ -13,50 +13,57 @@ import com.github.dfqin.grantor.PermissionsUtil
  * description ：PermissionUtils 添加权限检查工具
  */
 object PermissionUtils {
-    /**
-     * 添加权限检查
-     */
-    private fun requestCemera() {
-        PermissionsUtil.requestPermission(dominate, object : PermissionListener {
-            override fun permissionGranted(permissions: Array<String>) {
-                //Toast.makeText(MainActivity.this, "访问蓝牙", Toast.LENGTH_LONG).show();
-            }
+    private var isChecked: Boolean = false;
+    //添加权限检查 检查蓝牙权限，是否打开
+    fun checkPermission() {
+        if (!isChecked) {
+            PermissionsUtil.requestPermission(dominate, object : PermissionListener {
+                override fun permissionGranted(permissions: Array<String>) {
+                    isChecked = true;
+                    //Toast.makeText(MainActivity.this, "访问蓝牙", Toast.LENGTH_LONG).show();
+                }
 
-            override fun permissionDenied(permissions: Array<String>) {
-                ToastUtil.show("用户拒绝了访问蓝牙")
-                   }
-        }, Manifest.permission.BLUETOOTH)
+                override fun permissionDenied(permissions: Array<String>) {
+                    ToastUtil.show("用户拒绝了访问蓝牙")
+                    isChecked = false;
+                }
+            }, Manifest.permission.BLUETOOTH)
 
-        PermissionsUtil.requestPermission(dominate, object : PermissionListener {
-            override fun permissionGranted(permissions: Array<String>) {
-                // Toast.makeText(MainActivity.this, "访问位置", Toast.LENGTH_LONG).show();
-            }
+            PermissionsUtil.requestPermission(dominate, object : PermissionListener {
+                override fun permissionGranted(permissions: Array<String>) {
+                    isChecked = true;
+                    // Toast.makeText(MainActivity.this, "访问位置", Toast.LENGTH_LONG).show();
+                }
 
-            override fun permissionDenied(permissions: Array<String>) {
-                ToastUtil.show("用户拒绝了访问位置")
-            }
-        }, Manifest.permission.ACCESS_FINE_LOCATION)
+                override fun permissionDenied(permissions: Array<String>) {
+                    ToastUtil.show("用户拒绝了访问位置")
+                    isChecked = false;
+                }
+            }, Manifest.permission.ACCESS_FINE_LOCATION)
 
-        PermissionsUtil.requestPermission(dominate, object : PermissionListener {
-            override fun permissionGranted(permissions: Array<String>) {
-                //Toast.makeText(MainActivity.this, "访问位置", Toast.LENGTH_LONG).show();
-            }
+            PermissionsUtil.requestPermission(dominate, object : PermissionListener {
+                override fun permissionGranted(permissions: Array<String>) {
+                    isChecked = true;
+                    //Toast.makeText(MainActivity.this, "访问位置", Toast.LENGTH_LONG).show();
+                }
 
-            override fun permissionDenied(permissions: Array<String>) {
-                // Toast.makeText(MainActivity.this, "用户拒绝了访问位置", Toast.LENGTH_LONG).show();
-            }
-        }, Manifest.permission.ACCESS_COARSE_LOCATION)
-        PermissionsUtil.requestPermission(dominate, object : PermissionListener {
-            override fun permissionGranted(permissions: Array<String>) {
-                //Toast.makeText(MainActivity.this, "访问网络", Toast.LENGTH_LONG).show();
-            }
+                override fun permissionDenied(permissions: Array<String>) {
+                    // Toast.makeText(MainActivity.this, "用户拒绝了访问位置", Toast.LENGTH_LONG).show();
+                    isChecked = false;
+                }
+            }, Manifest.permission.ACCESS_COARSE_LOCATION)
+            PermissionsUtil.requestPermission(dominate, object : PermissionListener {
+                override fun permissionGranted(permissions: Array<String>) {
+                    isChecked = true;
+                    //Toast.makeText(MainActivity.this, "访问网络", Toast.LENGTH_LONG).show();
+                }
 
-            override fun permissionDenied(permissions: Array<String>) {
-                // Toast.makeText(MainActivity.this, "用户拒绝了访问网络", Toast.LENGTH_LONG).show();
-            }
-        }, Manifest.permission.INTERNET)
-
-
+                override fun permissionDenied(permissions: Array<String>) {
+                    // Toast.makeText(MainActivity.this, "用户拒绝了访问网络", Toast.LENGTH_LONG).show();
+                    isChecked = false;
+                }
+            }, Manifest.permission.INTERNET)
+        }
     }
 
 }

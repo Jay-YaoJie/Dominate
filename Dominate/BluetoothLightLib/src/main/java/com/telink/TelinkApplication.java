@@ -13,7 +13,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
-import android.widget.Toast;
 
 import com.telink.bluetooth.TelinkLog;
 import com.telink.bluetooth.event.DeviceEvent;
@@ -37,8 +36,6 @@ import com.telink.util.Event;
 import com.telink.util.EventBus;
 import com.telink.util.EventListener;
 import com.telink.util.Strings;
-
-import java.sql.Time;
 /**
  * author : Jeff  5899859876@qq.com
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
