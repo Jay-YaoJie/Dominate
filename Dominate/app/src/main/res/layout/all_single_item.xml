@@ -13,5 +13,4 @@
     android:gravity="center|left"
     android:text="@string/family_management" />
 
-
     </layout>

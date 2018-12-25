@@ -64,6 +64,8 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
     private CheckBox cb_scan_mode;
 
     private Button btn_online_status;
+    //组设备，单个设备
+    ListView listView1,listView2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,13 +73,11 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
         this.inflater = inflater;
 
-        View view = inflater.inflate(R.layout.fragment_device_list, null);
+        View view = inflater.inflate(R.layout.fragment_device2, null);
 
-        GridView listView = (GridView) view.findViewById(R.id.list_devices);
-
-        listView.setOnItemClickListener(this.itemClickListener);
-        listView.setOnItemLongClickListener(this.itemLongClickListener);
-        listView.setAdapter(this.adapter);
+        listView1=view.findViewById(R.id.devicelist);
+        listView2=view.findViewById(R.id.devicelist2);
+        listView1.setAdapter(this.adapter);
 
         this.backView = (Button) view.findViewById(R.id.img_header_menu_left);
         this.backView.setOnClickListener(this);
@@ -315,9 +315,9 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
     }
 
     private static class DeviceItemHolder {
-        public ImageView statusIcon;
         public TextView txtName;
     }
+
 
     final class DeviceListAdapter extends BaseAdapter {
 
@@ -347,16 +347,12 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
             if (convertView == null) {
 
-                convertView = inflater.inflate(R.layout.device_item, null);
+                convertView = inflater.inflate(R.layout.all_single_item, null);
 
-                ImageView statusIcon = (ImageView) convertView
-                        .findViewById(R.id.img_icon);
                 TextView txtName = (TextView) convertView
-                        .findViewById(R.id.txt_name);
+                        .findViewById(R.id.all_single_item_tv);
 
                 holder = new DeviceItemHolder();
-
-                holder.statusIcon = statusIcon;
                 holder.txtName = txtName;
 
                 convertView.setTag(holder);
@@ -369,13 +365,13 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             holder.txtName.setText(light.getLabel());
             holder.txtName.setTextColor(getResources().getColor(light.textColor));
 
-            if (light.connectionStatus == ConnectionStatus.OFFLINE) {
-                holder.statusIcon.setImageResource(R.mipmap.icon_light_offline);
-            } else if (light.connectionStatus == ConnectionStatus.OFF) {
-                holder.statusIcon.setImageResource(R.mipmap.icon_light_off);
-            } else if (light.connectionStatus == ConnectionStatus.ON) {
-                holder.statusIcon.setImageResource(R.mipmap.icon_light_on);
-            }
+//            if (light.connectionStatus == ConnectionStatus.OFFLINE) {
+//                holder.statusIcon.setImageResource(R.mipmap.icon_light_offline);
+//            } else if (light.connectionStatus == ConnectionStatus.OFF) {
+//                holder.statusIcon.setImageResource(R.mipmap.icon_light_off);
+//            } else if (light.connectionStatus == ConnectionStatus.ON) {
+//                holder.statusIcon.setImageResource(R.mipmap.icon_light_on);
+//            }
 
             return convertView;
         }

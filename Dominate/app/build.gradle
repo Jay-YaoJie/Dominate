@@ -88,6 +88,9 @@ dependencies {
     // https://github.com/mylhyl/Android-CircleDialog
     implementation 'com.mylhyl:circleDialog:3.0.2'
 
+    //iOS风格SwitchButton  https://github.com/iielse/SwitchButton
+    implementation 'ch.ielse:switchbutton:1.0.1'
+
     implementation'com.android.support:multidex:1.0.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
