@@ -14,9 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -37,11 +34,7 @@ import com.jeff.dominate.activity.MeshOTAActivity;
 import com.jeff.dominate.activity.OnlineStatusTestActivity;
 import com.jeff.dominate.activity.TempTestActivity;
 import com.jeff.dominate.model.Light;
-import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
-import com.telink.bluetooth.light.ConnectionStatus;
-
-import ch.ielse.view.SwitchView;
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -55,7 +48,7 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
     private static final String TAG = DeviceListFragment.class.getSimpleName();
     private static final int UPDATE = 1;
     private LayoutInflater inflater;
-    private DeviceListAdapter adapter;
+
 
     private Button backView;
     private ImageView editView;
@@ -65,9 +58,7 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
     private Activity mContext;
 
-    private EditText txtSendInterval;
-    private EditText txtSendNumbers;
-    private TextView txtNotifyCount;
+
     private TextView log;
 
     // interval on off test
@@ -85,6 +76,8 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
     private Button btn_online_status;
     //组设备，单个设备
     ListView listView1,listView2;
+    private BaseAdapters.DeviceListAdapter adapter2;
+    private BaseAdapters.GroupListAdapter adapter1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,7 +89,17 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
         listView1=view.findViewById(R.id.devicelist);
         listView2=view.findViewById(R.id.devicelist2);
-        listView1.setAdapter(this.adapter);
+        listView2.setAdapter(this.adapter2);
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(),
+                        DeviceSettingActivity.class);
+                Light light = adapter2.getItem(position);
+                intent.putExtra("meshAddress", light.meshAddress);
+                startActivity(intent);
+            }
+        });
 
         this.backView = (Button) view.findViewById(R.id.img_header_menu_left);
         this.backView.setOnClickListener(this);
@@ -114,9 +117,6 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
         this.btnOta = (Button) view.findViewById(R.id.btn_ota);
         this.btnOta.setOnClickListener(this);
 
-        this.txtSendInterval = (EditText) view.findViewById(R.id.sendInterval);
-        this.txtSendNumbers = (EditText) view.findViewById(R.id.sendNumbers);
-        this.txtNotifyCount = (TextView) view.findViewById(R.id.notifyCount);
         this.log = (TextView) view.findViewById(R.id.log);
         this.log.setOnClickListener(this);
         view.findViewById(R.id.userAll).setOnClickListener(this);
@@ -181,55 +181,13 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
         }
     };
 
-    private OnItemClickListener itemClickListener = new OnItemClickListener() {
 
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-
-            Light light = adapter.getItem(position);
-
-            if (light.connectionStatus == ConnectionStatus.OFFLINE)
-                return;
-
-            int dstAddr = light.meshAddress;
-
-            byte opcode = (byte) 0xD0;
-
-
-            if (light.connectionStatus == ConnectionStatus.OFF) {
-
-
-                TelinkLightService.Instance().sendCommandNoResponse(opcode, dstAddr, new byte[]{0x01, 0x00, 0x00});
-            } else if (light.connectionStatus == ConnectionStatus.ON) {
-
-
-                TelinkLightService.Instance().sendCommandNoResponse(opcode, dstAddr, new byte[]{0x00, 0x00, 0x00});
-            }
-        }
-    };
-
-    private OnItemLongClickListener itemLongClickListener = new OnItemLongClickListener() {
-
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                       int position, long id) {
-
-            Intent intent = new Intent(getActivity(),
-                    DeviceSettingActivity.class);
-            Light light = adapter.getItem(position);
-
-            intent.putExtra("meshAddress", light.meshAddress);
-            startActivity(intent);
-            return true;
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext = this.getActivity();
-        this.adapter = new DeviceListAdapter();
+        this.adapter2 = new BaseAdapters.DeviceListAdapter(mContext,true);
         mIntervalHandler = new Handler();
         onOff = false;
         testStarted = false;
@@ -250,16 +208,16 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
 
     public void addDevice(Light light) {
-        this.adapter.add(light);
+        this.adapter2.add(light);
     }
 
     public Light getDevice(int meshAddress) {
-        return this.adapter.get(meshAddress);
+        return this.adapter2.get(meshAddress);
     }
 
     public void notifyDataSetChanged() {
-        if (this.adapter != null)
-            this.adapter.notifyDataSetChanged();
+        if (this.adapter2 != null)
+            this.adapter2.notifyDataSetChanged();
     }
 
 
@@ -333,80 +291,6 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
         }
     }
 
-    private static class DeviceItemHolder {
-        public TextView txtName;
-        SwitchView switchView;
-    }
 
-
-    final class DeviceListAdapter extends BaseAdapter {
-
-        public DeviceListAdapter() {
-
-        }
-
-        @Override
-        public int getCount() {
-            return Lights.getInstance().size();
-        }
-
-        @Override
-        public Light getItem(int position) {
-            return Lights.getInstance().get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            DeviceItemHolder holder;
-
-            if (convertView == null) {
-
-                convertView = inflater.inflate(R.layout.all_device_item, null);
-
-                TextView txtName = (TextView) convertView
-                        .findViewById(R.id.all_device_item_tv);
-
-                holder = new DeviceItemHolder();
-                holder.txtName = txtName;
-                holder.switchView=convertView.findViewById(R.id.all_device_item_sv);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (DeviceItemHolder) convertView.getTag();
-            }
-
-            Light light = this.getItem(position);
-
-            holder.txtName.setText(light.getLabel());
-            holder.txtName.setTextColor(getResources().getColor(light.textColor));
-
-            if (light.connectionStatus == ConnectionStatus.OFFLINE) {
-               // holder.statusIcon.setImageResource(R.mipmap.icon_light_offline);
-                holder.switchView.toggleSwitch(false);
-            } else if (light.connectionStatus == ConnectionStatus.OFF) {
-               // holder.statusIcon.setImageResource(R.mipmap.icon_light_off);
-                holder.switchView.toggleSwitch(false);
-            } else if (light.connectionStatus == ConnectionStatus.ON) {
-                //holder.statusIcon.setImageResource(R.mipmap.icon_light_on);
-                holder.switchView.toggleSwitch(true);
-            }
-
-            return convertView;
-        }
-
-        public void add(Light light) {
-            Lights.getInstance().add(light);
-        }
-
-        public Light get(int meshAddress) {
-            return Lights.getInstance().getByMeshAddress(meshAddress);
-        }
-    }
 
 }

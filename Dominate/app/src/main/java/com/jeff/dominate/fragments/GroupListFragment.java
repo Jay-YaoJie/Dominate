@@ -11,6 +11,7 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.activity.GroupSettingActivity;
@@ -229,7 +230,7 @@ public final class GroupListFragment extends Fragment {
 
             byte opcode = (byte) 0xD0;
             int dstAddr = meshAddress;
-            LogUtils.INSTANCE.d("GroupListFragment","当前点击的数据 (int) view.getTag()"+meshAddress);
+            LogUtils.INSTANCE.d("GroupListFragment", "当前点击的数据 (int) view.getTag()" + meshAddress);
             if (clickId == R.id.btn_on) {
                 TelinkLightService.Instance().sendCommandNoResponse(opcode, dstAddr,
                         new byte[]{0x01, 0x00, 0x00});
