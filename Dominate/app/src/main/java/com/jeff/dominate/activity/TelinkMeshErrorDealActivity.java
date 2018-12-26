@@ -1,4 +1,4 @@
-package com.jeff.dominate;
+package com.jeff.dominate.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +10,9 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
+import com.jeff.dominate.TelinkBaseActivity;
+import com.jeff.dominate.TelinkLightApplication;
+import com.jeff.dominate.TelinkLightService;
 import com.telink.bluetooth.LeBluetooth;
 import com.telink.bluetooth.event.MeshEvent;
 import com.telink.util.ContextUtil;

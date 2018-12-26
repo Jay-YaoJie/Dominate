@@ -28,7 +28,6 @@ import com.jeff.dominate.MeshOTAService;
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightApplication;
 import com.jeff.dominate.TelinkLightService;
-import com.jeff.dominate.TelinkMeshErrorDealActivity;
 import com.jeff.dominate.fragments.DeviceListFragment;
 import com.jeff.dominate.fragments.GroupListFragment;
 import com.jeff.dominate.fragments.MainTestFragment;
