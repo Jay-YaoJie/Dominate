@@ -3,6 +3,7 @@ package com.jeff.dominate.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -19,8 +20,8 @@ import com.jeff.dominate.model.SharedPreferencesHelper;
 import com.jeff.dominate.qrcode.QRCodeShareActivity;
 import com.jeff.dominate.util.FileSystem;
 
-
-public final class AddMeshActivity extends TelinkBaseActivity {
+//修改成登录页面
+public final class AddMeshActivity extends AppCompatActivity {
 
     private ImageView backView;
     //    private Button btn_save_filter;

@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
@@ -58,8 +59,8 @@ import com.telink.util.Event;
 import com.telink.util.EventListener;
 
 import java.util.List;
-
-public final class MainActivity extends TelinkMeshErrorDealActivity implements EventListener<String> {
+//TelinkMeshErrorDealActivity
+public  class MainActivity extends AppCompatActivity implements EventListener<String> {
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
@@ -581,14 +582,8 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
         }
     }
 
-    @Override
-    protected void onLocationEnable() {
-        autoConnect();
-    }
-
-
     private void onNotificationEvent(NotificationEvent event) {
-        if (!foreground) return;
+
         // 解析版本信息
 
         byte[] data = event.getArgs().params;

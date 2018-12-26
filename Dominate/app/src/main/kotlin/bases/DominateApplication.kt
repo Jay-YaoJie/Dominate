@@ -3,6 +3,7 @@ package bases
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.jeff.dominate.TelinkLightApplication
+import jeff.bases.DominateApplication.Companion.instance
 
 
 /**
@@ -23,15 +24,11 @@ class DominateApplication : TelinkLightApplication() {
         super.attachBaseContext(base)
         MultiDex.install(this)
     }
-
     override fun onCreate() {
         super.onCreate()
+        instance = this;
         dominate = this;
 
     }
-
-
-    /////////////////////////////////////////
-
 
 }

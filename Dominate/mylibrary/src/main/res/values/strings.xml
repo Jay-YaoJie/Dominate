@@ -1,3 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyLibrary</string>
+
+    <string name="ble_not_support">当前系统不支持蓝牙</string>
+    <!--main tab-->
+    <string name="main">主页</string>
+    <string name="group">分组</string>
+    <string name="device">设备</string>
+    <string name="me">我的</string>
+
+    <!--我的-->
+    <string name="account_manage">帐号管理</string>
+    <string name="family_management">家庭管理</string>
+    <string name="setting">设置</string>
+    <string name="help_center">帮助中心</string>
+    <string name="about">关于</string>
+
+    <!--设备-->
+    <string name="all_device">所有设备</string>
+    <string name="ungrouped">未分组设备</string>
+
+
+
+
 </resources>

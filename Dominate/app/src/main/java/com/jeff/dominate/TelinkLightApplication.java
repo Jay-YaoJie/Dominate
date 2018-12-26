@@ -37,7 +37,6 @@ public  class TelinkLightApplication extends TelinkApplication {
         thiz = this;
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
-
     }
 
     public int getOnlineCount() {

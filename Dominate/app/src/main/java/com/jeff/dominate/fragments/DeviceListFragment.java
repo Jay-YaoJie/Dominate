@@ -246,6 +246,9 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
         return this.adapter.get(meshAddress);
     }
 
+
+    //刷新页面
+    //修改为 eventBus 传入的 DeviceFragment 那个页面就传入那个页面的名称
     public void notifyDataSetChanged() {
         if (this.adapter != null)
             this.adapter.notifyDataSetChanged();

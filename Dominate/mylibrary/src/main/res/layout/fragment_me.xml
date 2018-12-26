@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="jeff.me.MeFragmentDB" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+   <!--     <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height"
+            android:background="@color/theme_positive_color">
+
+            <TextView
+                android:id="@+id/txt_header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignWithParentIfMissing="false"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/main_test_title"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_model_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/main_test_model_setting"
+                android:textColor="@color/white" />
+        </RelativeLayout>-->
+        <!--帐号管理-->
+        <TextView
+            android:id="@+id/me_account_manage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/center_height"
+            android:layout_margin="@dimen/layout_margin"
+            android:background="@drawable/bg_radius_main"
+            android:drawableLeft="@mipmap/icon_bottom_tab_me_not_selected"
+            android:drawableRight="@mipmap/arrow_r"
+            android:drawablePadding="@dimen/text_drawable_padding"
+            android:gravity="center|left"
+            android:text="@string/account_manage" />
+
+        <!--家庭管理-->
+        <TextView
+            android:id="@+id/me_family_management"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/center_height"
+            android:layout_margin="@dimen/layout_margin"
+            android:background="@drawable/bg_radius_main"
+            android:drawableLeft="@mipmap/ic_model_unselected"
+            android:drawableRight="@mipmap/arrow_r"
+            android:drawablePadding="@dimen/text_drawable_padding"
+            android:gravity="center|left"
+            android:text="@string/family_management" />
+        <!--设置-->
+        <TextView
+            android:id="@+id/me_setting"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/center_height"
+            android:layout_margin="@dimen/layout_margin"
+            android:background="@drawable/bg_radius_main"
+            android:drawableLeft="@mipmap/ic_model_unselected"
+            android:drawableRight="@mipmap/arrow_r"
+            android:drawablePadding="@dimen/text_drawable_padding"
+            android:gravity="center|left"
+            android:text="@string/setting" />
+        <!--帮助中心-->
+        <TextView
+            android:id="@+id/me_help_center"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/center_height"
+            android:layout_margin="@dimen/layout_margin"
+            android:background="@drawable/bg_radius_main"
+            android:drawableLeft="@mipmap/ic_model_unselected"
+            android:drawableRight="@mipmap/arrow_r"
+            android:drawablePadding="@dimen/text_drawable_padding"
+            android:gravity="center|left"
+            android:text="@string/help_center" />
+        <!--关于-->
+        <TextView
+            android:id="@+id/me_about"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/center_height"
+            android:layout_margin="@dimen/layout_margin"
+            android:background="@drawable/bg_radius_main"
+            android:drawableLeft="@mipmap/ic_model_unselected"
+            android:drawableRight="@mipmap/arrow_r"
+            android:drawablePadding="@dimen/text_drawable_padding"
+            android:gravity="center|left"
+            android:text="@string/about" />
+
+
+    </LinearLayout>
+</layout>

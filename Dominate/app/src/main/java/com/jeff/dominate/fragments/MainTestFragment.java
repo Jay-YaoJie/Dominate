@@ -23,6 +23,8 @@ import com.jeff.dominate.util.FileSystem;
 import java.util.ArrayList;
 import java.util.List;
 
+import jeff.utils.ToastUtil;
+
 /**
  * 主页测试 fragment
  * Created by kee on 2018/1/8.
@@ -152,7 +154,8 @@ public class MainTestFragment extends Fragment implements View.OnClickListener {
 
 
     public void showErrorMsg(String msg) {
-        ((MainActivity) getActivity()).showToast(msg);
+        ToastUtil.INSTANCE.show(msg);
+       // ((MainActivity) getActivity()).showToast(msg);
     }
 
 }
