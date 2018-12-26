@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public final class TelinkLightApplication extends TelinkApplication {
+public  class TelinkLightApplication extends TelinkApplication {
 
     private Mesh mesh;
     private StringBuilder logInfo;
@@ -120,19 +120,6 @@ public final class TelinkLightApplication extends TelinkApplication {
                 light.connectionStatus = ConnectionStatus.OFFLINE;
                 light.textColor = R.color.black;
             }
-            /*Light light;
-            for (com.telink.bluetooth.light.model.DeviceInfo deviceInfo : mesh.devices) {
-                light = new Light();
-                light.macAddress = deviceInfo.macAddress;
-                light.meshAddress = deviceInfo.meshAddress;
-                light.brightness = 0;
-                light.connectionStatus = ConnectionStatus.OFFLINE;
-                light.textColor = this.getResources().getColorStateList(
-                        R.color.black);
-                light.updateIcon();
-
-                Lights.getInstance().add(light);
-            }*/
         }
     }
 
@@ -165,15 +152,6 @@ public final class TelinkLightApplication extends TelinkApplication {
     }
 
 
-   /* @Override
-    public void saveScanMac(String deviceAddress, String deviceName) {
-        if (macFilters.size() == 0 || macFilters.contains(deviceAddress)) {
-            String time = format.format(Calendar.getInstance().getTimeInMillis());
-            logInfo.append("\n\t").append(time).append(":\t").append("Scan : ").append(deviceName).append("-- ").append(deviceAddress);
-            showToast("Scan : " + deviceAddress);
-            TelinkLog.w("Scan : " + deviceAddress);
-        }
-    }*/
 
     public void saveLogInFile(String fileName, String logInfo) {
         if (FileSystem.writeAsString(fileName + ".txt", logInfo)) {
@@ -202,55 +180,4 @@ public final class TelinkLightApplication extends TelinkApplication {
     }
 
 
-    /**
-     * super method
-     *
-     * @param intent
-     */
-   /* @Override
-    protected void onLeScan(Intent intent) {
-        super.onLeScan(intent);
-        DeviceInfo deviceInfo = intent.getParcelableExtra(LightService.EXTRA_DEVICE);
-        saveLog("scan: " + deviceInfo.macAddress);
-    }
-
-    @Override
-    protected void onStatusChanged(Intent intent) {
-        super.onStatusChanged(intent);
-        DeviceInfo deviceInfo = intent.getParcelableExtra(LightService.EXTRA_DEVICE);
-        saveLog("device " + deviceInfo.macAddress + " " + getDeviceState(deviceInfo.connectionStatus));
-    }
-
-    private String getDeviceState(int connectionStatus) {
-        switch (connectionStatus) {
-            case LightAdapter.STATUS_CONNECTING:
-                return "STATUS_CONNECTING";
-            case LightAdapter.STATUS_CONNECTED:
-                return "STATUS_CONNECTED";
-            case LightAdapter.STATUS_LOGINING:
-                return "STATUS_LOGINING";
-            case LightAdapter.STATUS_LOGIN:
-                return "STATUS_LOGIN_SUCCESS";
-            case LightAdapter.STATUS_LOGOUT:
-                return "LOGIN_FAILURE | CONNECT_FAILURE";
-            case LightAdapter.STATUS_UPDATE_MESH_COMPLETED:
-            case LightAdapter.STATUS_UPDATING_MESH:
-            case LightAdapter.STATUS_UPDATE_MESH_FAILURE:
-            case LightAdapter.STATUS_UPDATE_ALL_MESH_COMPLETED:
-            case LightAdapter.STATUS_GET_LTK_COMPLETED:
-            case LightAdapter.STATUS_GET_LTK_FAILURE:
-            case LightAdapter.STATUS_MESH_OFFLINE:
-            case LightAdapter.STATUS_MESH_SCAN_COMPLETED:
-            case LightAdapter.STATUS_MESH_SCAN_TIMEOUT:
-            case LightAdapter.STATUS_OTA_COMPLETED:
-            case LightAdapter.STATUS_OTA_FAILURE:
-            case LightAdapter.STATUS_OTA_PROGRESS:
-            case LightAdapter.STATUS_GET_FIRMWARE_COMPLETED:
-            case LightAdapter.STATUS_GET_FIRMWARE_FAILURE:
-            case LightAdapter.STATUS_DELETE_COMPLETED:
-            case LightAdapter.STATUS_DELETE_FAILURE:
-            default:
-                return "OTHER";
-        }
-    }*/
 }

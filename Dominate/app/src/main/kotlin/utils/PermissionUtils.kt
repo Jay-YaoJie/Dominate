@@ -1,7 +1,7 @@
 package utils
 
 import android.Manifest
-import android.content.Context
+import bases.DominateApplication.Companion.dominate
 import com.github.dfqin.grantor.PermissionListener
 import com.github.dfqin.grantor.PermissionsUtil
 
@@ -15,7 +15,7 @@ import com.github.dfqin.grantor.PermissionsUtil
 object PermissionUtils {
     private var isChecked: Boolean = false;
     //添加权限检查 检查蓝牙权限，是否打开
-    fun checkPermission(dominate:Context) {
+    fun checkPermission() {
         if (!isChecked) {
             PermissionsUtil.requestPermission(dominate, object : PermissionListener {
                 override fun permissionGranted(permissions: Array<String>) {
