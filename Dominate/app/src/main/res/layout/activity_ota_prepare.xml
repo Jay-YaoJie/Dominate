@@ -11,14 +11,14 @@
         android:background="@color/theme_positive_color">
 
         <ImageView
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:background="@mipmap/icon_top_tab_back"
-                android:contentDescription="@null" tools:ignore="RtlCompat"/>
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/icon_top_tab_back"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/title"
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@mipmap/icon_right" />
+            android:src="@drawable/icon_right" />
 
     </LinearLayout>
 

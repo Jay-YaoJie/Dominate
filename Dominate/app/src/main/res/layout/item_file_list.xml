@@ -14,7 +14,7 @@
         android:id="@+id/iv_icon"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@mipmap/folder" />
+        android:src="@drawable/folder" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -29,6 +29,6 @@
         android:id="@+id/iv_right"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@mipmap/icon_right" />
+        android:src="@drawable/icon_right" />
 
 </LinearLayout>

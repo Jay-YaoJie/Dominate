@@ -10,8 +10,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightApplication;
@@ -19,17 +24,10 @@ import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.model.Group;
 import com.jeff.dominate.model.Groups;
 import com.telink.bluetooth.event.NotificationEvent;
-import com.telink.bluetooth.light.*;
+import com.telink.bluetooth.light.NotificationInfo;
 
 import com.telink.util.Event;
 import com.telink.util.EventListener;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
 
 public final class DeviceGroupingActivity extends TelinkBaseActivity implements EventListener {
 
@@ -79,6 +77,7 @@ public final class DeviceGroupingActivity extends TelinkBaseActivity implements 
         this.mApplication = (TelinkLightApplication) this.getApplication();
         this.mApplication.addEventListener(NotificationEvent.GET_GROUP, this);
 
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_device_grouping);
 
         this.meshAddress = this.getIntent().getIntExtra("meshAddress", 0);

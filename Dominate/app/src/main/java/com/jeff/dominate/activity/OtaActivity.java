@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightApplication;
@@ -24,8 +26,16 @@ import com.telink.bluetooth.TelinkLog;
 import com.telink.bluetooth.event.DeviceEvent;
 import com.telink.bluetooth.event.LeScanEvent;
 import com.telink.bluetooth.event.NotificationEvent;
-import com.telink.bluetooth.light.*;
+import com.telink.bluetooth.light.DeviceInfo;
+import com.telink.bluetooth.light.LeOtaParameters;
+import com.telink.bluetooth.light.LeScanParameters;
+import com.telink.bluetooth.light.LightAdapter;
+import com.telink.bluetooth.light.LightService;
+import com.telink.bluetooth.light.Manufacture;
+import com.telink.bluetooth.light.OtaDeviceInfo;
+import com.telink.bluetooth.light.Parameters;
 
+import com.telink.util.Arrays;
 import com.telink.util.Event;
 import com.telink.util.EventListener;
 import com.telink.util.Strings;
@@ -33,13 +43,6 @@ import com.telink.util.Strings;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
 
 public class OtaActivity extends TelinkBaseActivity implements EventListener<String>, View.OnClickListener {
 

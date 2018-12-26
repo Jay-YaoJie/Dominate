@@ -1,11 +1,9 @@
 package com.jeff.dominate.model;
 
 import java.io.Serializable;
+
 /**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
+ * Created by kee on 2018/1/8.
  */
 
 public class TestModel implements Serializable{

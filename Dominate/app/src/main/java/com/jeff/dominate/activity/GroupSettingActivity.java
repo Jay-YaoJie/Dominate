@@ -1,24 +1,19 @@
 package com.jeff.dominate.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.fragments.GroupSettingFragment;
 import com.jeff.dominate.model.Group;
 import com.jeff.dominate.model.Groups;
 
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
 
 public final class GroupSettingActivity extends TelinkBaseActivity {
 
@@ -31,6 +26,8 @@ public final class GroupSettingActivity extends TelinkBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.activity_group_setting);
 
 		this.groupAddress = this.getIntent().getIntExtra("groupAddress", 0);

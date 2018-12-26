@@ -1,12 +1,16 @@
 package com.jeff.dominate;
 
+import android.app.AlertDialog;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
@@ -28,13 +32,11 @@ import com.telink.util.Strings;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ： 通过广播形式转发
+ * 通过广播形式转发
+ * Created by kee on 2018/4/23.
  */
 
 public class MeshOTAService extends Service implements EventListener<String> {

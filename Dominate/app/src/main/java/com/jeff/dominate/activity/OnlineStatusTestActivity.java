@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightApplication;
@@ -16,7 +17,8 @@ import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.telink.bluetooth.event.NotificationEvent;
-import com.telink.bluetooth.light.*;
+import com.telink.bluetooth.light.ConnectionStatus;
+import com.telink.bluetooth.light.OnlineStatusNotificationParser;
 
 import com.telink.util.Event;
 import com.telink.util.EventListener;
@@ -24,13 +26,8 @@ import com.telink.util.EventListener;
 import java.util.List;
 
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
+ * Created by Administrator on 2017/3/22.
  */
-
 
 public class OnlineStatusTestActivity extends TelinkBaseActivity implements EventListener<String> {
     TextView tv_info;

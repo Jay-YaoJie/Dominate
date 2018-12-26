@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightService;
@@ -18,15 +22,7 @@ import com.jeff.dominate.activity.GroupSettingActivity;
 import com.jeff.dominate.model.Group;
 import com.jeff.dominate.model.Groups;
 
-import utils.LogUtils;
 
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
 public final class GroupListFragment extends Fragment {
 
     private LayoutInflater inflater;
@@ -230,7 +226,7 @@ public final class GroupListFragment extends Fragment {
 
             byte opcode = (byte) 0xD0;
             int dstAddr = meshAddress;
-            LogUtils.INSTANCE.d("GroupListFragment", "当前点击的数据 (int) view.getTag()" + meshAddress);
+
             if (clickId == R.id.btn_on) {
                 TelinkLightService.Instance().sendCommandNoResponse(opcode, dstAddr,
                         new byte[]{0x01, 0x00, 0x00});

@@ -1,21 +1,25 @@
 package com.jeff.dominate.qrcode;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 
-/**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
- */
+import java.util.List;
+
+
 public final class QRCodeShareActivity extends TelinkBaseActivity {
 
     private ImageView qr_image;

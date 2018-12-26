@@ -1,24 +1,23 @@
 package com.jeff.dominate;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.View;
+import android.widget.Toast;
+
 import com.telink.bluetooth.LeBluetooth;
 import com.telink.bluetooth.event.MeshEvent;
 import com.telink.util.ContextUtil;
 import com.telink.util.Event;
 import com.telink.util.EventListener;
 
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：添加 扫描过程中出现的因定位未开启而导致的扫描不成功问题
- */
 
+// 添加 扫描过程中出现的因定位未开启而导致的扫描不成功问题
 public abstract class TelinkMeshErrorDealActivity extends TelinkBaseActivity implements EventListener<String> {
 
     protected final static int ACTIVITY_REQUEST_CODE_LOCATION = 0x11;

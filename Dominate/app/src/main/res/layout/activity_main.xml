@@ -17,17 +17,17 @@
         android:gravity="center"
         android:layoutMode="clipBounds"
         android:orientation="horizontal">
+
         <RadioButton
-                android:id="@+id/tab_main"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:button="@null"
-                android:checked="true"
-                android:drawableTop="@drawable/tab_model"
-                android:gravity="center_horizontal"
-                android:paddingTop="10dp" />
+            android:id="@+id/tab_devices"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/tab_device"
+            android:gravity="center_horizontal|bottom"
+            android:paddingTop="5dp" />
 
         <RadioButton
             android:id="@+id/tab_groups"
@@ -37,29 +37,30 @@
             android:button="@null"
             android:drawableTop="@drawable/tab_group"
             android:gravity="center_horizontal|bottom"
-            android:paddingTop="10dp" />
+            android:paddingTop="5dp" />
+
+        <RadioButton
+            android:id="@+id/tab_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_account"
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp" />
 
 
         <RadioButton
-                android:id="@+id/tab_devices"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableTop="@drawable/tab_device"
-                android:gravity="center_horizontal|bottom"
-                android:paddingTop="10dp" />
-
-        <RadioButton
-                android:id="@+id/tab_me"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableTop="@drawable/tab_account"
-                android:gravity="center_horizontal"
-                android:paddingTop="10dp" />
+            android:id="@+id/tab_test"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_model"
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp" />
     </RadioGroup>
 
 </LinearLayout>

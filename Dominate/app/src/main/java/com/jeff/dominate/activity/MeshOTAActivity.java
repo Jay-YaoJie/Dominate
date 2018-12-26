@@ -1,7 +1,11 @@
 package com.jeff.dominate.activity;
 
 import android.app.AlertDialog;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,7 +18,12 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.jeff.dominate.*;
+
+import com.jeff.dominate.MeshOTAService;
+import com.jeff.dominate.R;
+import com.jeff.dominate.TelinkBaseActivity;
+import com.jeff.dominate.TelinkLightApplication;
+import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.adapter.BaseRecyclerViewAdapter;
 import com.jeff.dominate.adapter.TypeSelectAdapter;
 import com.jeff.dominate.model.Light;
@@ -25,7 +34,7 @@ import com.telink.bluetooth.TelinkLog;
 import com.telink.bluetooth.event.DeviceEvent;
 import com.telink.bluetooth.event.LeScanEvent;
 import com.telink.bluetooth.event.NotificationEvent;
-import com.telink.bluetooth.light.*;
+import com.telink.bluetooth.light.DeviceInfo;
 
 import com.telink.util.Event;
 import com.telink.util.EventListener;
@@ -38,11 +47,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：演示mesh ota相关功能
+ * 演示mesh ota相关功能
  * 要求， 准备升级的设备必须是之前做过加灯操作的
  * 流程：
  * 1. 判断当前mesh在线状态， 如果是非在线状态，则不可操作

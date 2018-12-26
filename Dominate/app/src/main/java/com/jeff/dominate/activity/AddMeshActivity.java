@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightApplication;
@@ -17,14 +18,6 @@ import com.jeff.dominate.model.Mesh;
 import com.jeff.dominate.model.SharedPreferencesHelper;
 import com.jeff.dominate.qrcode.QRCodeShareActivity;
 import com.jeff.dominate.util.FileSystem;
-
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
 
 
 public final class AddMeshActivity extends TelinkBaseActivity {
@@ -56,6 +49,8 @@ public final class AddMeshActivity extends TelinkBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_add_mesh);
 
         this.mApplication = (TelinkLightApplication) this.getApplication();

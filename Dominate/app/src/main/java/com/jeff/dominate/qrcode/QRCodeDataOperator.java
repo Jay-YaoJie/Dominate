@@ -1,6 +1,7 @@
 package com.jeff.dominate.qrcode;
 
 import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.jeff.dominate.TelinkLightApplication;
 import com.jeff.dominate.model.Light;
@@ -8,13 +9,13 @@ import com.jeff.dominate.model.Mesh;
 import com.jeff.dominate.model.SharedPreferencesHelper;
 
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
+ * Created by kee on 2017/12/27.
  */
 
 public class QRCodeDataOperator {

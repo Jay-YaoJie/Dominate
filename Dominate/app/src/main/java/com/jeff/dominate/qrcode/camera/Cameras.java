@@ -3,16 +3,12 @@ package com.jeff.dominate.qrcode.camera;
 import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
 import com.telink.bluetooth.TelinkLog;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
-/**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
- */
+
 public final class Cameras {
 
     private final static String TAG = Cameras.class.getSimpleName();

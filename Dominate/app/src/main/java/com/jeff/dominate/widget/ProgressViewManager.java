@@ -6,15 +6,17 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.telink.bluetooth.TelinkLog;
+
+
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
+ * Created by kee on 2018/4/24.
  */
 
 public class ProgressViewManager implements View.OnClickListener {

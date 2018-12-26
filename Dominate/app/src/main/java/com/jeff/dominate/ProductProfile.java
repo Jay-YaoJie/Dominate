@@ -1,11 +1,5 @@
 package com.jeff.dominate;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
- */
+
 public enum ProductProfile {
 
     DIM(0x0001, "单色灯"), CCT(0x0002, ""), RGBW(0x0003, "四色灯，红绿蓝白"), RGB(0x0004, "三色灯，红绿蓝"), C_SLEEP(0x0005, "色温灯"), UNKNOWN(-1, "未定义");

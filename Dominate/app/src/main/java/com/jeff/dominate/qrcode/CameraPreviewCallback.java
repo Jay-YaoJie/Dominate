@@ -3,7 +3,12 @@ package com.jeff.dominate.qrcode;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Handler;
-import com.google.zxing.*;
+
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
 import com.telink.bluetooth.TelinkLog;
 
 import java.io.UnsupportedEncodingException;
@@ -11,12 +16,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
- */
+
 public final class CameraPreviewCallback implements Camera.PreviewCallback {
 
     public static final String TAG = CameraPreviewCallback.class.getSimpleName();

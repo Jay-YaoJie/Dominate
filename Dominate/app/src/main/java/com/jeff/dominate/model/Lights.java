@@ -1,18 +1,15 @@
 package com.jeff.dominate.model;
 
 import android.text.TextUtils;
+
 import com.telink.bluetooth.light.ConnectionStatus;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-/**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
- */
+
 public class Lights extends DataStorageImpl<Light> {
 
     private static Lights mThis;

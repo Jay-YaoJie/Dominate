@@ -9,18 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.jeff.dominate.R;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
 
+/**
+ * Created by Administrator on 2016/10/8.
+ */
 public class FileListAdapter extends BaseAdapter {
 
     private Context mContext;
@@ -66,15 +61,15 @@ public class FileListAdapter extends BaseAdapter {
         }
         if (mFiles.get(position).isDirectory()) {
             // 目录
-            holder.iv_icon.setImageResource(R.mipmap.folder);
+            holder.iv_icon.setImageResource(R.drawable.folder);
             holder.iv_right.setVisibility(View.VISIBLE);
         } else {
             holder.iv_right.setVisibility(View.GONE);
             // 文件
             if (mFiles.get(position).getName().endsWith(".bin")) {
-                holder.iv_icon.setImageResource(R.mipmap.file_right);
+                holder.iv_icon.setImageResource(R.drawable.file_right);
             } else {
-                holder.iv_icon.setImageResource(R.mipmap.file);
+                holder.iv_icon.setImageResource(R.drawable.file);
             }
         }
         holder.tv_name.setText(mFiles.get(position).getName());

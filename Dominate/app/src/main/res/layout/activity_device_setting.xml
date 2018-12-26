@@ -17,20 +17,19 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:background="@mipmap/icon_top_tab_back"
-            android:contentDescription="@null"
-            tools:ignore="RtlCompat" />
+            android:background="@drawable/icon_top_tab_back"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/txt_header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="false"
-            android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
             android:gravity="center_vertical"
             android:singleLine="true"
             android:text="@string/device_setting_header"
@@ -45,9 +44,8 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:background="@mipmap/icon_top_tab_edit"
-            android:contentDescription="@null"
-            tools:ignore="RtlCompat" />
+            android:background="@drawable/icon_top_tab_edit"
+            android:contentDescription="@null" />
     </RelativeLayout>
 
     <FrameLayout
@@ -57,11 +55,10 @@
 
         <fragment
             android:id="@+id/device_setting_fragment"
-            class="com.jeff.dominate.fragments.DeviceSettingFragment"
+            android:name="com.jeff.dominate.fragments.DeviceSettingFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_device_setting" />
-
     </FrameLayout>
 
 </LinearLayout>

@@ -23,20 +23,18 @@ import android.hardware.Camera;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+
 import com.google.zxing.client.android.camera.CameraConfigurationUtils;
 import com.telink.bluetooth.TelinkLog;
 
 import java.io.IOException;
 
-
 /**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：This object wraps the Camera service object and expects to be the only one talking to it. The
- *   implementation encapsulates the steps needed to take preview-sized images, which are used for
- *   both preview and decoding.
+ * This object wraps the Camera service object and expects to be the only one talking to it. The
+ * implementation encapsulates the steps needed to take preview-sized images, which are used for
+ * both preview and decoding.
  *
+ * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class CameraManager {
 

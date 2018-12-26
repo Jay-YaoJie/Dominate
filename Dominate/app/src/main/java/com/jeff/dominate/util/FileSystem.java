@@ -2,16 +2,16 @@ package com.jeff.dominate.util;
 
 import android.content.Context;
 import android.os.Environment;
+
 import com.telink.bluetooth.TelinkLog;
 
-import java.io.*;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
- */
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public abstract class FileSystem {
 
     public static boolean writeAsString(String fileName, String content) {

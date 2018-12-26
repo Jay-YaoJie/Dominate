@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dominate</string>
+
+    <!-- Activity Labels -->
+    <string name="app_name">dominate</string>
     <string name="activity_device_setting_label">Device Setting</string>
     <string name="activity_device_scanning_label">Device Scanning</string>
     <string name="activity_device_grouping">Device Grouping</string>
@@ -73,25 +75,32 @@
     <string name="target_version">Target Version : %s</string>
 
     <!--main test fragment-->
-    <string name="main_test_title">模式</string>
+    <string name="main_test_title">Model</string>
     <string name="hex_input_digit">0123456789abcdefABCDEF </string>
-    <string name="main_test_model_setting">设置</string>
+    <string name="main_test_model_setting">Setting </string>
+
     <string-array name="model_names">
-        <item>开/关</item>
+
+        <item>ON/OFF</item>
+
         <!--空白位置-->
         <item>placeholder</item>
+
         <!--空白位置-->
         <item>placeholder</item>
-        <item>平淡</item>
-        <item>闪耀</item>
-        <item>白色</item>
-        <item>双色</item>
-        <item>原型</item>
-        <item>沉着的</item>
-        <item>爵士乐队</item>
+
+        <item>Fade</item>
+        <item>Twinkling</item>
+        <item>Flash White</item>
+        <item>Dual Color</item>
+        <item>Chasing</item>
+        <item>Steady</item>
+        <item>Combo</item>
+
         <!--空白位置-->
         <item>placeholder</item>
-        <item>自动</item>
+
+        <item>Auto</item>
     </string-array>
 
     <string name="ota_device_info">DeviceId: %1$s \nMac:%2$s</string>
@@ -102,29 +111,4 @@
 
 
     <string name="mesh_ota_state">State: %s</string>
-
-
-
-    <string name="ble_not_support">当前系统不支持蓝牙</string>
-    ble not support
-    <!--main tab-->
-    <string name="main">主页</string>
-    <string name="group">分组</string>
-    <string name="device">设备</string>
-    <string name="me">我的</string>
-
-    <!--我的-->
-    <string name="account_manage">帐号管理</string>
-    <string name="family_management">家庭管理</string>
-    <string name="setting">设置</string>
-    <string name="help_center">帮助中心</string>
-    <string name="about">关于</string>
-
-    <!--设备-->
-    <string name="all_device">所有设备</string>
-    <string name="ungrouped">未分组设备</string>
-
-
-
-
 </resources>

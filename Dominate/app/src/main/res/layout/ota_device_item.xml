@@ -9,7 +9,7 @@
         android:id="@+id/img_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/icon_light_on" />
+        android:src="@drawable/icon_light_on" />
 
     <TextView
         android:id="@+id/txt_name"

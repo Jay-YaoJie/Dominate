@@ -31,8 +31,7 @@ import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.TelinkMeshErrorDealActivity;
 import com.jeff.dominate.fragments.DeviceListFragment;
 import com.jeff.dominate.fragments.GroupListFragment;
-import com.jeff.dominate.fragments.MainFragment;
-import com.jeff.dominate.fragments.MeFragment;
+import com.jeff.dominate.fragments.MainTestFragment;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
@@ -52,6 +51,7 @@ import com.telink.bluetooth.light.GetAlarmNotificationParser;
 import com.telink.bluetooth.light.LeAutoConnectParameters;
 import com.telink.bluetooth.light.LeRefreshNotifyParameters;
 import com.telink.bluetooth.light.LightAdapter;
+
 import com.telink.bluetooth.light.OnlineStatusNotificationParser;
 import com.telink.bluetooth.light.Parameters;
 import com.telink.util.BuildUtils;
@@ -59,8 +59,6 @@ import com.telink.util.Event;
 import com.telink.util.EventListener;
 
 import java.util.List;
-
-import utils.LogUtils;
 
 public final class MainActivity extends TelinkMeshErrorDealActivity implements EventListener<String> {
 
@@ -70,8 +68,7 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
     private FragmentManager fragmentManager;
     private DeviceListFragment deviceFragment;
     private GroupListFragment groupFragment;
-    private MainFragment mainTestFragment;
-    private MeFragment meFragment;
+    private MainTestFragment mainTestFragment;
 
     private Fragment mContent;
 
@@ -88,11 +85,8 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
                 switchContent(mContent, deviceFragment);
             } else if (checkedId == R.id.tab_groups) {
                 switchContent(mContent, groupFragment);
-            } else if (checkedId == R.id.tab_main) {
+            } else if (checkedId == R.id.tab_test) {
                 switchContent(mContent, mainTestFragment);
-            }else if (checkedId==R.id.tab_me){
-                switchContent(mContent, meFragment);
-
             }
         }
     };
@@ -152,10 +146,8 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
                 .createFragment(R.id.tab_devices);
         this.groupFragment = (GroupListFragment) FragmentFactory
                 .createFragment(R.id.tab_groups);
-        this.mainTestFragment = (MainFragment) FragmentFactory
-                .createFragment(R.id.tab_main);
-        this.meFragment = (MeFragment) FragmentFactory
-                .createFragment(R.id.tab_me);
+        this.mainTestFragment = (MainTestFragment) FragmentFactory
+                .createFragment(R.id.tab_test);
         this.tabs = (RadioGroup) this.findViewById(R.id.tabs);
         this.tabs.setOnCheckedChangeListener(this.checkedChangeListener);
 
@@ -463,7 +455,7 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
      * 处理{@link NotificationEvent#ONLINE_STATUS}事件
      */
     private synchronized void onOnlineStatusNotify(NotificationEvent event) {
-        LogUtils.INSTANCE.d(TAG,"MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().getId());
+
         TelinkLog.i("MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().getId());
         List<OnlineStatusNotificationParser.DeviceNotificationInfo> notificationInfoList;
         //noinspection unchecked
@@ -480,7 +472,7 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
 
             int meshAddress = notificationInfo.meshAddress;
             int brightness = notificationInfo.brightness;
-            LogUtils.INSTANCE.d(TAG,"notificationInfo.toString()"+notificationInfo.toString());
+
             Light light = this.deviceFragment.getDevice(meshAddress);
 
             if (light == null) {
@@ -557,7 +549,6 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
      */
     @Override
     public void performed(Event<String> event) {
-        LogUtils.INSTANCE.d(TAG,"performed(Event<String> event)  event.getType()="+event.getType());
         switch (event.getType()) {
             case NotificationEvent.ONLINE_STATUS:
                 this.onOnlineStatusNotify((NotificationEvent) event);

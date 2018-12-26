@@ -1,6 +1,7 @@
 package com.jeff.dominate.qrcode;
 
 import android.graphics.Bitmap;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -10,12 +11,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.util.EnumMap;
 import java.util.Map;
-/**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
- */
+
 public final class QREncoder {
 
     private Builder mBuilder;

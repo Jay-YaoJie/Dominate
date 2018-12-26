@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@null"
             android:scaleType="center"
-            android:src="@mipmap/icon_light_on" />
+            android:src="@drawable/icon_light_on" />
 
         <TextView
             android:id="@+id/name"

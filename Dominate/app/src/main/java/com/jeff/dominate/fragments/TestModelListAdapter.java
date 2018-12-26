@@ -1,24 +1,23 @@
-package com.jeff.dominate.adapter;
+package com.jeff.dominate.fragments;
 
 import android.content.Context;
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.jeff.dominate.R;
-import com.jeff.dominate.model.TestModel;
 
+
+import com.jeff.dominate.R;
+import com.jeff.dominate.adapter.BaseRecyclerViewAdapter;
+import com.jeff.dominate.model.TestModel;
 
 import java.util.List;
 
 /**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：
+ * Created by kee on 2017/12/19.
  */
+
 public class TestModelListAdapter extends BaseRecyclerViewAdapter<TestModelListAdapter.ViewHolder> {
     private List<TestModel> models;
     private int selectPosition = 0;

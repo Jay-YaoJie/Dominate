@@ -2,13 +2,11 @@ package com.jeff.dominate.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
+ * Created by kee on 2017/12/25.
  */
+
 public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> implements View.OnClickListener, View.OnLongClickListener {
 
     private OnItemClickListener onItemClickListener;

@@ -6,19 +6,19 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+
 import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.jeff.dominate.TelinkLightApplication;
 import com.telink.bluetooth.TelinkLog;
+
+
 import java.io.UnsupportedEncodingException;
 
 
-
 /**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：二维码生成器
+ * 二维码生成器
+ * Created by kee on 2016/9/14.
  */
 public class QRCodeGenerator extends AsyncTask<Void, Void, Bitmap> {
     private QREncoder mEncoder;

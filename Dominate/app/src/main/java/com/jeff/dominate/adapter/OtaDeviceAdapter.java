@@ -7,19 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.model.Light;
-
 
 import java.util.List;
 
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
+ * Created by kee on 2017/12/19.
  */
+
 public class OtaDeviceAdapter extends BaseRecyclerViewAdapter<OtaDeviceAdapter.ViewHolder> {
     private List<Light> models;
     private Context context;

@@ -1,9 +1,8 @@
 package com.jeff.dominate;
 
-import android.content.Context;
-import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.widget.Toast;
+
 import com.jeff.dominate.activity.TempTestActivity;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
@@ -17,22 +16,9 @@ import com.telink.bluetooth.light.ConnectionStatus;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：Application
- */
+
+
 public final class TelinkLightApplication extends TelinkApplication {
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
-
-
-
 
     private Mesh mesh;
     private StringBuilder logInfo;
@@ -58,7 +44,7 @@ public final class TelinkLightApplication extends TelinkApplication {
         //this.doInit();
         logInfo = new StringBuilder("log:");
         thiz = this;
-     //   toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 //        AdvanceStrategy.setDefault(new MySampleAdvanceStrategy());
 
 
@@ -75,9 +61,6 @@ public final class TelinkLightApplication extends TelinkApplication {
     public static TelinkLightApplication getApp() {
         return thiz;
     }
-
-
-
 
     @Override
     public void doInit() {
@@ -103,6 +86,15 @@ public final class TelinkLightApplication extends TelinkApplication {
             setupMesh(mesh);
         }
 
+
+/*
+
+        if (FileSystem.exists("telink.meshs")) {
+            this.mesh = (Mesh) FileSystem.readAsObject("telink.meshs");
+        }
+*/
+
+
         //启动LightService
         this.startLightService(TelinkLightService.class);
     }
@@ -118,6 +110,9 @@ public final class TelinkLightApplication extends TelinkApplication {
             this.mesh = new Mesh();
             this.mesh.name = "telink_mesh1";
             this.mesh.password = "123";
+
+//            this.mesh.factoryName = "telink_mesh1";
+//            this.mesh.factoryPassword = "123";
         }
         return this.mesh;
     }
@@ -135,7 +130,19 @@ public final class TelinkLightApplication extends TelinkApplication {
                 light.connectionStatus = ConnectionStatus.OFFLINE;
                 light.textColor = R.color.black;
             }
+            /*Light light;
+            for (com.telink.bluetooth.light.model.DeviceInfo deviceInfo : mesh.devices) {
+                light = new Light();
+                light.macAddress = deviceInfo.macAddress;
+                light.meshAddress = deviceInfo.meshAddress;
+                light.brightness = 0;
+                light.connectionStatus = ConnectionStatus.OFFLINE;
+                light.textColor = this.getResources().getColorStateList(
+                        R.color.black);
+                light.updateIcon();
 
+                Lights.getInstance().add(light);
+            }*/
         }
     }
 
@@ -155,6 +162,9 @@ public final class TelinkLightApplication extends TelinkApplication {
     @Override
     public void saveLog(String action) {
 
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+//        Date date = sdf.parse(dateInString);
+        ;
         String time = format.format(Calendar.getInstance().getTimeInMillis());
         logInfo.append("\n\t").append(time).append(":\t").append(action);
         /*if (Looper.myLooper() == Looper.getMainLooper()) {
@@ -164,6 +174,16 @@ public final class TelinkLightApplication extends TelinkApplication {
         TelinkLog.w("SaveLog: " + action);
     }
 
+
+   /* @Override
+    public void saveScanMac(String deviceAddress, String deviceName) {
+        if (macFilters.size() == 0 || macFilters.contains(deviceAddress)) {
+            String time = format.format(Calendar.getInstance().getTimeInMillis());
+            logInfo.append("\n\t").append(time).append(":\t").append("Scan : ").append(deviceName).append("-- ").append(deviceAddress);
+            showToast("Scan : " + deviceAddress);
+            TelinkLog.w("Scan : " + deviceAddress);
+        }
+    }*/
 
     public void saveLogInFile(String fileName, String logInfo) {
         if (FileSystem.writeAsString(fileName + ".txt", logInfo)) {
@@ -192,4 +212,55 @@ public final class TelinkLightApplication extends TelinkApplication {
     }
 
 
+    /**
+     * super method
+     *
+     * @param intent
+     */
+   /* @Override
+    protected void onLeScan(Intent intent) {
+        super.onLeScan(intent);
+        DeviceInfo deviceInfo = intent.getParcelableExtra(LightService.EXTRA_DEVICE);
+        saveLog("scan: " + deviceInfo.macAddress);
+    }
+
+    @Override
+    protected void onStatusChanged(Intent intent) {
+        super.onStatusChanged(intent);
+        DeviceInfo deviceInfo = intent.getParcelableExtra(LightService.EXTRA_DEVICE);
+        saveLog("device " + deviceInfo.macAddress + " " + getDeviceState(deviceInfo.connectionStatus));
+    }
+
+    private String getDeviceState(int connectionStatus) {
+        switch (connectionStatus) {
+            case LightAdapter.STATUS_CONNECTING:
+                return "STATUS_CONNECTING";
+            case LightAdapter.STATUS_CONNECTED:
+                return "STATUS_CONNECTED";
+            case LightAdapter.STATUS_LOGINING:
+                return "STATUS_LOGINING";
+            case LightAdapter.STATUS_LOGIN:
+                return "STATUS_LOGIN_SUCCESS";
+            case LightAdapter.STATUS_LOGOUT:
+                return "LOGIN_FAILURE | CONNECT_FAILURE";
+            case LightAdapter.STATUS_UPDATE_MESH_COMPLETED:
+            case LightAdapter.STATUS_UPDATING_MESH:
+            case LightAdapter.STATUS_UPDATE_MESH_FAILURE:
+            case LightAdapter.STATUS_UPDATE_ALL_MESH_COMPLETED:
+            case LightAdapter.STATUS_GET_LTK_COMPLETED:
+            case LightAdapter.STATUS_GET_LTK_FAILURE:
+            case LightAdapter.STATUS_MESH_OFFLINE:
+            case LightAdapter.STATUS_MESH_SCAN_COMPLETED:
+            case LightAdapter.STATUS_MESH_SCAN_TIMEOUT:
+            case LightAdapter.STATUS_OTA_COMPLETED:
+            case LightAdapter.STATUS_OTA_FAILURE:
+            case LightAdapter.STATUS_OTA_PROGRESS:
+            case LightAdapter.STATUS_GET_FIRMWARE_COMPLETED:
+            case LightAdapter.STATUS_GET_FIRMWARE_FAILURE:
+            case LightAdapter.STATUS_DELETE_COMPLETED:
+            case LightAdapter.STATUS_DELETE_FAILURE:
+            default:
+                return "OTHER";
+        }
+    }*/
 }

@@ -1,48 +1,44 @@
 package com.jeff.dominate.fragments;
 
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightService;
+import com.jeff.dominate.activity.MainActivity;
 import com.jeff.dominate.activity.ModelTestSettingActivity;
 import com.jeff.dominate.adapter.BaseRecyclerViewAdapter;
-import com.jeff.dominate.adapter.TestModelListAdapter;
 import com.jeff.dominate.model.TestModel;
 import com.jeff.dominate.util.FileSystem;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ：主页 fragment
+ * 主页测试 fragment
+ * Created by kee on 2018/1/8.
  */
 
-public class MainFragment extends Fragment implements View.OnClickListener {
+public class MainTestFragment extends Fragment implements View.OnClickListener {
 
     TestModelListAdapter mAdapter;
     private List<TestModel> models;
     private TextView tv_model_setting;
     private static final String TEST_FILE_NAME = "TEST_MODELS";
-    String tag="MainFragment";
-private View view;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.fragment_main, null);
-        return view;
+        return inflater.inflate(R.layout.fragment_main_test, null);
     }
 
 
@@ -50,6 +46,7 @@ private View view;
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        RecyclerView rv_models = (RecyclerView) view.findViewById(R.id.rv_test_models);
 
         tv_model_setting = (TextView) view.findViewById(R.id.tv_model_setting);
         tv_model_setting.setOnClickListener(this);
@@ -114,6 +111,8 @@ private View view;
         mAdapter = new TestModelListAdapter(getActivity(), models);
         mAdapter.setSettingMode(false);
 //        rv_models.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rv_models.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        rv_models.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -152,8 +151,8 @@ private View view;
     }
 
 
-    public void showErrorMsg(String msg) {//弹出错误信息
-      //  ((MainActivity) getActivity()).showToast(msg);
+    public void showErrorMsg(String msg) {
+        ((MainActivity) getActivity()).showToast(msg);
     }
 
 }

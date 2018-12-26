@@ -1,5 +1,6 @@
 package com.jeff.dominate.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,18 +12,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
-
-
 import java.io.File;
-import java.util.*;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
+/**
+ * Created by Administrator on 2016/10/8.
+ */
 public class FileSelectActivity extends TelinkBaseActivity {
     private ListView lv_file;
     private TextView tv_parent;

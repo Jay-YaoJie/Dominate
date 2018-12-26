@@ -2,7 +2,7 @@ package utils
 
 import android.content.Context
 import android.widget.Toast
-import bases.DominateApplication
+
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -32,7 +32,7 @@ object ToastUtil {
     }
 
     fun show(resId: Int) {
-        show(DominateApplication.dominate.getString(resId))
+       // show(DominateApplication.dominate.getString(resId))
     }
 
     fun show(context: Context) {
@@ -40,7 +40,7 @@ object ToastUtil {
     }
 
     fun show(text: CharSequence) {
-        show(DominateApplication.dominate, text)
+      // show(DominateApplication.dominate, text)
     }
 
 }

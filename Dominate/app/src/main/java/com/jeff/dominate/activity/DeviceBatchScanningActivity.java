@@ -10,7 +10,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightApplication;
@@ -21,20 +28,17 @@ import com.telink.bluetooth.TelinkLog;
 import com.telink.bluetooth.event.DeviceEvent;
 import com.telink.bluetooth.event.LeScanEvent;
 import com.telink.bluetooth.event.MeshEvent;
-import com.telink.bluetooth.light.*;
+import com.telink.bluetooth.light.DeviceInfo;
+import com.telink.bluetooth.light.LeScanParameters;
+import com.telink.bluetooth.light.LeUpdateParameters;
+import com.telink.bluetooth.light.LightAdapter;
+import com.telink.bluetooth.light.Parameters;
 
 import com.telink.util.Event;
 import com.telink.util.EventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
 
 public final class DeviceBatchScanningActivity extends TelinkBaseActivity implements AdapterView.OnItemClickListener, EventListener<String> {
 
@@ -76,6 +80,7 @@ public final class DeviceBatchScanningActivity extends TelinkBaseActivity implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_device_scanning);
 
         //监听事件
@@ -369,7 +374,7 @@ public final class DeviceBatchScanningActivity extends TelinkBaseActivity implem
             Light light = this.getItem(position);
 
             holder.txtName.setText(light.deviceName);
-            holder.icon.setImageResource(R.mipmap.icon_light_on);
+            holder.icon.setImageResource(R.drawable.icon_light_on);
             holder.selected.setChecked(light.selected);
 
             return convertView;

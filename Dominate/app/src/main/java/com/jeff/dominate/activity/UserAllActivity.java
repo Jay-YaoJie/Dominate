@@ -6,29 +6,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightApplication;
 import com.jeff.dominate.TelinkLightService;
 import com.telink.bluetooth.event.NotificationEvent;
-import com.telink.bluetooth.light.*;
+import com.telink.bluetooth.light.NotificationInfo;
 import com.telink.util.Arrays;
 import com.telink.util.Event;
 import com.telink.util.EventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
+ * Created by Administrator on 2017/3/22.
  */
-
 
 public class UserAllActivity extends TelinkBaseActivity implements EventListener<String> {
     TextView tv_info;

@@ -1,5 +1,6 @@
 package com.jeff.dominate.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,19 +9,14 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.fragments.DeviceSettingFragment;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
+
 
 public final class DeviceSettingActivity extends TelinkBaseActivity {
 
@@ -54,6 +50,7 @@ public final class DeviceSettingActivity extends TelinkBaseActivity {
 
         super.onCreate(savedInstanceState);
 
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_device_setting);
 
         this.meshAddress = this.getIntent().getIntExtra("meshAddress", 0);

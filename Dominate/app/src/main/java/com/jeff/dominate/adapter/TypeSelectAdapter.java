@@ -8,20 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.activity.FileSelectActivity;
 import com.jeff.dominate.activity.MeshOTAActivity;
 import com.jeff.dominate.model.MeshDeviceType;
 
-
+import java.util.ArrayList;
 import java.util.List;
+
 /**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
+ * Created by kee on 2017/12/19.
  */
+
 public class TypeSelectAdapter extends BaseRecyclerViewAdapter<TypeSelectAdapter.ViewHolder> {
     private List<MeshDeviceType> models;
     //    private List<String> filePathList;
@@ -54,9 +54,9 @@ public class TypeSelectAdapter extends BaseRecyclerViewAdapter<TypeSelectAdapter
     public void onBindViewHolder(ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         if (position == selectPosition) {
-            holder.iv_select.setImageResource(R.mipmap.light_group_select2);
+            holder.iv_select.setImageResource(R.drawable.light_group_select2);
         } else {
-            holder.iv_select.setImageResource(R.mipmap.light_group_select);
+            holder.iv_select.setImageResource(R.drawable.light_group_select);
         }
         holder.tv_name.setText("Type: 0x" + Integer.toHexString(models.get(position).type) +
                 "（online: " + models.get(position).deviceList.size() + "）");

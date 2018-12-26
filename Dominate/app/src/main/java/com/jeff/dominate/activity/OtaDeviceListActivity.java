@@ -4,7 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightApplication;
@@ -12,13 +20,6 @@ import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.model.Light;
 
 import java.util.List;
-/**
- * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-12-13.
- * description ：
- */
 
 public class OtaDeviceListActivity extends TelinkBaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
@@ -126,7 +127,7 @@ public class OtaDeviceListActivity extends TelinkBaseActivity implements Adapter
 
             holder.txtName.setText(deviceInfo.deviceName);
             holder.txtMac.setText(deviceInfo.macAddress);
-            holder.icon.setImageResource(R.mipmap.icon_light_on);
+            holder.icon.setImageResource(R.drawable.icon_light_on);
             holder.selected.setChecked(deviceInfo.selected);
 
             return convertView;

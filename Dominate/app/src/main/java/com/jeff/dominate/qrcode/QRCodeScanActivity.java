@@ -1,6 +1,7 @@
 package com.jeff.dominate.qrcode;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -18,18 +19,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.qrcode.camera.Cameras;
 
 
-
 /**
- * author : Jeff  5899859876@qq.com
- * Github: https://github.com/Jay-YaoJie
- * Created :  2018-11-17.
- * description ： 二维码扫描页面
- *   扫描 --> 解析 --> 同步
+ * 二维码扫描页面
+ * 扫描 --> 解析 --> 同步
+ *
+ * @author kee
  */
 public class QRCodeScanActivity extends TelinkBaseActivity implements ViewTreeObserver.OnGlobalLayoutListener {
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 0x12;
