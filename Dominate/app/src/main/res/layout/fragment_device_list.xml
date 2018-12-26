@@ -60,7 +60,7 @@
             android:layout_centerVertical="true"
             android:contentDescription="@null"
             android:padding="10dp"
-            android:src="@drawable/icon_top_tab_add" />
+            android:src="@mipmap/icon_top_tab_add" />
     </RelativeLayout>
 
     <LinearLayout
@@ -230,14 +230,6 @@
         android:scrollbars="none"
         android:verticalSpacing="10dp" />
 
-    <Button
-        android:id="@+id/userAll"
-        style="@style/CommonButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:text="OnOffTest"
-        android:visibility="gone" />
     <!--OnlineStatus-->
 
     <Button
@@ -246,5 +238,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="online status test"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </LinearLayout>

@@ -54,9 +54,9 @@ public class TypeSelectAdapter extends BaseRecyclerViewAdapter<TypeSelectAdapter
     public void onBindViewHolder(ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         if (position == selectPosition) {
-            holder.iv_select.setImageResource(R.drawable.light_group_select2);
+            holder.iv_select.setImageResource(R.mipmap.light_group_select2);
         } else {
-            holder.iv_select.setImageResource(R.drawable.light_group_select);
+            holder.iv_select.setImageResource(R.mipmap.light_group_select);
         }
         holder.tv_name.setText("Type: 0x" + Integer.toHexString(models.get(position).type) +
                 "（online: " + models.get(position).deviceList.size() + "）");

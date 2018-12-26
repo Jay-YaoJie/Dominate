@@ -380,7 +380,7 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
             Light light = this.getItem(position);
 
             holder.txtName.setText(light.deviceName);
-            holder.icon.setImageResource(R.drawable.icon_light_on);
+            holder.icon.setImageResource(R.mipmap.icon_light_on);
             holder.selected.setChecked(light.selected);
 
             return convertView;

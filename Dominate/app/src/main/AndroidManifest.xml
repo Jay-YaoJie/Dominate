@@ -22,7 +22,7 @@
     <application
         android:name=".TelinkLightApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <service
@@ -67,14 +67,9 @@
             android:name=".activity.GroupSettingActivity"
             android:label="@string/activity_group_setting"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.AddGroupActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.OtaActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OtaDeviceListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BatchOtaActivity"
@@ -91,9 +86,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FileSelectActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.UserAllActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -112,7 +104,6 @@
         <activity
             android:name=".activity.DeviceMeshScanningActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".activity.TempTestActivity" />
     </application>
 
 </manifest>

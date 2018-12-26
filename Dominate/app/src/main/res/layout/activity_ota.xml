@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:contentDescription="@null"
             android:paddingLeft="10dp"
-            android:src="@drawable/icon_top_tab_back" />
+            android:src="@mipmap/icon_top_tab_back" />
 
         <TextView
             android:layout_width="wrap_content"

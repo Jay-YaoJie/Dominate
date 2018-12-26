@@ -10,21 +10,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
 
-        <!--<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="adr： 0x" />
 
-        <EditText
-            android:id="@+id/et_adr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:text="FFFF"
-            android:digits="0123456789abcdefABCDEF"
-            android:minWidth="50dp" />
--->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

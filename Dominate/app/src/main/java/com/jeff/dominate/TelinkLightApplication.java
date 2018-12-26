@@ -3,7 +3,6 @@ package com.jeff.dominate;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.jeff.dominate.activity.TempTestActivity;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
@@ -28,15 +27,7 @@ public final class TelinkLightApplication extends TelinkApplication {
     private Toast toast;
     private int onlineCount = 0;
 
-    private TempTestActivity.TestInput testInput;
 
-    public TempTestActivity.TestInput getTestInput() {
-        return testInput;
-    }
-
-    public void setTestInput(TempTestActivity.TestInput testInput) {
-        this.testInput = testInput;
-    }
 
     @Override
     public void onCreate() {
@@ -45,7 +36,6 @@ public final class TelinkLightApplication extends TelinkApplication {
         logInfo = new StringBuilder("log:");
         thiz = this;
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-//        AdvanceStrategy.setDefault(new MySampleAdvanceStrategy());
 
 
     }

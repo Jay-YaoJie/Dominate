@@ -19,7 +19,13 @@ import com.jeff.dominate.TelinkBaseActivity;
 
 import java.util.List;
 
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * CSDN ： https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-24.
+ * description ：QRCodeShareActivity  二维码展示页面
+ */
 public final class QRCodeShareActivity extends TelinkBaseActivity {
 
     private ImageView qr_image;

@@ -24,7 +24,7 @@ import com.jeff.dominate.widget.ColorPicker;
 
 public final class DeviceSettingFragment extends Fragment implements View.OnClickListener {
 
-    public final static String TAG = DeviceSettingFragment.class.getSimpleName();
+    private   String tag = "DeviceSettingFragment";
 
     public int meshAddress;
 
@@ -32,7 +32,6 @@ public final class DeviceSettingFragment extends Fragment implements View.OnClic
     private SeekBar temperatureBar;
     private ColorPicker colorPicker;
     private Button remove, ota;
-    private AlertDialog dialog;
 
     private OnSeekBarChangeListener barChangeListener = new OnSeekBarChangeListener() {
 

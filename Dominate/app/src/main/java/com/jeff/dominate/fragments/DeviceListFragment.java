@@ -35,14 +35,10 @@ import com.jeff.dominate.activity.DeviceSettingActivity;
 import com.jeff.dominate.activity.LogInfoActivity;
 import com.jeff.dominate.activity.MeshOTAActivity;
 import com.jeff.dominate.activity.OnlineStatusTestActivity;
-import com.jeff.dominate.activity.TempTestActivity;
 import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
 import com.telink.bluetooth.light.ConnectionStatus;
-
-
-import java.util.List;
 
 public final class DeviceListFragment extends Fragment implements OnClickListener {
 
@@ -113,7 +109,6 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
         this.txtNotifyCount = (TextView) view.findViewById(R.id.notifyCount);
         this.log = (TextView) view.findViewById(R.id.log);
         this.log.setOnClickListener(this);
-        view.findViewById(R.id.userAll).setOnClickListener(this);
 
         et_adr = (EditText) view.findViewById(R.id.et_adr);
         et_interval = (EditText) view.findViewById(R.id.et_interval);
@@ -280,7 +275,7 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             byte[] params = new byte[]{0x00, 0x00, 0x00};
             TelinkLightService.Instance().sendCommandNoResponse(opcode, address,
                     params);
-        } else if (v == backView) {
+        } else if (v.getId() == R.id.img_header_menu_left) {
             Intent intent = new Intent(mContext, AddMeshActivity.class);
             startActivity(intent);
 
@@ -313,10 +308,7 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             Toast.makeText(getActivity(), "No Device Online!", Toast.LENGTH_SHORT).show();*/
         } else if (v == log) {
             startActivity(new Intent(getActivity(), LogInfoActivity.class));
-        } else if (v.getId() == R.id.userAll) {
-//            startActivity(new Intent(getActivity(), UserAllActivity.class));
-            startActivity(new Intent(getActivity(), TempTestActivity.class));
-        } else if (v == btn_start_test) {
+        }else if (v == btn_start_test) {
             if (!testStarted) {
                 startIntervalTest();
             } else {
@@ -383,11 +375,11 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             holder.txtName.setTextColor(getResources().getColor(light.textColor));
 
             if (light.connectionStatus == ConnectionStatus.OFFLINE) {
-                holder.statusIcon.setImageResource(R.drawable.icon_light_offline);
+                holder.statusIcon.setImageResource(R.mipmap.icon_light_offline);
             } else if (light.connectionStatus == ConnectionStatus.OFF) {
-                holder.statusIcon.setImageResource(R.drawable.icon_light_off);
+                holder.statusIcon.setImageResource(R.mipmap.icon_light_off);
             } else if (light.connectionStatus == ConnectionStatus.ON) {
-                holder.statusIcon.setImageResource(R.drawable.icon_light_on);
+                holder.statusIcon.setImageResource(R.mipmap.icon_light_on);
             }
 
             return convertView;

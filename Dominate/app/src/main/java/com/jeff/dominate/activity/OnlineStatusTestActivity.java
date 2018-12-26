@@ -26,9 +26,8 @@ import com.telink.util.EventListener;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/3/22.
+ * 获得当前在线数据，lights
  */
-
 public class OnlineStatusTestActivity extends TelinkBaseActivity implements EventListener<String> {
     TextView tv_info;
 

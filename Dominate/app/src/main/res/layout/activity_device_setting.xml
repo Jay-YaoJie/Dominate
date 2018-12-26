@@ -17,7 +17,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:background="@drawable/icon_top_tab_back"
+            android:background="@mipmap/icon_top_tab_back"
             android:contentDescription="@null" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/icon_top_tab_edit"
+            android:background="@mipmap/icon_top_tab_edit"
             android:contentDescription="@null" />
     </RelativeLayout>
 

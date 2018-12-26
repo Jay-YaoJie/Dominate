@@ -12,7 +12,13 @@ import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightService;
 import com.jeff.dominate.widget.ColorPicker;
 
-
+/**
+ * author : Jeff  5899859876@qq.com
+ * CSDN ： https://blog.csdn.net/Jeff_YaoJie
+ * Github: https://github.com/Jay-YaoJie
+ * Created :  2018-12-24.
+ * description ：GroupSettingFragment  分组设置页面
+ */
 public final class GroupSettingFragment extends Fragment {
 
     public int groupAddress;
