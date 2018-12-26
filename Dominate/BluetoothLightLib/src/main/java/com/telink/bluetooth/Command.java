@@ -4,8 +4,6 @@
  */
 package com.telink.bluetooth;
 
-import com.telink.util.Arrays;
-
 import java.util.UUID;
 /**
  * author : Jeff  5899859876@qq.com
@@ -57,17 +55,6 @@ public class Command {
         this.data = null;
     }
 
-    @Override
-    public String toString() {
-        String d = "";
-
-        if (data != null)
-            d = Arrays.bytesToHexString(this.data, ",");
-
-        return "{ tag : " + this.tag + ", type : " + this.type
-                + " characteristicUUID :" + characteristicUUID.toString() + " data: " + d + " delay :" + delay + "}";
-    }
-
     public enum CommandType {
         READ, WRITE, WRITE_NO_RESPONSE, ENABLE_NOTIFY, DISABLE_NOTIFY
     }
@@ -79,5 +66,17 @@ public class Command {
         void error(Peripheral peripheral, Command command, String errorMsg);
 
         boolean timeout(Peripheral peripheral, Command command);
+    }
+
+    @Override
+    public String toString() {
+        return "Command{" +
+                "serviceUUID=" + serviceUUID +
+                ", characteristicUUID=" + characteristicUUID +
+                ", type=" + type +
+                ", data=" + java.util.Arrays.toString(data) +
+                ", tag=" + tag +
+                ", delay=" + delay +
+                '}';
     }
 }

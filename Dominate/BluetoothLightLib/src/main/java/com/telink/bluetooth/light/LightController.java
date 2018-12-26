@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 
 import com.telink.bluetooth.Command;
 import com.telink.bluetooth.Peripheral;
@@ -284,7 +285,9 @@ public final class LightController extends EventBus<Integer> implements LightPer
         rCmd.tag = TAG_LOGIN_READ;
 
         isLoginWriteFail.set(false);
+        Log.d("登录要发送的数据","login(byte[] meshName, byte[] password)---rCmd="+wCmd.toString());
         this.sendCommand(this.loginCallback, wCmd);
+       Log.d("登录要发送的数据","login(byte[] meshName, byte[] password)---rCmd="+rCmd.toString());
         this.sendCommand(this.loginCallback, rCmd);
     }
 
@@ -366,11 +369,15 @@ public final class LightController extends EventBus<Integer> implements LightPer
 
         this.sendCommand(this.resetCallback, nnCmd);
         pwdCmd.delay = 200;
+        Log.d("重置要发送的数据","reset(byte[] meshName, byte[] password, byte[] longTermKey) =-----checkCmd.toString()="+nnCmd.toString());
         this.sendCommand(this.resetCallback, pwdCmd);
+        Log.d("重置要发送的数据","reset(byte[] meshName, byte[] password, byte[] longTermKey) =-----checkCmd.toString()="+pwdCmd.toString());
         ltkCmd.delay = 200;
         this.sendCommand(this.resetCallback, ltkCmd);
+        Log.d("重置要发送的数据","reset(byte[] meshName, byte[] password, byte[] longTermKey) =-----checkCmd.toString()="+ltkCmd.toString());
         checkCmd.delay = 200;
         this.sendCommand(this.resetCallback, checkCmd);
+        Log.d("重置要发送的数据","reset(byte[] meshName, byte[] password, byte[] longTermKey) =-----checkCmd.toString()="+checkCmd.toString());
     }
 
     public void resetByMesh(byte[] meshName, byte[] password, byte[] longTermKey) {
@@ -446,12 +453,16 @@ public final class LightController extends EventBus<Integer> implements LightPer
                 null, TAG_RESET_MESH_CHECK);
 
         this.sendCommand(this.resetCallback, nnCmd);
+        Log.d("resetByMesh要发送的数据","resetByMesh =-----nnCmd.toString()="+nnCmd.toString());
         pwdCmd.delay = 200;
         this.sendCommand(this.resetCallback, pwdCmd);
+        Log.d("resetByMesh要发送的数据","resetByMesh =-----pwdCmd.toString()="+pwdCmd.toString());
         ltkCmd.delay = 200;
         this.sendCommand(this.resetCallback, ltkCmd);
+        Log.d("resetByMesh要发送的数据","resetByMesh =-----ltkCmd.toString()="+ltkCmd.toString());
         checkCmd.delay = 200;
         this.sendCommand(this.resetCallback, checkCmd);
+        Log.d("resetByMesh要发送的数据","resetByMesh =-----checkCmd.toString()="+checkCmd.toString());
     }
 
     protected boolean resetDeviceAddress() {
@@ -472,7 +483,7 @@ public final class LightController extends EventBus<Integer> implements LightPer
         TelinkLog.d("prepare update mesh address -->" + light.getMacAddress() + " src : " + Integer.toHexString(oldAddress) + " new : " + Integer.toHexString(newAddress)
                 /*+ " vendorId:" + Integer.toHexString(vendorId)*/
         );
-
+        Log.d("resetDeviceAddress要发送的数据","resetDeviceAddress =-----opcode="+opcode+"--address 0x0000 "+"---params="+params);
         this.sendCommand(this.normalCallback, opcode, 0x0000, params, true, TAG_RESET_MESH_ADDRESS, 0);
 //        this.sendVendorCommand(this.normalCallback, opcode, 0x0000, vendorId, params, true, TAG_RESET_MESH_ADDRESS, 0);
 //        byte[] params1 = new byte[]{(byte) 0xFF, (byte) 0xFF};
@@ -502,7 +513,7 @@ public final class LightController extends EventBus<Integer> implements LightPer
         enableNotifyCmd.serviceUUID = serviceUUID;
         enableNotifyCmd.characteristicUUID = characteristicUUID;
         enableNotifyCmd.tag = tag;
-
+        Log.d("enableNotification要发送的数据","enableNotification =-----enableNotifyCmd.toString()="+enableNotifyCmd.toString());
         this.sendCommand(callback, enableNotifyCmd);
     }
 
@@ -528,7 +539,7 @@ public final class LightController extends EventBus<Integer> implements LightPer
         disableNotifyCmd.serviceUUID = serviceUUID;
         disableNotifyCmd.characteristicUUID = characteristicUUID;
         disableNotifyCmd.tag = TAG_NOTIFY_DISABLE;
-
+        Log.d("disableNotification要发送的数据","disableNotification =-----disableNotifyCmd.toString()="+disableNotifyCmd.toString());
         this.sendCommand(this.notifyCallback, disableNotifyCmd);
     }
 
@@ -552,7 +563,7 @@ public final class LightController extends EventBus<Integer> implements LightPer
         updateNotifyCmd.characteristicUUID = characteristicUUID;
         updateNotifyCmd.tag = TAG_NOTIFY_UPDATE;
 //        updateNotifyCmd.delay = DEFAULT_DELAY_TIME;
-
+        Log.d("updateNotification要发送的数据","updateNotification =-----updateNotifyCmd.toString()="+updateNotifyCmd.toString());
         this.sendCommand(null, updateNotifyCmd);
         TelinkLog.d("LightController#updateNotification");
     }
@@ -691,8 +702,9 @@ public final class LightController extends EventBus<Integer> implements LightPer
         rCmd.characteristicUUID = characteristicUUID;
         rCmd.type = Command.CommandType.READ;
         rCmd.tag = TAG_DELETE_READ;
-
+        Log.d("delete要发送的数据","delete =-----wCmd.toString()="+wCmd.toString());
         this.sendCommand(this.deleteCallback, wCmd);
+        Log.d("delete要发送的数据","delete =-----rCmd.toString()="+rCmd.toString());
         this.sendCommand(this.deleteCallback, rCmd);
     }
 
@@ -756,7 +768,7 @@ public final class LightController extends EventBus<Integer> implements LightPer
             cmd.tag = TAG_OTA_LAST;
             isLast = true;
         }
-
+        Log.d("sendNextOtaPacketCommand要发送的数据","sendNextOtaPacketCommand =-----cmd.toString()="+cmd.toString());
         this.sendCommand(this.otaCallback, cmd);
 
         return isLast;
@@ -777,6 +789,7 @@ public final class LightController extends EventBus<Integer> implements LightPer
             cmd.characteristicUUID = characteristicUUID;
             cmd.type = Command.CommandType.READ;
             cmd.tag = TAG_OTA_READ;
+            Log.d("validateOta要发送的数据","validateOta =-----cmd.toString()="+cmd.toString());
             this.sendCommand(otaCallback, cmd);
             return true;
         }
@@ -795,6 +808,7 @@ public final class LightController extends EventBus<Integer> implements LightPer
         cmd.type = Command.CommandType.READ;
         cmd.tag = TAG_OTA_CHECK;
         cmd.delay = 0;
+        Log.d("sendOtaCheckPacket要发送的数据","sendOtaCheckPacket =-----cmd.toString()="+cmd.toString());
         this.sendCommand(otaCallback, cmd);
     }
 

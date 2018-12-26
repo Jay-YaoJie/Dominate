@@ -149,6 +149,7 @@ public class TelinkLog {
         try {
             if (!dir.exists())
                 dir.mkdir();
+            Log.d(TAG,"文件创建dir="+dir.getPath());
             File file = new File(dir, fileName);
             if (!file.exists())
                 file.createNewFile();
