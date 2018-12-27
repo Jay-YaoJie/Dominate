@@ -22,4 +22,11 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@drawable/tab_text_color_selector</item>
     </style>
+
+
+    <style name="Custom.ViewLine1dp">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/border_line</item>
+    </style>
 </resources>

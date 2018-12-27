@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,7 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
             parent.removeView(rootView)
         }
         initViews()
-        mActivity = activity as BaseActivity<DB>
+        mActivity = activity!! as BaseActivity<DB>
         tag=mActivity.localClassName
         return binding.root
     }
