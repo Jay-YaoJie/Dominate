@@ -27,7 +27,6 @@ open class WelcomeActivity : AppCompatActivity() {
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }
-
             if (SPUtils.getAutoLogin(this)) {
                 //如果当前已经登录,并记录的是自动登录，就直接到主页
                 main();

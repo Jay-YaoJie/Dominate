@@ -18,35 +18,38 @@ import jeff.utils.ToastUtil
  * description ：LoginActivity 登录页面
  */
 class LoginActivity : LoginActivity() {
-    override fun login() {
-        super.login()
+    override fun login(): Boolean {
+        if (super.login()) {
+            //设置用户名和密码
+            var mesh = FileSystem.readAsObject(this, "$name.$password")
 
-        //设置用户名和密码
-        var mesh = FileSystem.readAsObject(this, "$name.$password")
+            if (mesh == null) {
+                mesh = Mesh()
+                mesh.name = name
+                mesh.password = password
+            }
 
-        if (mesh == null) {
-            mesh = Mesh()
-            mesh.name = name
-            mesh.password = password
+            (mesh as Mesh).factoryName = "telink_mesh1"
+            mesh.factoryPassword = "123"
+
+            if (mesh.saveOrUpdate(this)) {
+                dominate.setupMesh(mesh)
+                SharedPreferencesHelper.saveMeshName(this, mesh.name)
+                SharedPreferencesHelper.saveMeshPassword(this, mesh.password)
+                //  this.showToast("Save Mesh Success");
+                //登录成功
+                ToastUtil(R.string.login_success)
+                startActivity(Intent(this, MainActivity::class.java))
+                this.finish()
+            } else {
+                //登录失败
+                ToastUtil(R.string.logon_back)
+                logonBack()//清除数据
+            }
+            return true
         }
 
-        (mesh as Mesh).factoryName = "telink_mesh1"
-        mesh.factoryPassword = "123"
-
-        if (mesh.saveOrUpdate(this)) {
-            dominate.setupMesh(mesh)
-            SharedPreferencesHelper.saveMeshName(this, mesh.name)
-            SharedPreferencesHelper.saveMeshPassword(this, mesh.password)
-            //  this.showToast("Save Mesh Success");
-            //登录成功
-            ToastUtil(R.string.login_success)
-            startActivity(Intent(this, MainActivity::class.java))
-            this.finish()
-        } else {
-            //登录失败
-            ToastUtil(R.string.logon_back)
-            logonBack()//清除数据
-        }
+        return false
     }
 
     /*
