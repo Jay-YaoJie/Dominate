@@ -2,7 +2,6 @@ package jeff.utils
 
 import android.content.Context
 import android.widget.Toast
-import jeff.bases.DominateApplication
 import jeff.bases.DominateApplication.Companion.instance
 
 /**
@@ -42,5 +41,14 @@ object ToastUtil {
     fun show(text: CharSequence) {
         show(instance, text)
     }
+    operator fun invoke(resId: Int) {
+        show(instance, instance.getString(resId))
+    }
+
+
+    operator fun invoke(text: CharSequence) {
+        show(instance, text)
+    }
+
 
 }
