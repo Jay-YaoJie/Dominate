@@ -19,12 +19,11 @@ import jeff.utils.ToastUtil
 open class LoginActivity : BaseActivity<LoginActivityDB>() {
 
     /**************************页面使用，没有功能***********************************************/
-    override fun getContentViewId(): Int = R.layout.activity_login
-
+    override fun getContentViewId(): Int=R.layout.activity_login
     //自动登录
     override fun initViews() {
         //判断用户第一次登陆
-        if (getLocalName(mActivity) == null) {
+        if (getLocalName(mActivity).isNullOrEmpty()) {
             binding.checkBoxPassword.isChecked = false//取消记住密码的复选框
             binding.checkBoxLogin.isChecked = false//取消自动登录的复选框
         } else {
@@ -45,20 +44,29 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
             if (binding.ivSeePassword.isSelected) {
                 //密码不可见
                 binding.ivSeePassword.isSelected = false
-                binding.etPassword.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                binding.etPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD;
             } else {
                 //密码可见
                 binding.ivSeePassword.isSelected = true
                 binding.etPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.etPassword
             }
         }
         //选择事件记住密码
         binding.checkBoxPassword.setOnCheckedChangeListener { _, isChecked ->
             isSavePassword = isChecked
+            if (!isChecked){
+                binding.checkBoxLogin.isChecked=false
+                isAutomaticLogin = false;
+            }
         }
         //选择事件，记录登录状态
         binding.checkBoxLogin.setOnCheckedChangeListener { _, isChecked ->
             isAutomaticLogin = isChecked;
+            if (isChecked){
+                binding.checkBoxPassword.isChecked=true
+                isSavePassword=isChecked
+            }
         }
         //登录
         binding.btnLogin.setOnClickListener {
@@ -67,9 +75,9 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
     }
 
     //保存帐号
-    var name: String? = null
+    open  var name: String? = null
     //保存密码
-    var password: String? = null
+    open var password: String? = null
     //记住密码
     var isSavePassword: Boolean = false
     //自动登录
@@ -79,7 +87,7 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
      * 模拟登录情况
      * 用户名csdn，密码123456，就能登录成功，否则登录失败
      */
-    private fun login() {
+    open fun login() {
         //先做一些基本的判断，比如输入的用户命为空，密码为空，网络不可用多大情况，都不需要去链接服务器了，而是直接返回提示错误
         if (name.isNullOrEmpty()) {
             ToastUtil("你输入的账号为空！")
@@ -95,6 +103,10 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
         //保存帐号  登录成功了之后保存用户名和密码
         SPUtils.setLoadLogin(mActivity, name!!, password!!, isSavePassword, isAutomaticLogin)
         //登录一般都是请求服务器来判断密码是否正确，要请求网络，要子线程
-
+    }
+    //重新登录
+    open fun logonBack(){
+        binding.btnLogin.isClickable=true//提交按钮可以点击
+        SPUtils.clear(mActivity)
     }
 }

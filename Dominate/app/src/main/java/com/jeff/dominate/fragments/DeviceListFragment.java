@@ -28,7 +28,6 @@ import android.widget.Toast;
 import com.jeff.dominate.R;
 import com.jeff.dominate.TelinkLightApplication;
 import com.jeff.dominate.TelinkLightService;
-import com.jeff.dominate.activity.AddMeshActivity;
 import com.jeff.dominate.activity.DeviceMeshScanningActivity;
 import com.jeff.dominate.activity.DeviceScanningActivity;
 import com.jeff.dominate.activity.DeviceSettingActivity;
@@ -39,6 +38,8 @@ import com.jeff.dominate.model.Light;
 import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
 import com.telink.bluetooth.light.ConnectionStatus;
+
+import org.greenrobot.eventbus.Subscribe;
 
 public final class DeviceListFragment extends Fragment implements OnClickListener {
 
@@ -228,7 +229,7 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        notifyDataSetChanged();
+        notifyDataSetChanged("");
     }
 
     @Override
@@ -249,7 +250,8 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
     //刷新页面
     //修改为 eventBus 传入的 DeviceFragment 那个页面就传入那个页面的名称
-    public void notifyDataSetChanged() {
+    @Subscribe
+    public void notifyDataSetChanged(String te) {
         if (this.adapter != null)
             this.adapter.notifyDataSetChanged();
     }
@@ -279,10 +281,9 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             TelinkLightService.Instance().sendCommandNoResponse(opcode, address,
                     params);
         } else if (v.getId() == R.id.img_header_menu_left) {
-            Intent intent = new Intent(mContext, AddMeshActivity.class);
-            startActivity(intent);
 
-        } else if (v == editView) {
+
+        } else if (v.getId() == R.id.img_header_menu_right) {
             Mesh mesh = TelinkLightApplication.getApp().getMesh();
             if (TextUtils.isEmpty(mesh.factoryName) || TextUtils.isEmpty(mesh.factoryPassword)) {
                 Toast.makeText(mContext, "pls set mesh factory info!", Toast.LENGTH_SHORT).show();

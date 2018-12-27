@@ -30,9 +30,9 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
         if (parent != null && parent is ViewGroup) {
             parent.removeView(rootView)
         }
-        initViews()
         mActivity = activity!! as BaseActivity<DB>
         tag=mActivity.localClassName
+        initViews()
         return binding.root
     }
 

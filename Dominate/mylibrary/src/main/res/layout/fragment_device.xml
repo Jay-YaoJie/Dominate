@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/deviceAllTV"
+            android:id="@+id/device_fragment_all_TV"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:layout_margin="@dimen/layout_margin"
@@ -22,7 +22,7 @@
 
         <!--分组 ，点击按钮选择添加-->
         <TextView
-            android:id="@+id/deviceGroupTV"
+            android:id="@+id/device_fragment_group_TV"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:drawableRight="@mipmap/arrow_r"
@@ -33,7 +33,7 @@
             android:textSize="@dimen/text_size" />
         <!--//分组 数据列表-->
         <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
-            android:id="@+id/deviceGroupDSRV"
+            android:id="@+id/device_fragment_group_DSRV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -43,7 +43,7 @@
             android:padding="5dp" />
         <!--未分组设备-->
         <TextView
-            android:id="@+id/deviceUngroupedTV"
+            android:id="@+id/device_fragment_ungrouped_TV"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:drawableRight="@mipmap/arrow_r"
@@ -54,7 +54,7 @@
             android:textSize="@dimen/text_size" />
         <!--//未分组 数据列表-->
         <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
-            android:id="@+id/deviceUngroupedDSRV"
+            android:id="@+id/device_fragment_ungrouped_DSRV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"

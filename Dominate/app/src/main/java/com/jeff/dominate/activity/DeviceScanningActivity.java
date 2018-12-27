@@ -39,6 +39,9 @@ import com.telink.util.EventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 搜索设备
+ */
 public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity implements EventListener<String> {
 
     private ImageView backView;

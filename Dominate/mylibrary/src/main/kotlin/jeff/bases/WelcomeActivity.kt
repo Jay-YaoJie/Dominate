@@ -12,13 +12,15 @@ import jeff.utils.SPUtils
  * CSDN ： https://blog.csdn.net/Jeff_YaoJie
  * Github: https://github.com/Jay-YaoJie
  * Created :  2018-12-27.
- * description ：WelcomeActivity
+ * description ：WelcomeActivity 欢迎页面
  */
 open class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welocme)
+        //添加当前页面
         Glide.with(this).load(R.drawable.welcome).into((findViewById(R.id.welcome) as ImageView))
+
         Thread(Runnable {
             try {
                 Thread.sleep(3000) //睡眠3秒
@@ -38,6 +40,6 @@ open class WelcomeActivity : AppCompatActivity() {
 
     }
 
-    fun login() {}//登录
-    fun main() {}//已经登录过了，去主页
+    open fun login() {}//登录
+    open fun main() {}//已经登录过了，去主页
 }

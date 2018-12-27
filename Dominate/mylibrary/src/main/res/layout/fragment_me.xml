@@ -44,7 +44,7 @@
         </RelativeLayout>-->
         <!--帐号管理-->
         <TextView
-            android:id="@+id/me_account_manage"
+            android:id="@+id/me_fragment_account_manage"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:layout_margin="@dimen/layout_margin"
@@ -57,7 +57,7 @@
 
         <!--家庭管理-->
         <TextView
-            android:id="@+id/me_family_management"
+            android:id="@+id/me_fragment_family_management"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:layout_margin="@dimen/layout_margin"
@@ -69,7 +69,7 @@
             android:text="@string/family_management" />
         <!--设置-->
         <TextView
-            android:id="@+id/me_setting"
+            android:id="@+id/me_fragment_setting"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:layout_margin="@dimen/layout_margin"
@@ -81,7 +81,7 @@
             android:text="@string/setting" />
         <!--帮助中心-->
         <TextView
-            android:id="@+id/me_help_center"
+            android:id="@+id/me_fragment_help_center"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:layout_margin="@dimen/layout_margin"
@@ -93,7 +93,7 @@
             android:text="@string/help_center" />
         <!--关于-->
         <TextView
-            android:id="@+id/me_about"
+            android:id="@+id/me_fragment_about"
             android:layout_width="match_parent"
             android:layout_height="@dimen/center_height"
             android:layout_margin="@dimen/layout_margin"

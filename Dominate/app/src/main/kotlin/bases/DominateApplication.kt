@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.multidex.MultiDex
 import com.jeff.dominate.TelinkLightApplication
 import jeff.bases.DominateApplication.Companion.instance
+import jeff.utils.ActivitiesManager
 
 
 /**
@@ -28,7 +29,8 @@ class DominateApplication : TelinkLightApplication() {
         super.onCreate()
         instance = this;
         dominate = this;
-
+        ////初始货Activity堆管理
+        ActivitiesManager.getActivitiesManager()
     }
 
 }

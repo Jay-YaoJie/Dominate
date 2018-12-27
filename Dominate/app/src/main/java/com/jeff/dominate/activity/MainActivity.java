@@ -98,7 +98,7 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
             super.handleMessage(msg);
             switch (msg.what) {
                 case UPDATE_LIST:
-                    deviceFragment.notifyDataSetChanged();
+                    deviceFragment.notifyDataSetChanged("");
                     break;
             }
         }
@@ -321,7 +321,7 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
                 this.mApplication.refreshLights();
 
 
-                this.deviceFragment.notifyDataSetChanged();
+                this.deviceFragment.notifyDataSetChanged("");
 
                 Mesh mesh = this.mApplication.getMesh();
 
@@ -439,7 +439,7 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                deviceFragment.notifyDataSetChanged();
+                deviceFragment.notifyDataSetChanged("");
             }
         });
     }
@@ -510,7 +510,7 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
         for (Light light : lights) {
             light.connectionStatus = ConnectionStatus.OFFLINE;
         }
-        this.deviceFragment.notifyDataSetChanged();
+        this.deviceFragment.notifyDataSetChanged("");
 
         if (TelinkLightApplication.getApp().getMesh().isOtaProcessing()) {
             TelinkLightService.Instance().idleMode(true);

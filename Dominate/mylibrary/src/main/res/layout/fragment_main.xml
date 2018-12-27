@@ -47,7 +47,7 @@
             </RelativeLayout>-->
             <!--最顶使用的 RecyclerView  横向滚动，并可以拖拽的-->
             <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
-                android:id="@+id/mainFragmentDSRVTop"
+                android:id="@+id/main_fragment_top_DSRV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -57,7 +57,7 @@
                 android:padding="5dp" />
             <!--分组 ，点击按钮选择添加-->
             <TextView
-                android:id="@+id/deviceGroupTV"
+                android:id="@+id/main_fragment_device_group_TV"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/center_height"
                 android:drawableRight="@mipmap/arrow_r"
@@ -68,7 +68,7 @@
                 android:textSize="@dimen/text_size" />
             <!-- //组 数据列表-->
             <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
-                android:id="@+id/mainFragmentDSRVGroup"
+                android:id="@+id/main_fragment_group_DSRV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -79,7 +79,7 @@
 
             <!--未分组设备-->
             <TextView
-                android:id="@+id/deviceUngroupedTV"
+                android:id="@+id/main_fragment_device_ungrouped_TV"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/center_height"
                 android:drawableRight="@mipmap/arrow_r"
@@ -90,7 +90,7 @@
                 android:textSize="@dimen/text_size" />
             <!--//单个数据列表-->
             <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
-                android:id="@+id/mainFragmentSSRVSingle"
+                android:id="@+id/main_fragment_single_SSRV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

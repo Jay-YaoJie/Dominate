@@ -36,6 +36,10 @@ import jeff.utils.ToastUtil
  * description ：bases.MainActivity
  */
 class MainActivity : MainActivity(), EventListener<String> {
+    override fun onRestart() {
+        super.onRestart()
+        eventReg()
+    }
     /**
      * 事件处理方法
      *
@@ -47,9 +51,7 @@ class MainActivity : MainActivity(), EventListener<String> {
             NotificationEvent.ONLINE_STATUS -> {
                 // this.onOnlineStatusNotify(event as NotificationEvent)
                 TelinkLog.i("MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().id)
-                val notificationInfoList: List<OnlineStatusNotificationParser.DeviceNotificationInfo>?
-                //noinspection unchecked
-                notificationInfoList = (event as NotificationEvent).parse() as List<OnlineStatusNotificationParser.DeviceNotificationInfo>?
+                val notificationInfoList: List<OnlineStatusNotificationParser.DeviceNotificationInfo>?= (event as NotificationEvent).parse() as List<OnlineStatusNotificationParser.DeviceNotificationInfo>
 
                 if (notificationInfoList == null || notificationInfoList.size <= 0)
                     return
@@ -58,12 +60,14 @@ class MainActivity : MainActivity(), EventListener<String> {
                     val meshAddress = notificationInfo.meshAddress
                     val brightness = notificationInfo.brightness
 
-                    var light: Light? = this.deviceFragment.getDevice(meshAddress)
+                    var light: Light=Light()
+//                    var light: Light? = this.deviceFragment.getDevice(meshAddress)
+//
+//                    if (light == null) {
+//                        light = Light()
+//                        this.deviceFragment.addDevice(light)
+//                    }
 
-                    if (light == null) {
-                        light = Light()
-                        this.deviceFragment.addDevice(light)
-                    }
 
                     light.meshAddress = meshAddress
                     light.brightness = brightness
@@ -95,14 +99,14 @@ class MainActivity : MainActivity(), EventListener<String> {
                     var mTimeoutBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
                     mTimeoutBuilder.setTitle("AutoConnect Fail")
                     mTimeoutBuilder.setMessage("Connect device:" + TelinkLightApplication.getApp().mesh.otaDevice.mac + " Fail, Quit? \nYES: quit MeshOTA process, NO: retry")
-                    mTimeoutBuilder.setNeutralButton("Quit", DialogInterface.OnClickListener { dialog, which ->
+                    mTimeoutBuilder.setNeutralButton("Quit", DialogInterface.OnClickListener { dialog, _ ->
                         val mesh = TelinkLightApplication.getApp().mesh
                         mesh.otaDevice = null
                         mesh.saveOrUpdate(this@MainActivity)
                         autoConnect()
                         dialog.dismiss()
                     })
-                    mTimeoutBuilder.setNegativeButton("Retry", DialogInterface.OnClickListener { dialog, which ->
+                    mTimeoutBuilder.setNegativeButton("Retry", DialogInterface.OnClickListener { dialog, _ ->
                         autoConnect()
                         dialog.dismiss()
                     })

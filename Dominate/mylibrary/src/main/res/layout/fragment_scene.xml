@@ -4,7 +4,7 @@
     <data class="jeff.scene.SceneFragmentDB" />
     <!--//单个数据列表-->
     <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
-        android:id="@+id/SceneFragmentSSRVScene"
+        android:id="@+id/scene_fragment_SSRV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"

@@ -183,5 +183,10 @@ class SPUtils {
             return helper.getBoolean("autoLogin", false)
         }
 
+        //清除当前登录用户文件的所有的数据
+        fun clear(context: Context) {
+            SPUtils(context, "Login").clear()
+        }
+
     }
 }

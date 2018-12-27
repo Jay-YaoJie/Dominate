@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.widget.RadioButton
-import jeff.bases.MyFragmentPagerAdapter
 import com.jeff.mylibrary.R
 import jeff.device.DeviceFragment
 import jeff.main.MainFragment
@@ -20,12 +19,10 @@ import jeff.scene.SceneFragment
  */
 open class MainActivity : BaseActivity<MainActivityDB>() {
 
-
     /**************************页面使用，没有功能***********************************************/
-    override fun getContentViewId(): Int = R.layout.activity_main
-
-    override fun initViews() {
-        mTabRadioGroup()// TabRadioGroup  的点击或着滑动切换
+    override fun getContentViewId(): Int=R.layout.activity_mains
+    override fun initViews() { //
+    mTabRadioGroup()// TabRadioGroup  的点击或着滑动切换
 
     }
 
@@ -40,9 +37,9 @@ open class MainActivity : BaseActivity<MainActivityDB>() {
         mFragments.add(MeFragment())//我的
         //页面管理  // init view pager
         mAdapter = MyFragmentPagerAdapter(supportFragmentManager, mFragments)
-        binding.fragmentVP.adapter = mAdapter
+        binding.mainVP.adapter = mAdapter
         // register listener
-        binding.fragmentVP.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        binding.mainVP.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(position: Int) {
                 //("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -62,7 +59,7 @@ open class MainActivity : BaseActivity<MainActivityDB>() {
         binding.tabsRG.setOnCheckedChangeListener { group, checkedId ->
             for (i in 0 until group.childCount) {
                 if (group.getChildAt(i).id == checkedId) {
-                    binding.fragmentVP.setCurrentItem(i)
+                    binding.mainVP.setCurrentItem(i)
                     break
                 }
             }

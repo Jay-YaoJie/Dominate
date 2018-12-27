@@ -62,7 +62,7 @@ dependencies {
     //   通用，功能全面的自定义标题栏，支持沉浸式标题栏，颜色渐变，miui9
     // https://github.com/wuhenzhizao/android-titlebar
     implementation 'com.wuhenzhizao:titlebar:1.1.3'
-    //   kapt "com.android.databinding:compiler:3.1.2"//在kotlin3.0以后就不用这个了
+    kapt "com.android.databinding:compiler:3.1.2"//在kotlin3.0以后就不用这个了
     
     // 支持与外围BLE设备进行扫描、连接、读、写、通知订阅与取消等基本操作
     // https://github.com/Jasonchenlijian/FastBle
@@ -76,7 +76,7 @@ dependencies {
     //iOS风格SwitchButton  https://github.com/iielse/SwitchButton
     implementation 'ch.ielse:switchbutton:1.0.1'
 
-    // EventBus  https://github.com/greenrobot/EventBus\
+    // EventBus  https://github.com/greenrobot/EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     testImplementation 'junit:junit:4.12'

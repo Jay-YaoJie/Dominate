@@ -1,8 +1,10 @@
 package jeff.device
 
-import jeff.bases.BaseFragment
 import com.jeff.mylibrary.R
-
+import jeff.bases.BaseFragment
+import jeff.utils.LogUtils
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 /**
@@ -16,6 +18,10 @@ open  class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
     override fun getContentViewId(): Int = R.layout.fragment_device
 
     override fun initViews() {
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun  onMessageEventMain( event:String) {
+        LogUtils.i(tag, "onMessageEventMain(), current thread is " +event+ Thread.currentThread().getName());
     }
 
 //

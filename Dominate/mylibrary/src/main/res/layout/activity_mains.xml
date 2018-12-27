@@ -7,16 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <android.support.v4.view.ViewPager
-            android:id="@+id/fragmentVP"
+            android:id="@+id/main_VP"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/tabsRG"
+            android:layout_above="@+id/tabs_RG"
             android:layout_weight="1" />
 
         <RadioGroup
-            android:id="@+id/tabsRG"
+            android:id="@+id/tabs_RG"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_alignParentBottom="true"
@@ -24,26 +23,26 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/mainRB"
+                android:id="@+id/main_RB"
                 style="@style/Custom.TabRadioButton"
                 android:checked="true"
                 android:drawableTop="@drawable/tab_model"
                 android:text="@string/main" />
 
             <RadioButton
-                android:id="@+id/groupRB"
+                android:id="@+id/group_RB"
                 style="@style/Custom.TabRadioButton"
                 android:drawableTop="@drawable/tab_group"
                 android:text="@string/group" />
 
             <RadioButton
-                android:id="@+id/deviceRB"
+                android:id="@+id/device_RB"
                 style="@style/Custom.TabRadioButton"
                 android:drawableTop="@drawable/tab_device"
                 android:text="@string/device" />
 
             <RadioButton
-                android:id="@+id/meRB"
+                android:id="@+id/me_RB"
                 style="@style/Custom.TabRadioButton"
                 android:drawableTop="@drawable/tab_account"
                 android:text="@string/me" />
