@@ -2,6 +2,9 @@ package jeff.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import jeff.beans.FragmentAdapterBeans.deviceBean
 
 
 /**
@@ -97,7 +100,7 @@ class SPUtils {
 
     //使用静态方法去调用这里的对象
     companion object {
-
+        val tag: String = "SPUtils"
         /****保存/获取 用户数据对象，登录 时的对象********************************************/
         /******保存****************************/
         /**
@@ -184,9 +187,45 @@ class SPUtils {
         }
 
         //清除当前登录用户文件的所有的数据
-        fun clear(context: Context) {
+        fun loginClear(context: Context) {
+            SPUtils(context, "Login").clear()
+        }
+
+
+        /*********FragmentAdapterBeans  页面列表对象*************************************************/
+        /**
+         * 获得列表对象
+         */
+        fun setFragmentAdapterBeans(context: Context, listBeanName: String, list: ArrayList<deviceBean>) {
+            //获取SharedPreferences对象，使用自定义类的方法来获取对象
+            val helper = SPUtils(context, "FragmentAdapterBeans")
+            val strJson = (Gson().toJson(list))
+            helper.putValues(SPUtils.ContentValue(listBeanName, strJson))
+        }
+
+        /**
+         * 获得列表对象
+         */
+        fun getFragmentAdapterBeans(context: Context, listBeanName: String): ArrayList<deviceBean>? {
+            //获取SharedPreferences对象，使用自定义类的方法来获取对象
+            val helper = SPUtils(context, "FragmentAdapterBeans")
+            val strJson = helper.getString(listBeanName)
+            if (!listBeanName.isNullOrEmpty()) {
+                //使用TypeToken进行转化
+                val type = object : TypeToken<List<deviceBean>>() {}.type
+                return (Gson().fromJson(strJson, type))
+            } else {
+                return null;
+            }
+
+        }
+
+        //清除当前登录用户文件的所有的数据
+        fun FragmentAdapterBeansClear(context: Context) {
             SPUtils(context, "Login").clear()
         }
 
     }
+
+
 }

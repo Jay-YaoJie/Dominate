@@ -308,15 +308,19 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
 
         switch (event.getType()) {
             case LeScanEvent.LE_SCAN:
+                // 处理扫描事件,,添加灯
                 this.onLeScan((LeScanEvent) event);
                 break;
             case LeScanEvent.LE_SCAN_TIMEOUT:
+                // 扫描不到任何设备了
                 this.onLeScanTimeout((LeScanEvent) event);
                 break;
             case DeviceEvent.STATUS_CHANGED:
+                ////加灯完成继续扫描,直到扫不到设备
                 this.onDeviceStatusChanged((DeviceEvent) event);
                 break;
             case MeshEvent.ERROR:
+                //重启蓝牙,更好地体验智能灯
                 this.onMeshEvent((MeshEvent) event);
                 break;
         }

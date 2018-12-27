@@ -22,19 +22,20 @@ open class MainActivity : BaseActivity<MainActivityDB>() {
     /**************************页面使用，没有功能***********************************************/
     override fun getContentViewId(): Int=R.layout.activity_mains
     override fun initViews() { //
-    mTabRadioGroup()// TabRadioGroup  的点击或着滑动切换
-
+//        mFragments.add(MainFragment())//主页
+//        mFragments.add(SceneFragment())//情景
+//        mFragments.add(DeviceFragment())//设备管理
+//        mFragments.add(MeFragment())//我的
+   mTabRadioGroup()// TabRadioGroup  的点击或着滑动切换
     }
 
-    var mFragments: MutableList<Fragment> = ArrayList()
+    open var mFragments: MutableList<Fragment> = ArrayList()
+
     private var mAdapter: FragmentPagerAdapter? = null
     // TabRadioGroup  的点击或着滑动切换
     fun mTabRadioGroup() {
         // // init fragment
-        mFragments.add(MainFragment())//主页
-        mFragments.add(SceneFragment())//情景
-        mFragments.add(DeviceFragment())//设备管理
-        mFragments.add(MeFragment())//我的
+
         //页面管理  // init view pager
         mAdapter = MyFragmentPagerAdapter(supportFragmentManager, mFragments)
         binding.mainVP.adapter = mAdapter

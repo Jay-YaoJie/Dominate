@@ -112,6 +112,6 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
     //重新登录
     open fun logonBack() {
         binding.btnLogin.isClickable = true//提交按钮可以点击
-        SPUtils.clear(mActivity)
+        SPUtils.loginClear(mActivity)
     }
 }

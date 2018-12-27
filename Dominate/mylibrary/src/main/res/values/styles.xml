@@ -1,5 +1,5 @@
 <resources>
-
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
     <!--主页按钮里的横条按钮-->
     <style name="CommonButton">
         <item name="android:background">@drawable/btn_radius</item>

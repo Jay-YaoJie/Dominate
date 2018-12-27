@@ -452,7 +452,7 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
 
 
     /**
-     * 处理{@link NotificationEvent#ONLINE_STATUS}事件
+     * 处理{@link NotificationEvent#ONLINE_STATUS}事件  扫描设备并添加到列表中显示，并保存
      */
     private synchronized void onOnlineStatusNotify(NotificationEvent event) {
 
@@ -473,10 +473,11 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
             int meshAddress = notificationInfo.meshAddress;
             int brightness = notificationInfo.brightness;
 
-            Light light = this.deviceFragment.getDevice(meshAddress);
+            Light light = this.deviceFragment.getDevice(meshAddress);//显示当前数据库中是否有此灯
 
             if (light == null) {
                 light = new Light();
+                //添加到列表中显示
                 this.deviceFragment.addDevice(light);
             }
 

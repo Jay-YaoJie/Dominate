@@ -16,7 +16,7 @@ import com.telink.bluetooth.light.ErrorReportInfo;
  */
 
 public class ErrorReportEvent extends DataEvent<ErrorReportInfo> {
-
+    //出现错误信息时
     public static final String ERROR_REPORT = "com.telink.bluetooth.light.ERROR_REPORT";
 
     /**

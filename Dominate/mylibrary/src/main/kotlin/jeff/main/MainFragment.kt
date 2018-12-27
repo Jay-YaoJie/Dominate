@@ -40,14 +40,14 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     override fun getContentViewId(): Int = R.layout.fragment_main
 
     override fun initViews() {
-        async {
-            await<Unit> {
-                //加载测试数据
-
-            }
-
-            info()//加载数据列表适配器
-        }
+//        async {
+//            await<Unit> {
+//                //加载测试数据
+//
+//            }
+//
+//            info()//加载数据列表适配器
+//        }
     }
 
     open fun info() {
@@ -110,7 +110,6 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 .attach(mainFragment_DSRV_top)
         //添加数据
         topAdapter.putItems(topicList)
-        LogUtils.d(tag, "未移动的items  adapter.getItems()=" + topAdapter.getItems())
     }
 
     //点击列表事件
@@ -137,6 +136,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         mainFragment_DSRV_group.addItemDecoration(decoration)
+        LogUtils.d(tag, "没有移动之前的items  groupList.toString()=" + groupList.toString())
         groupAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(context!!)
                 .match(deviceBean::class, R.layout.all_single_item)
                 .holderCreateListener {
@@ -234,6 +234,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         mainFragment_DSRV_single.addItemDecoration(decoration)
+        LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + singleList.toString())
         singleAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(context!!)
                 .match(deviceBean::class, R.layout.all_single_item)
                 .holderCreateListener {
@@ -241,8 +242,6 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 }
                 .holderBindListener { holder, position ->
                     val topic = singleAdapter.getItem(position)
-
-
                     holder.withView<TextView>(R.id.all_single_item_tv, {
                         text = topic.textStr
 

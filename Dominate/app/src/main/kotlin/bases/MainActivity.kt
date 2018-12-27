@@ -9,21 +9,22 @@ import android.os.Handler
 import android.text.TextUtils
 import bases.DominateApplication.Companion.dominate
 import com.jeff.dominate.MeshOTAService
-import com.jeff.dominate.R
 import com.jeff.dominate.TelinkLightApplication
 import com.jeff.dominate.TelinkLightService
-import com.jeff.dominate.model.Light
 import com.jeff.dominate.model.Lights
 import com.jeff.dominate.util.MeshCommandUtil
 import com.telink.bluetooth.TelinkLog
 import com.telink.bluetooth.event.*
 import com.telink.bluetooth.light.ConnectionStatus
 import com.telink.bluetooth.light.LightAdapter
-import com.telink.bluetooth.light.OnlineStatusNotificationParser
 import com.telink.bluetooth.light.Parameters
 import com.telink.util.Event
 import com.telink.util.EventListener
 import jeff.bases.MainActivity
+import jeff.device.DeviceFragment
+import main.MainFragment
+import jeff.me.MeFragment
+import jeff.scene.SceneFragment
 import jeff.utils.LogUtils
 import jeff.utils.ToastUtil
 
@@ -38,8 +39,9 @@ import jeff.utils.ToastUtil
 class MainActivity : MainActivity(), EventListener<String> {
     override fun onRestart() {
         super.onRestart()
-        eventReg()
+    // eventReg()
     }
+
     /**
      * 事件处理方法
      *
@@ -48,45 +50,48 @@ class MainActivity : MainActivity(), EventListener<String> {
     override fun performed(event: Event<String>) {
         //  T ODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         when (event.getType()) {
-            NotificationEvent.ONLINE_STATUS -> {
-                // this.onOnlineStatusNotify(event as NotificationEvent)
-                TelinkLog.i("MainActivity#onOnlineStatusNotify#Thread ID : " + Thread.currentThread().id)
-                val notificationInfoList: List<OnlineStatusNotificationParser.DeviceNotificationInfo>?= (event as NotificationEvent).parse() as List<OnlineStatusNotificationParser.DeviceNotificationInfo>
+            DeviceEvent.STATUS_CHANGED -> {
+                // 当设备的状态发生改变时,会分发此事件.可以根据事件参数{@link DeviceInfo#status}获取状态.
+                val deviceInfo = (event as DeviceEvent).args
+                when (deviceInfo.status) {
+                    LightAdapter.STATUS_LOGIN -> {
+                        this.connectMeshAddress = dominate.getConnectDevice().meshAddress
+                        //                this.showToast("login success");
+                        if (TelinkLightService.Instance().mode == LightAdapter.MODE_AUTO_CONNECT_MESH) {
+                            Handler().postDelayed({
+                                TelinkLightService.Instance().sendCommandNoResponse(0xE4.toByte(), 0xFFFF, byteArrayOf())
+                                eventBus.post("DeviceFragment")//刷新页面
+                            }, (3 * 1000).toLong())
+                        }
 
-                if (notificationInfoList == null || notificationInfoList.size <= 0)
-                    return
-                for (notificationInfo in notificationInfoList) {
-
-                    val meshAddress = notificationInfo.meshAddress
-                    val brightness = notificationInfo.brightness
-
-                    var light: Light=Light()
-//                    var light: Light? = this.deviceFragment.getDevice(meshAddress)
-//
-//                    if (light == null) {
-//                        light = Light()
-//                        this.deviceFragment.addDevice(light)
-//                    }
-
-
-                    light.meshAddress = meshAddress
-                    light.brightness = brightness
-                    light.connectionStatus = notificationInfo.connectionStatus
-
-                    if (light.meshAddress == this.connectMeshAddress) {
-                        light.textColor = R.color.theme_positive_color
-                    } else {
-                        light.textColor = R.color.black
+                        if (TelinkLightApplication.getApp().mesh.isOtaProcessing && !MeshOTAService.isRunning) {
+                            // 获取本地设备OTA状态信息
+                            MeshCommandUtil.getDeviceOTAState()
+                        }
+                    }
+                    LightAdapter.STATUS_CONNECTING -> {
+                    }
+                    LightAdapter.STATUS_LOGOUT -> {
+                        val lights = Lights.getInstance().get()
+                        for (light in lights) {
+                            light.connectionStatus = ConnectionStatus.OFFLINE
+                        }
+                        runOnUiThread {
+                            eventBus.post("DeviceFragment")//刷新页面
+                        }
+                    }
+                    LightAdapter.STATUS_ERROR_N -> {
+                        ToastUtil.show("连接重试多次失败")
+                        TelinkLightService.Instance().idleMode(true)
+                        TelinkLog.d("DeviceScanningActivity#onNError")
+                    }
+                    else -> {
+                        // this.showToast("login");
                     }
                 }
-
-                eventBus.post("DeviceFragment")//刷新页面
             }
-
-            NotificationEvent.GET_ALARM -> {
-            }
-            DeviceEvent.STATUS_CHANGED -> this.onDeviceStatusChanged(event as DeviceEvent)
             MeshEvent.OFFLINE -> {
+                //连接到不任何设备的时候分发此事件
                 TelinkLog.w("auto connect offline")
                 val lights = Lights.getInstance().get()
                 for (light in lights) {
@@ -115,15 +120,15 @@ class MainActivity : MainActivity(), EventListener<String> {
                     mTimeoutBuilder.show()
                 }
             }
-            ServiceEvent.SERVICE_CONNECTED -> {
+            ServiceEvent.SERVICE_CONNECTED -> { //服务启动
                 //this.onServiceConnected(event as ServiceEvent)
                 autoConnect()
             }
 
-            ServiceEvent.SERVICE_DISCONNECTED -> {
+            ServiceEvent.SERVICE_DISCONNECTED -> {//服务关闭
                 LogUtils.d(tag, "现在什么也不做。。")
             }
-            NotificationEvent.GET_DEVICE_STATE -> {
+            NotificationEvent.GET_DEVICE_STATE -> {//获取设备版本号
                 // 解析版本信息
 
                 val data = (event as NotificationEvent).getArgs().params
@@ -156,7 +161,7 @@ class MainActivity : MainActivity(), EventListener<String> {
 
             }
 
-            ErrorReportEvent.ERROR_REPORT -> {
+            ErrorReportEvent.ERROR_REPORT -> {//错误信息
                 val info = (event as ErrorReportEvent).args
                 TelinkLog.d("MainActivity#performed#ERROR_REPORT: " + " stateCode-" + info.stateCode
                         + " errorCode-" + info.errorCode
@@ -166,6 +171,11 @@ class MainActivity : MainActivity(), EventListener<String> {
     }
 
     override fun initViews() {
+        mFragments.add(MainFragment())//主页
+        mFragments.add(SceneFragment())//情景
+        mFragments.add(DeviceFragment())//设备管理
+        mFragments.add(MeFragment())//我的
+
         super.initViews()
         //添加蓝牙事件
         dominate.doInit()
@@ -186,13 +196,15 @@ class MainActivity : MainActivity(), EventListener<String> {
     override fun onStart() {
         super.onStart()
         LogUtils.d(tag, "监听各种事件")
+        //当设备的状态发生改变时,会分发此事件.可以根据事件参数{@link DeviceInfo#status}获取状态.
         dominate.addEventListener(DeviceEvent.STATUS_CHANGED, this)
-        dominate.addEventListener(NotificationEvent.ONLINE_STATUS, this)
-        dominate.addEventListener(NotificationEvent.GET_ALARM, this)
+        //获取设备版本号
         dominate.addEventListener(NotificationEvent.GET_DEVICE_STATE, this)
+        //服务启动
         dominate.addEventListener(ServiceEvent.SERVICE_CONNECTED, this)
+        //连接到不任何设备的时候分发此事件
         dominate.addEventListener(MeshEvent.OFFLINE, this)
-
+        //  //出现错误信息时
         dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)
         //连接
         autoConnect()
@@ -267,47 +279,6 @@ class MainActivity : MainActivity(), EventListener<String> {
             refreshNotifyParams.setRefreshInterval(2000)
             //开启自动刷新Notify
             TelinkLightService.Instance().autoRefreshNotify(refreshNotifyParams)
-        }
-    }
-
-    private val mHandler = Handler()
-    private fun onDeviceStatusChanged(event: DeviceEvent) {
-        val deviceInfo = event.args
-        when (deviceInfo.status) {
-            LightAdapter.STATUS_LOGIN -> {
-                this.connectMeshAddress = dominate.getConnectDevice().meshAddress
-                //                this.showToast("login success");
-                if (TelinkLightService.Instance().mode == LightAdapter.MODE_AUTO_CONNECT_MESH) {
-                    mHandler.postDelayed({
-                        TelinkLightService.Instance().sendCommandNoResponse(0xE4.toByte(), 0xFFFF, byteArrayOf())
-                        eventBus.post("DeviceFragment")//刷新页面
-                    }, (3 * 1000).toLong())
-                }
-
-                if (TelinkLightApplication.getApp().mesh.isOtaProcessing && !MeshOTAService.isRunning) {
-                    // 获取本地设备OTA状态信息
-                    MeshCommandUtil.getDeviceOTAState()
-                }
-            }
-            LightAdapter.STATUS_CONNECTING -> {
-            }
-            LightAdapter.STATUS_LOGOUT -> {
-                val lights = Lights.getInstance().get()
-                for (light in lights) {
-                    light.connectionStatus = ConnectionStatus.OFFLINE
-                }
-                runOnUiThread {
-                    eventBus.post("DeviceFragment")//刷新页面
-                }
-            }
-            LightAdapter.STATUS_ERROR_N -> {
-                ToastUtil.show("连接重试多次失败")
-                TelinkLightService.Instance().idleMode(true)
-                TelinkLog.d("DeviceScanningActivity#onNError")
-            }
-            else -> {
-                // this.showToast("login");
-            }
         }
     }
 
