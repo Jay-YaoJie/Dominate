@@ -191,7 +191,27 @@ class SPUtils {
             SPUtils(context, "Login").clear()
         }
 
+        /***************保存蓝牙连接的mac地址以便后面再次连接**********************************/
+        //保存当前连接的mac地址
+        fun setConnectMac(context: Context, deviceMac: String) {
+            //获取SharedPreferences对象，使用自定义类的方法来获取对象
+            SPUtils(context, "ConnectMac")
+                    .putValues(SPUtils.ContentValue("deviceMac", deviceMac))
+        }
 
+        /**
+         * 获得已经连接过的mac地址
+         */
+        fun getConnectMac(context: Context): String? {
+            //获取SharedPreferences对象，使用自定义类的方法来获取对象
+            val helper = SPUtils(context, "ConnectMac")
+            return helper.getString("deviceMac")
+        }
+
+        //清除连接的mac地址
+        fun connectMacClear(context: Context) {
+            SPUtils(context, "ConnectMac").clear()
+        }
         /*********FragmentAdapterBeans  页面列表对象*************************************************/
         /**
          * 获得列表对象
@@ -223,6 +243,17 @@ class SPUtils {
         //清除当前登录用户文件的所有的数据
         fun FragmentAdapterBeansClear(context: Context) {
             SPUtils(context, "Login").clear()
+        }
+
+
+        /************删除所有的数据*******************************/
+        fun clearAll(context: Context) {
+            //清除当前登录用户文件的所有的数据
+            loginClear(context)
+            //清除连接的mac地址
+            connectMacClear(context)
+            //清除当前登录用户文件的所有的数据
+            FragmentAdapterBeansClear(context)
         }
 
     }

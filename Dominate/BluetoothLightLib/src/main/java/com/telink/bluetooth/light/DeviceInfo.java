@@ -6,6 +6,9 @@ package com.telink.bluetooth.light;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.Arrays;
+
 /**
  * author : Jeff  5899859876@qq.com
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
@@ -69,6 +72,21 @@ public class DeviceInfo implements Parcelable {
         this.productUUID = in.readInt();
         this.status = in.readInt();
         in.readByteArray(this.longTermKey);
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceInfo{" +
+                "macAddress='" + macAddress + '\'' +
+                ", deviceName='" + deviceName + '\'' +
+                ", meshName='" + meshName + '\'' +
+                ", meshAddress=" + meshAddress +
+                ", meshUUID=" + meshUUID +
+                ", productUUID=" + productUUID +
+                ", status=" + status +
+                ", longTermKey=" + Arrays.toString(longTermKey) +
+                ", firmwareRevision='" + firmwareRevision + '\'' +
+                '}';
     }
 
     @Override

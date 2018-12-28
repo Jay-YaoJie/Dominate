@@ -8,6 +8,11 @@ package jeff.constants
  * description ：Settings
  */
 object Settings {
+
+    //默认出厂名称
+    const val factoryName="telink_mesh1"
+    const val factoryPassword="123"
+
     //全局属性   var是一个可变变量，val是一个只读变量相当于java中的final变量。
     //不可变的变量
     const val APP_NAME: String = "jeff"

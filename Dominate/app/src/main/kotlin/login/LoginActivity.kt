@@ -1,13 +1,8 @@
 package login
 
 import android.content.Intent
-import bases.DominateApplication.Companion.dominate
-import bases.MainActivity
 import com.jeff.dominate.R
-import com.jeff.dominate.TelinkLightService
-import com.jeff.dominate.model.Mesh
-import com.jeff.dominate.model.SharedPreferencesHelper
-import com.jeff.dominate.util.FileSystem
+import  device.DeviceScaningActivity
 import jeff.login.LoginActivity
 import jeff.utils.ToastUtil
 
@@ -21,46 +16,20 @@ import jeff.utils.ToastUtil
 class LoginActivity : LoginActivity() {
     override fun login(): Boolean {
         if (super.login()) {
-            //断开当前连接
-            TelinkLightService.Instance().idleMode(true)
-            //设置用户名和密码
-            var mesh = FileSystem.readAsObject(this, "$name.$password") as Mesh
+            //登录成功
+            ToastUtil(R.string.login_success)
+            startActivity(Intent(this, DeviceScaningActivity::class.java))
+            this.finish()
 
-            if (mesh == null) {
-                mesh = Mesh()
-                mesh.name = name
-                mesh.password = password
-            }
-
-            mesh.factoryName = "telink_mesh1"
-            mesh.factoryPassword = "123"
-
-            if (mesh.saveOrUpdate(this)) {
-                dominate.setupMesh(mesh)
-                SharedPreferencesHelper.saveMeshName(this, mesh.name)
-                SharedPreferencesHelper.saveMeshPassword(this, mesh.password)
-                //  this.showToast("Save Mesh Success");
-                //登录成功
-                ToastUtil(R.string.login_success)
-                startActivity(Intent(this, MainActivity::class.java))
-                this.finish()
-            } else {
-                //登录失败
-                ToastUtil(R.string.logon_back)
-                logonBack()//清除数据
-            }
             return true
+        } else {
+            //登录失败
+            ToastUtil(R.string.logon_back)
+            logonBack()//清除数据
         }
 
         return false
     }
-
-    /*
-    *删除登录数据  Mesh
-    *   if (mApplication.getMesh().devices != null) {
-                    mApplication.getMesh().devices.clear();
-                }
-    * */
 
 
 }

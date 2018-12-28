@@ -38,21 +38,21 @@ class DeviceFragment : DeviceFragment () {
 
     //获得单个设备列表数据
     fun infoSingleList() {
-        var lights= Lights.getInstance().get()//获得所有设备
-        for (light in lights) {
-            var device: FragmentAdapterBeans.deviceBean = FragmentAdapterBeans.deviceBean()
-            //主页里选择适配使用的对象
-            // device.imgAny//: Any? = null//图片
-            device.textStr=light.deviceName//: String? = null//文字
-            // device.groupId//: Int = 0//当前id
-            device.idInt=light.meshAddress//:Int=0//单个设备时的id
-            device.deviceName=light.macAddress//: String? = null//设备里的名称
-            device.index=light.meshUUID//: Int = 0 //当前所在的下标
-            device.checke=false//: Boolean = false//当前是否选择
-            // OFF(0), ON(1), OFFLINE(2);  关，开，离线
-            device.connectionStatus=light.connectionStatus.value//:Int=0
-            singleList.add(device)
-        }
+//        var lights= Lights.getInstance().get()//获得所有设备
+//        for (light in lights) {
+//            var device: FragmentAdapterBeans.deviceBean = FragmentAdapterBeans.deviceBean()
+//            //主页里选择适配使用的对象
+//            // device.imgAny//: Any? = null//图片
+//            device.textStr=light.deviceName//: String? = null//文字
+//            // device.groupId//: Int = 0//当前id
+//            device.idInt=light.meshAddress//:Int=0//单个设备时的id
+//            device.deviceName=light.macAddress//: String? = null//设备里的名称
+//            device.index=light.meshUUID//: Int = 0 //当前所在的下标
+//            device.checke=false//: Boolean = false//当前是否选择
+//            // OFF(0), ON(1), OFFLINE(2);  关，开，离线
+//            device.connectionStatus=light.connectionStatus.value//:Int=0
+//            singleList.add(device)
+//        }
 
 
 //        val icListStr = SPUtils.getFragmentAdapterBeans(mActivity, "infoSingleList")

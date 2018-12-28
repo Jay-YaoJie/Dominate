@@ -55,8 +55,11 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
             textView.setCompoundDrawables(nav_up, null, null, null)
         }
         if (isblak){
-            //关闭页面
-            mActivity.finish()
+            textView.setOnClickListener( {
+                //关闭页面
+                mActivity.finish()
+            })
+
         }
         return textView;
     }

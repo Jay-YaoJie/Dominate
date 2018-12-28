@@ -3,8 +3,10 @@ package bases
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.jeff.dominate.TelinkLightApplication
+import com.telink.TelinkApplication
 import jeff.bases.DominateApplication.Companion.instance
 import jeff.utils.ActivitiesManager
+import jeff.utils.DelegatesExt
 
 
 /**
@@ -14,9 +16,12 @@ import jeff.utils.ActivitiesManager
  * Created :  2018-12-24.
  * description ：DominateApplication
  */
-class DominateApplication : TelinkLightApplication() {
+class DominateApplication : TelinkApplication() {
     companion object {
-        lateinit var dominate: DominateApplication;
+        // 自定义委托实现单例,只能修改这个值一次.
+        var dominate: DominateApplication by DelegatesExt.notNullSingleValue<DominateApplication>();
+        var mLightService: LightService by DelegatesExt.notNullSingleValue<LightService>();
+
     }
 
 
@@ -33,6 +38,8 @@ class DominateApplication : TelinkLightApplication() {
         ActivitiesManager.getActivitiesManager()
         //初始化蓝牙
        dominate.doInit()
+        //启动LightService
+        this.startLightService(LightService::class.java)
     }
 
 }
