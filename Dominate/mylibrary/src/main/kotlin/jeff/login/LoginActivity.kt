@@ -31,6 +31,7 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
             //判断是否记住密码
             if (SPUtils.getRemenberPassword(mActivity)) {
                 binding.checkBoxPassword.isChecked = true//勾选记住密码
+                isSavePassword=true
                 //)//把密码和账号输入到输入框中
                 binding.etAccount.setText(getLocalName(mActivity))
                 binding.etPassword.setText(getLocalPassword(mActivity))

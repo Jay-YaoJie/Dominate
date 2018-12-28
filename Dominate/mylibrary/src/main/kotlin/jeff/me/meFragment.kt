@@ -1,7 +1,7 @@
 package jeff.me
 
-import jeff.bases.BaseFragment
 import com.jeff.mylibrary.R
+import jeff.bases.BaseFragment
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -11,6 +11,10 @@ import com.jeff.mylibrary.R
  * description ：meFragment 我的页面
  */
 open class MeFragment : BaseFragment<MeFragmentDB>() {
+    override fun lazyLoad() {
+        //T ODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getContentViewId(): Int= R.layout.fragment_me
 
     override fun initViews() {

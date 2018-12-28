@@ -11,9 +11,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.telink.TelinkApplication;
 import com.telink.bluetooth.Command;
 import com.telink.bluetooth.LeBluetooth;
 import com.telink.bluetooth.Peripheral;
@@ -24,10 +22,7 @@ import com.telink.util.Event;
 import com.telink.util.EventListener;
 import com.telink.util.Strings;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -756,6 +751,7 @@ public class LightAdapter {
 
     protected LightPeripheral onLeScan(BluetoothDevice device, int rssi,
                                        byte[] scanRecord) {
+        //添加广播过率
         AdvertiseFilterChain filterChain = AdvertiseFilterChain.getDefault();
         Iterator<AdvertiseDataFilter> iterator = filterChain.iterator();
         AdvertiseDataFilter filter;
@@ -980,7 +976,7 @@ public class LightAdapter {
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
 
-//            TelinkLog.d("Scan : " + device.getName() + "-" + device.getAddress());
+            TelinkLog.d("onLeSca : device.getName()=" + device.getName() + "---device.getAddress()=" + device.getAddress());
 
             if (scanEmpty.get()) {
                 scanEmpty.set(false);

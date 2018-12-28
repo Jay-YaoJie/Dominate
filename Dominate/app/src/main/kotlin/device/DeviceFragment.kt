@@ -1,40 +1,28 @@
-package main
+package device
 
 import co.metalab.asyncawait.async
 import com.jeff.dominate.model.Lights
-import jeff.beans.FragmentAdapterBeans.deviceBean
-import jeff.main.MainFragment
+import jeff.beans.FragmentAdapterBeans
+import jeff.device.DeviceFragment
 import jeff.utils.SPUtils
-
 
 /**
  * author : Jeff  5899859876@qq.com
- * Csdn :https://blog.csdn.net/Jeff_YaoJie
+ * CSDN ： https://blog.csdn.net/Jeff_YaoJie
  * Github: https://github.com/Jay-YaoJie
- * creation date: 2018-12-27 23:16
- * description ：MainFragment 主页显示
+ * Created :  2018-12-28.
+ * description ：DeviceFragment
  */
-class MainFragment : MainFragment() {
+class DeviceFragment : DeviceFragment () {
     override fun initViews() {
         super.initViews()
         async {
             await<Unit> {
                 //加载测试数据
-                infoTopList()
                 infoGroupList()
                 infoSingleList()
             }
             info()//加载数据列表适配器
-        }
-    }
-
-    //获得最顶上的数据
-    fun infoTopList() {
-        val icListStr = SPUtils.getFragmentAdapterBeans(mActivity, "infoTopList")
-        if (icListStr == null) {
-            //如果没有初始化过对象，则初始化数据对象并保存
-        } else {
-            topicList = icListStr
         }
     }
 
@@ -50,13 +38,13 @@ class MainFragment : MainFragment() {
 
     //获得单个设备列表数据
     fun infoSingleList() {
-       var lights=Lights.getInstance().get()//获得所有设备
+        var lights= Lights.getInstance().get()//获得所有设备
         for (light in lights) {
-           var device: deviceBean= deviceBean()
+            var device: FragmentAdapterBeans.deviceBean = FragmentAdapterBeans.deviceBean()
             //主页里选择适配使用的对象
-           // device.imgAny//: Any? = null//图片
+            // device.imgAny//: Any? = null//图片
             device.textStr=light.deviceName//: String? = null//文字
-           // device.groupId//: Int = 0//当前id
+            // device.groupId//: Int = 0//当前id
             device.idInt=light.meshAddress//:Int=0//单个设备时的id
             device.deviceName=light.macAddress//: String? = null//设备里的名称
             device.index=light.meshUUID//: Int = 0 //当前所在的下标
@@ -65,10 +53,7 @@ class MainFragment : MainFragment() {
             device.connectionStatus=light.connectionStatus.value//:Int=0
             singleList.add(device)
         }
-        if (singleList.size<=0){
-           // mActivity.startActivity(Intent(mActivity, DeviceScanningActivity::class.java))
 
-        }
 
 //        val icListStr = SPUtils.getFragmentAdapterBeans(mActivity, "infoSingleList")
 //        if (icListStr == null) {

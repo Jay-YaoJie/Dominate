@@ -29,4 +29,6 @@
     <string name="logon_back">重新登录</string>
     <string name="loading">正在加载数据</string>
 
+    <string name="add_device">添加设备</string>
+
 </resources>

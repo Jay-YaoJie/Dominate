@@ -31,6 +31,8 @@ class DominateApplication : TelinkLightApplication() {
         dominate = this;
         ////初始货Activity堆管理
         ActivitiesManager.getActivitiesManager()
+        //初始化蓝牙
+       dominate.doInit()
     }
 
 }

@@ -22,30 +22,19 @@ public  class TelinkLightApplication extends TelinkApplication {
     private Mesh mesh;
     private StringBuilder logInfo;
     private static TelinkLightApplication thiz;
-//    private List<String> macFilters = new ArrayList<>();
 
     private Toast toast;
-    private int onlineCount = 0;
-
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        //this.doInit();
         logInfo = new StringBuilder("log:");
         thiz = this;
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
     }
 
-    public int getOnlineCount() {
-        return onlineCount;
-    }
-
-    public void setOnlineCount(int onlineCount) {
-        this.onlineCount = onlineCount;
-    }
 
     public static TelinkLightApplication getApp() {
         return thiz;
@@ -74,16 +63,6 @@ public  class TelinkLightApplication extends TelinkApplication {
             Mesh mesh = getMesh();
             setupMesh(mesh);
         }
-
-
-/*
-
-        if (FileSystem.exists("telink.meshs")) {
-            this.mesh = (Mesh) FileSystem.readAsObject("telink.meshs");
-        }
-*/
-
-
         //启动LightService
         this.startLightService(TelinkLightService.class);
     }
@@ -99,9 +78,8 @@ public  class TelinkLightApplication extends TelinkApplication {
             this.mesh = new Mesh();
             this.mesh.name = "telink_mesh1";
             this.mesh.password = "123";
-
-//            this.mesh.factoryName = "telink_mesh1";
-//            this.mesh.factoryPassword = "123";
+            this.mesh.factoryName = "telink_mesh1";
+            this.mesh.factoryPassword = "123";
         }
         return this.mesh;
     }

@@ -7,5 +7,13 @@
     <ImageView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
+        android:layout_weight="1"
         android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/weclome_tv"
+        android:layout_width="@dimen/center_height"
+        android:gravity="center"
+
+        android:text="@string/login"
+        android:layout_height="@dimen/center_height" />
 </LinearLayout>

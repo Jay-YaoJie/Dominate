@@ -5,10 +5,6 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.widget.RadioButton
 import com.jeff.mylibrary.R
-import jeff.device.DeviceFragment
-import jeff.main.MainFragment
-import jeff.me.MeFragment
-import jeff.scene.SceneFragment
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -38,6 +34,8 @@ open class MainActivity : BaseActivity<MainActivityDB>() {
 
         //页面管理  // init view pager
         mAdapter = MyFragmentPagerAdapter(supportFragmentManager, mFragments)
+        //ViewPager 加载Fragment oncreatview() 方法重复调用最简单解决方案
+        binding.mainVP.setOffscreenPageLimit(3)
         binding.mainVP.adapter = mAdapter
         // register listener
         binding.mainVP.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {

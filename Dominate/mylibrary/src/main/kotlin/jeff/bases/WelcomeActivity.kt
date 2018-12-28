@@ -3,8 +3,10 @@ package jeff.bases
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
+import jeff.utils.PermissionUtils
 import jeff.utils.SPUtils
 
 /**
@@ -20,13 +22,9 @@ open class WelcomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_welocme)
         //添加当前页面
         Glide.with(this).load(R.drawable.welcome).into((findViewById(R.id.welcome) as ImageView))
+        PermissionUtils.checkPermission()//访问权限
 
-        Thread(Runnable {
-            try {
-                Thread.sleep(3000) //睡眠3秒
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+        ( this.findViewById<TextView>(R.id.weclome_tv)).setOnClickListener {
             if (SPUtils.getAutoLogin(this)) {
                 //如果当前已经登录,并记录的是自动登录，就直接到主页
                 main();
@@ -34,7 +32,7 @@ open class WelcomeActivity : AppCompatActivity() {
                 //如果没有自动登录，或着没有登录 就去登录页面
                 login()
             }
-        }).start()
+        }
 
 
     }

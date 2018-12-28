@@ -38,8 +38,9 @@
     <!--登录成功-->
     <string name="login_success">success</string>
     <!--重新登录-->
-    <string name="logon_back">Logon back"</string>
+    <string name="logon_back">LogonBack"</string>
     <!--正在加载数据-->
     <string name="loading">loading</string>
-
+    <!--添加设备-->
+    <string name="add_device">addDevice</string>
 </resources>

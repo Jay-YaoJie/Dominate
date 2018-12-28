@@ -1,7 +1,7 @@
 package jeff.scene
 
-import jeff.bases.BaseFragment
 import com.jeff.mylibrary.R
+import jeff.bases.BaseFragment
 
 
 
@@ -13,6 +13,10 @@ import com.jeff.mylibrary.R
  * description ：SceneFragment 场景模式
  */
 open class SceneFragment : BaseFragment<SceneFragmentDB>() {
+    override fun lazyLoad() {
+        //T ODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getContentViewId(): Int = R.layout.fragment_scene
 
     override fun initViews() {

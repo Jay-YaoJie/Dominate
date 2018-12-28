@@ -31,7 +31,7 @@ public final class DefaultAdvertiseDataFilter implements AdvertiseDataFilter<Lig
     @Override
     public LightPeripheral filter(BluetoothDevice device, int rssi, byte[] scanRecord) {
 
-        TelinkLog.d(device.getName() + "-->" + Arrays.bytesToHexString(scanRecord, ":"));
+        TelinkLog.d("LightPeripheral filter()--device.getName()="+device.getName() + "-->" + Arrays.bytesToHexString(scanRecord, ":"));
 
         int length = scanRecord.length;
         int packetPosition = 0;

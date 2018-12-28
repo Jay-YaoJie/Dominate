@@ -1,18 +1,16 @@
 package jeff.main
 
 
-import android.util.Log
-import android.widget.ImageView
-import co.metalab.asyncawait.async
-import com.bumptech.glide.Glide
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import ch.ielse.view.SwitchView
+import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
@@ -22,7 +20,6 @@ import jeff.widgets.LinearOffsetsItemDecoration
 import kotlin_adapter.adapter_core.*
 import kotlin_adapter.adapter_core.extension.getItems
 import kotlin_adapter.adapter_core.extension.putItems
-import kotlin_adapter.adapter_core.holder.RecyclerViewHolder
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerViewAdapter
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.dragListener
@@ -37,6 +34,10 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
  * description ：MainFragment 主页显示
  */
 open class MainFragment : BaseFragment<MainFragmentDB>() {
+    override fun lazyLoad() {
+        //TO DO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getContentViewId(): Int = R.layout.fragment_main
 
     override fun initViews() {
@@ -63,19 +64,19 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     //最顶层的列表
     private fun bindTopAdapter() {
         mainFragment_DSRV_top = binding.mainFragmentTopDSRV
-        mainFragment_DSRV_top.layoutManager = LinearLayoutManager(context)
+        mainFragment_DSRV_top.layoutManager = LinearLayoutManager(mActivity)
         mainFragment_DSRV_top.isLongPressDragEnable = true  //// 开启长按拖拽
         // 关闭开启Swipe Dismiss
         mainFragment_DSRV_top.isItemViewSwipeEnable = false
         //可以拖的位置
         mainFragment_DSRV_top.dragDirection = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT or ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        // binding.rv.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+        // binding.rv.layoutManager = GridLayoutManager(mActivity, 3, GridLayoutManager.VERTICAL, false)
 
         //可以设置为 横向，纵向，，spanCount设置的是当前行或列    orientation是横或纵
-        mainFragment_DSRV_top.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
+        mainFragment_DSRV_top.layoutManager = GridLayoutManager(mActivity, 1, GridLayoutManager.HORIZONTAL, false)
         //没有移动之前的items
         LogUtils.d(tag, "没有移动之前的items  topicList.toString()=" + topicList.toString())
-        topAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(context!!)
+        topAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(mActivity)
                 //加载item布局
                 .match(deviceBean::class, R.layout.fragment_main_top_item)
                 .holderCreateListener {}
@@ -85,10 +86,10 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                         //是否已经打开了场景的控制
                         if (topic.checke) {
                             //已经打开场景
-                            Glide.with(context!!).load(topic.imgAny).into(this)
+                            Glide.with(mActivity).load(topic.imgAny).into(this)
                         } else {
                             //未打开场景
-                            Glide.with(context!!).load(topic.imgAny).into(this)
+                            Glide.with(mActivity).load(topic.imgAny).into(this)
                         }
 
                     }).withView<TextView>(R.id.main_top_tv, { text = topic.textStr })
@@ -101,7 +102,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 }
                 .dragListener { from, target ->
                     //当前移动的数据
-                    Toast.makeText(context!!, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
+                    Toast.makeText(mActivity, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
                     //移动后的items
                     Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
                     Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
@@ -130,14 +131,14 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         mainFragment_DSRV_group.isItemViewSwipeEnable = false
         mainFragment_DSRV_group.dragDirection = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         // mainFragment_DSRV_group.swipeDirection = ItemTouchHelper.LEFT
-        mainFragment_DSRV_group.layoutManager = LinearLayoutManager(context)
+        mainFragment_DSRV_group.layoutManager = LinearLayoutManager(mActivity)
         val decoration = LinearOffsetsItemDecoration(LinearOffsetsItemDecoration.LINEAR_OFFSETS_VERTICAL)  //LINEAR_OFFSETS_HORIZONTAL  LINEAR_OFFSETS_VERTICAL
-        //decoration.setItemOffsets(ScreenUtils.dp2PxInt(context, 10f))
+        //decoration.setItemOffsets(ScreenUtils.dp2PxInt(mActivity, 10f))
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         mainFragment_DSRV_group.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  groupList.toString()=" + groupList.toString())
-        groupAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(context!!)
+        groupAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(mActivity)
                 .match(deviceBean::class, R.layout.all_single_item)
                 .holderCreateListener {
                 }
@@ -180,7 +181,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 }
                 .dragListener { from, target ->
                     //当前移动的数据
-                    Toast.makeText(context!!, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
+                    Toast.makeText(mActivity, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + BluetoothInfoList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + BluetoothInfoList)
@@ -188,7 +189,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 }
                 .swipeListener { position, direction ->
                     //当前移动取消数据
-                    Toast.makeText(context!!, "position $position dismissed", Toast.LENGTH_LONG)
+                    Toast.makeText(mActivity, "position $position dismissed", Toast.LENGTH_LONG)
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
@@ -228,14 +229,14 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         mainFragment_DSRV_single.isItemViewSwipeEnable = false
         mainFragment_DSRV_single.dragDirection = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         //  mainFragment_DSRV_single.swipeDirection = ItemTouchHelper.LEFT
-        mainFragment_DSRV_single.layoutManager = LinearLayoutManager(context)
+        mainFragment_DSRV_single.layoutManager = LinearLayoutManager(mActivity)
         val decoration = LinearOffsetsItemDecoration(LinearOffsetsItemDecoration.LINEAR_OFFSETS_VERTICAL)  //LINEAR_OFFSETS_HORIZONTAL  LINEAR_OFFSETS_VERTICAL
-        decoration.setItemOffsets(ScreenUtils.dp2PxInt(context, 10f))
+        decoration.setItemOffsets(ScreenUtils.dp2PxInt(mActivity, 10f))
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         mainFragment_DSRV_single.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + singleList.toString())
-        singleAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(context!!)
+        singleAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(mActivity)
                 .match(deviceBean::class, R.layout.all_single_item)
                 .holderCreateListener {
 
@@ -279,7 +280,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 }
                 .dragListener { from, target ->
                     //当前移动的数据
-                    Toast.makeText(context!!, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
+                    Toast.makeText(mActivity, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
@@ -287,7 +288,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 }
                 .swipeListener { position, direction ->
                     //当前移动取消数据
-                    Toast.makeText(context!!, "position $position dismissed", Toast.LENGTH_LONG)
+                    Toast.makeText(mActivity, "position $position dismissed", Toast.LENGTH_LONG)
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())

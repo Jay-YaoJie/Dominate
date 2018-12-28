@@ -40,7 +40,7 @@ import com.telink.util.EventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class DeviceBatchScanningActivity extends TelinkBaseActivity implements AdapterView.OnItemClickListener, EventListener<String> {
+public  class DeviceBatchScanningActivity extends TelinkBaseActivity implements AdapterView.OnItemClickListener, EventListener<String> {
 
     private ImageView backView;
     private Button btnScan;

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,17 +33,18 @@ import com.telink.bluetooth.light.LeScanParameters;
 import com.telink.bluetooth.light.LeUpdateParameters;
 import com.telink.bluetooth.light.LightAdapter;
 import com.telink.bluetooth.light.Parameters;
-
 import com.telink.util.Event;
 import com.telink.util.EventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import jeff.utils.LogUtils;
+
 /**
  * 搜索设备
  */
-public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity implements EventListener<String> {
+public final class DeviceScanningActivity extends AppCompatActivity implements EventListener<String> {
 
     private ImageView backView;
     private Button btnScan;
@@ -117,7 +119,7 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
         isScanComplete = false;
 //        onLeScan(null);
 
-        saveLog("Scan start");
+        //saveLog("Scan start");
 
         this.startScan(0);
     }
@@ -129,18 +131,13 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
         this.mHandler.removeCallbacksAndMessages(null);
 
         if (!isScanComplete) {
-            statisticUpdateResult();
+          //  saveLog("Scan complete:" + "  successCount-" + successDevices.size() + "  -failCount:" + failDevices.size());
         }
     }
 
-    private void statisticUpdateResult() {
-        saveLog("Scan complete:" + "  successCount-" + successDevices.size() + "  -failCount:" + failDevices.size());
-    }
 
-    @Override
-    protected void onLocationEnable() {
-        startScan(50);
-    }
+
+
 
     /**
      * 开始扫描
@@ -182,7 +179,8 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
         final int meshAddress = mesh.getDeviceAddress();
 
         if (meshAddress == -1) {
-            this.showToast("哎呦，网络里的灯泡太多了！目前可以有256灯");
+          //  this.showToast("哎呦，网络里的灯泡太多了！目前可以有256灯");
+
             this.finish();
             return;
         }
@@ -220,7 +218,6 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
     private void onLeScanTimeout(LeScanEvent event) {
         this.btnScan.setEnabled(true);
         isScanComplete = true;
-        statisticUpdateResult();
     }
 
     private void onDeviceStatusChanged(DeviceEvent event) {
@@ -259,13 +256,13 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
                 }
 
                 successDevices.add(deviceInfo.macAddress);
-                saveLog("Success:  mac--" + deviceInfo.macAddress);
+               // saveLog("Success:  mac--" + deviceInfo.macAddress);
                 this.startScan(1000);
                 break;
             case LightAdapter.STATUS_UPDATE_MESH_FAILURE:
                 //加灯失败继续扫描
                 failDevices.add(deviceInfo.macAddress);
-                saveLog("Fail:  mac--" + deviceInfo.macAddress);
+              //  saveLog("Fail:  mac--" + deviceInfo.macAddress);
                 this.startScan(1000);
                 break;
 
@@ -305,7 +302,7 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
      */
     @Override
     public void performed(Event<String> event) {
-
+        LogUtils.INSTANCE.d("","performed(Event<String> event) -event.getType()="+event.getType());
         switch (event.getType()) {
             case LeScanEvent.LE_SCAN:
                 // 处理扫描事件,,添加灯

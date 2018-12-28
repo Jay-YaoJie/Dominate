@@ -4,6 +4,7 @@ import android.content.Intent
 import bases.DominateApplication.Companion.dominate
 import bases.MainActivity
 import com.jeff.dominate.R
+import com.jeff.dominate.TelinkLightService
 import com.jeff.dominate.model.Mesh
 import com.jeff.dominate.model.SharedPreferencesHelper
 import com.jeff.dominate.util.FileSystem
@@ -20,8 +21,10 @@ import jeff.utils.ToastUtil
 class LoginActivity : LoginActivity() {
     override fun login(): Boolean {
         if (super.login()) {
+            //断开当前连接
+            TelinkLightService.Instance().idleMode(true)
             //设置用户名和密码
-            var mesh = FileSystem.readAsObject(this, "$name.$password")
+            var mesh = FileSystem.readAsObject(this, "$name.$password") as Mesh
 
             if (mesh == null) {
                 mesh = Mesh()
@@ -29,7 +32,7 @@ class LoginActivity : LoginActivity() {
                 mesh.password = password
             }
 
-            (mesh as Mesh).factoryName = "telink_mesh1"
+            mesh.factoryName = "telink_mesh1"
             mesh.factoryPassword = "123"
 
             if (mesh.saveOrUpdate(this)) {

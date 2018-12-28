@@ -20,13 +20,13 @@ import com.telink.bluetooth.light.LightAdapter
 import com.telink.bluetooth.light.Parameters
 import com.telink.util.Event
 import com.telink.util.EventListener
+import device.DeviceFragment
 import jeff.bases.MainActivity
-import jeff.device.DeviceFragment
-import main.MainFragment
 import jeff.me.MeFragment
 import jeff.scene.SceneFragment
 import jeff.utils.LogUtils
 import jeff.utils.ToastUtil
+import main.MainFragment
 
 
 /**
@@ -49,6 +49,7 @@ class MainActivity : MainActivity(), EventListener<String> {
      */
     override fun performed(event: Event<String>) {
         //  T ODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        LogUtils.d(tag," performed(event: Event<String>)=event.getType()="+event.getType())
         when (event.getType()) {
             DeviceEvent.STATUS_CHANGED -> {
                 // 当设备的状态发生改变时,会分发此事件.可以根据事件参数{@link DeviceInfo#status}获取状态.
@@ -178,7 +179,8 @@ class MainActivity : MainActivity(), EventListener<String> {
 
         super.initViews()
         //添加蓝牙事件
-        dominate.doInit()
+        //初始化蓝牙
+       // dominate.doInit()
         //打印日志创建文件
         TelinkLog.d("-------------------------------------------")
         TelinkLog.d(Build.MANUFACTURER)
@@ -195,7 +197,8 @@ class MainActivity : MainActivity(), EventListener<String> {
 
     override fun onStart() {
         super.onStart()
-        LogUtils.d(tag, "监听各种事件")
+
+        LogUtils.d(tag, "onStart()监听各种事件")
         //当设备的状态发生改变时,会分发此事件.可以根据事件参数{@link DeviceInfo#status}获取状态.
         dominate.addEventListener(DeviceEvent.STATUS_CHANGED, this)
         //获取设备版本号
@@ -206,6 +209,7 @@ class MainActivity : MainActivity(), EventListener<String> {
         dominate.addEventListener(MeshEvent.OFFLINE, this)
         //  //出现错误信息时
         dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)
+        dominate.addEventListener(MeshEvent.ERROR, this);
         //连接
         autoConnect()
     }
@@ -213,19 +217,22 @@ class MainActivity : MainActivity(), EventListener<String> {
     var connectMeshAddress: Int = 0
     override fun onResume() {
         super.onResume()
+        LogUtils.d(tag, "onResume()")
         val deviceInfo = dominate.getConnectDevice()
         if (deviceInfo != null) {
-            this.connectMeshAddress = dominate.getConnectDevice().meshAddress and 0xFF
+            this.connectMeshAddress = deviceInfo.meshAddress and 0xFF
         }
     }
 
     override fun onStop() {
         super.onStop()
+        LogUtils.d(tag, "onStop()")
         TelinkLightService.Instance().disableAutoRefreshNotify()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        LogUtils.d(tag, "onDestroy()")
         dominate.doDestroy()
         //移除事件
         dominate.removeEventListener(this)
@@ -236,8 +243,9 @@ class MainActivity : MainActivity(), EventListener<String> {
      * 自动重连
      */
     private fun autoConnect() {
-        if (TelinkLightService.Instance() != null) {
 
+        if (TelinkLightService.Instance() != null) {
+            LogUtils.d(tag,"autoConnect()")
             if (TelinkLightService.Instance().mode != LightAdapter.MODE_AUTO_CONNECT_MESH) {
 
                 if (dominate.isEmptyMesh())
@@ -252,6 +260,7 @@ class MainActivity : MainActivity(), EventListener<String> {
                 val mesh = dominate.getMesh()
 
                 if (TextUtils.isEmpty(mesh.name) || TextUtils.isEmpty(mesh.password)) {
+                   //  是否断开当前的连接: disconnect
                     TelinkLightService.Instance().idleMode(true)
                     return
                 }

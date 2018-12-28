@@ -89,6 +89,8 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
 
         //监听事件
         this.mApplication = (TelinkLightApplication) this.getApplication();
+
+
         this.mApplication.addEventListener(LeScanEvent.LE_SCAN, this);
         this.mApplication.addEventListener(LeScanEvent.LE_SCAN_TIMEOUT, this);
         this.mApplication.addEventListener(DeviceEvent.STATUS_CHANGED, this);

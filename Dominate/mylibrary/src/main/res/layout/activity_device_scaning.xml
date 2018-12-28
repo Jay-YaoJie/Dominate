@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="jeff.device.DeviceScaningActivityDB" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/top" />
+
+        <!--//未分组 数据列表-->
+        <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
+            android:id="@+id/device_Scaning_activity_DSRV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:padding="5dp" />
+    </LinearLayout>
+
+</layout>

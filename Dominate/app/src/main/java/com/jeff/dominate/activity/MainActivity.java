@@ -51,7 +51,6 @@ import com.telink.bluetooth.light.GetAlarmNotificationParser;
 import com.telink.bluetooth.light.LeAutoConnectParameters;
 import com.telink.bluetooth.light.LeRefreshNotifyParameters;
 import com.telink.bluetooth.light.LightAdapter;
-
 import com.telink.bluetooth.light.OnlineStatusNotificationParser;
 import com.telink.bluetooth.light.Parameters;
 import com.telink.util.BuildUtils;
@@ -59,6 +58,9 @@ import com.telink.util.Event;
 import com.telink.util.EventListener;
 
 import java.util.List;
+
+import jeff.utils.LogUtils;
+
 //TelinkMeshErrorDealActivity
 public  class MainActivity extends AppCompatActivity implements EventListener<String> {
 
@@ -116,12 +118,12 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
 
                 switch (state) {
                     case BluetoothAdapter.STATE_ON:
-                        Log.d(TAG, "蓝牙开启");
+                        LogUtils.INSTANCE.d(TAG, "蓝牙开启");
                         TelinkLightService.Instance().idleMode(true);
                         autoConnect();
                         break;
                     case BluetoothAdapter.STATE_OFF:
-                        Log.d(TAG, "蓝牙关闭");
+                        LogUtils.INSTANCE.d(TAG, "蓝牙关闭");
                         break;
                 }
             }
@@ -133,7 +135,7 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
 
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, "onCreate");
+        LogUtils.INSTANCE.d(TAG, "onCreate");
         //TelinkLog.ENABLE = false;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_main);
@@ -208,10 +210,10 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
 
         super.onStart();
 
-        Log.d(TAG, "onStart");
+        LogUtils.INSTANCE.d(TAG, "onStart");
 
         int result = BuildUtils.assetSdkVersion("4.4");
-        Log.d(TAG, " Version : " + result);
+        LogUtils.INSTANCE.d(TAG, " Version : " + result);
 
         // 监听各种事件
         this.mApplication.addEventListener(DeviceEvent.STATUS_CHANGED, this);
@@ -229,13 +231,13 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(TAG, "onRestart");
+        LogUtils.INSTANCE.d(TAG, "onRestart");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause");
+        LogUtils.INSTANCE.d(TAG, "onPause");
     }
 
     @Override
@@ -272,7 +274,7 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
             this.connectMeshAddress = this.mApplication.getConnectDevice().meshAddress & 0xFF;
         }
 
-        Log.d(TAG, "onResume");
+        LogUtils.INSTANCE.d(TAG, "onResume");
         /*mDelayHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -281,14 +283,10 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
         }, 1000);*/
     }
 
-    public static void getAlarm() {
-        TelinkLightService.Instance().sendCommandNoResponse((byte) 0xE6, 0x0000, new byte[]{0x10, (byte) 0x00});
-    }
-
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop");
+        LogUtils.INSTANCE.d(TAG, "onStop");
         TelinkLightService.Instance().disableAutoRefreshNotify();
     }
 
@@ -373,8 +371,6 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
             transaction.commit();
         }
     }
-
-    private Handler mHanlder = new Handler();
 
     private void onDeviceStatusChanged(DeviceEvent event) {
 

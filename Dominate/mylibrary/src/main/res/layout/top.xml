@@ -13,7 +13,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@mipmap/arrow_l"
             android:gravity="center|left"
             android:visibility="invisible" />
 
@@ -31,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@mipmap/arrow_r"
             android:gravity="center|right"
             android:visibility="invisible" />
     </LinearLayout>

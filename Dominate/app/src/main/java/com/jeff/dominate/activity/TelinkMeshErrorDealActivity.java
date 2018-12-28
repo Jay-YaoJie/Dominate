@@ -1,14 +1,10 @@
 package com.jeff.dominate.activity;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.View;
-import android.widget.Toast;
 
 import com.jeff.dominate.TelinkBaseActivity;
 import com.jeff.dominate.TelinkLightApplication;
@@ -18,6 +14,8 @@ import com.telink.bluetooth.event.MeshEvent;
 import com.telink.util.ContextUtil;
 import com.telink.util.Event;
 import com.telink.util.EventListener;
+
+import jeff.utils.LogUtils;
 
 
 // 添加 扫描过程中出现的因定位未开启而导致的扫描不成功问题
@@ -34,6 +32,7 @@ public abstract class TelinkMeshErrorDealActivity extends TelinkBaseActivity imp
 
     @Override
     public void performed(Event<String> event) {
+        LogUtils.INSTANCE.d("TelinkMeshErrorDealActivity","event.getType()="+event.getType());
         switch (event.getType()) {
             case MeshEvent.ERROR:
                 onMeshError((MeshEvent) event);
