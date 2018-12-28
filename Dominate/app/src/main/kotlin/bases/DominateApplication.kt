@@ -30,6 +30,7 @@ class DominateApplication : TelinkApplication() {
         super.attachBaseContext(base)
         MultiDex.install(this)
     }
+
     override fun onCreate() {
         super.onCreate()
         instance = this;
@@ -37,9 +38,15 @@ class DominateApplication : TelinkApplication() {
         ////初始货Activity堆管理
         ActivitiesManager.getActivitiesManager()
         //初始化蓝牙
-       dominate.doInit()
+        doInit()
+
+    }
+
+    override fun doInit() {
+        super.doInit()
         //启动LightService
         this.startLightService(LightService::class.java)
+
     }
 
 }

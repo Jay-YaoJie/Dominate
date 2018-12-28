@@ -7,6 +7,7 @@ import bases.DominateApplication.Companion.mLightService
 import com.jeff.dominate.TelinkLightService
 import com.telink.bluetooth.light.LightAdapter
 import com.telink.bluetooth.light.LightService
+import jeff.utils.LogUtils
 
 /**
  * author : Jeff  5899859876@qq.com
