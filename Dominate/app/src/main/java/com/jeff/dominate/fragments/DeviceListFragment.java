@@ -39,8 +39,6 @@ import com.jeff.dominate.model.Lights;
 import com.jeff.dominate.model.Mesh;
 import com.telink.bluetooth.light.ConnectionStatus;
 
-import org.greenrobot.eventbus.Subscribe;
-
 public final class DeviceListFragment extends Fragment implements OnClickListener {
 
     private static final String TAG = DeviceListFragment.class.getSimpleName();
@@ -250,7 +248,6 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
 
     //刷新页面
     //修改为 eventBus 传入的 DeviceFragment 那个页面就传入那个页面的名称
-    @Subscribe
     public void notifyDataSetChanged(String te) {
         if (this.adapter != null)
             this.adapter.notifyDataSetChanged();

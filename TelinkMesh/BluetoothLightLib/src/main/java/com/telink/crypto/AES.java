@@ -76,7 +76,7 @@ public abstract class AES {
         return decryptCmd(plaintext, nonce, key);
     }
 
-     static native byte[] encryptCmd(byte[] packet, byte[] iv, byte[] sk);
+    private static native byte[] encryptCmd(byte[] packet, byte[] iv, byte[] sk);
 
-     static native byte[] decryptCmd(byte[] packet, byte[] iv, byte[] sk);
+    private static native byte[] decryptCmd(byte[] packet, byte[] iv, byte[] sk);
 }

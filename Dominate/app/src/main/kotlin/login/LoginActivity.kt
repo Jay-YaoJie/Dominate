@@ -1,8 +1,10 @@
 package login
 
+import android.app.AlertDialog
 import android.content.Intent
 import com.jeff.dominate.R
-import  device.DeviceScaningActivity
+import com.telink.bluetooth.LeBluetooth
+import device.DeviceScaningActivity
 import jeff.login.LoginActivity
 import jeff.utils.ToastUtil
 
@@ -29,6 +31,25 @@ class LoginActivity : LoginActivity() {
         }
 
         return false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //检查是否支持蓝牙设备
+        if (!LeBluetooth.getInstance().isSupport(applicationContext)) {
+            ToastUtil("ble not support")
+            return
+        }
+
+        if (!LeBluetooth.getInstance().isEnabled) {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("开启蓝牙，体验智能灯!")
+            builder.setNeutralButton("cancel") { dialog, which -> finish() }
+            builder.setNegativeButton("enable") { dialog, which -> LeBluetooth.getInstance().enable(applicationContext) }
+            builder.show()
+        }
+
+
     }
 
 

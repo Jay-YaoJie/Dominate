@@ -77,7 +77,7 @@ dependencies {
     implementation 'ch.ielse:switchbutton:1.0.1'
 
     // EventBus  https://github.com/greenrobot/EventBus
-    implementation 'org.greenrobot:eventbus:3.1.1'
+ //   implementation 'org.greenrobot:eventbus:3.1.1'
 
     // gson https://github.com/google/gson
     implementation 'com.google.code.gson:gson:2.8.5'

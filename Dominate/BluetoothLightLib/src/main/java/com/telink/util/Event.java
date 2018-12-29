@@ -47,4 +47,13 @@ public class Event<T> {
     public enum ThreadMode {
         Background, Main, Default,;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "sender=" + sender +
+                ", type=" + type +
+                ", threadMode=" + threadMode +
+                '}';
+    }
 }

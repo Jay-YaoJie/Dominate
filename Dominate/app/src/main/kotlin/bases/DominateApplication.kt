@@ -2,7 +2,6 @@ package bases
 
 import android.content.Context
 import android.support.multidex.MultiDex
-import com.jeff.dominate.TelinkLightApplication
 import com.telink.TelinkApplication
 import jeff.bases.DominateApplication.Companion.instance
 import jeff.utils.ActivitiesManager
@@ -37,11 +36,10 @@ class DominateApplication : TelinkApplication() {
         dominate = this;
         ////初始货Activity堆管理
         ActivitiesManager.getActivitiesManager()
-        //初始化蓝牙
+
+        //初始化
         doInit()
-
     }
-
     override fun doInit() {
         super.doInit()
         //启动LightService

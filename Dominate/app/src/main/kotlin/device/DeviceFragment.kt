@@ -1,8 +1,6 @@
 package device
 
 import co.metalab.asyncawait.async
-import com.jeff.dominate.model.Lights
-import jeff.beans.FragmentAdapterBeans
 import jeff.device.DeviceFragment
 import jeff.utils.SPUtils
 

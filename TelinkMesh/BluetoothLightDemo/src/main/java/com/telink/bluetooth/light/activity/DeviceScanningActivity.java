@@ -43,19 +43,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity implements EventListener<String> {
-
     private ImageView backView;
     private Button btnScan;
-
     private LayoutInflater inflater;
     private DeviceListAdapter adapter;
-
     private TelinkLightApplication mApplication;
     private boolean isScanComplete;
-
     private List<String> successDevices;
     private List<String> failDevices;
-
 
     private OnClickListener clickListener = new OnClickListener() {
 
@@ -89,8 +84,6 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
 
         //监听事件
         this.mApplication = (TelinkLightApplication) this.getApplication();
-
-
         this.mApplication.addEventListener(LeScanEvent.LE_SCAN, this);
         this.mApplication.addEventListener(LeScanEvent.LE_SCAN_TIMEOUT, this);
         this.mApplication.addEventListener(DeviceEvent.STATUS_CHANGED, this);

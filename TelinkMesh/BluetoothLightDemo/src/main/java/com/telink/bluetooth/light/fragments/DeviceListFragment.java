@@ -279,8 +279,7 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             byte[] params = new byte[]{0x00, 0x00, 0x00};
             TelinkLightService.Instance().sendCommandNoResponse(opcode, address,
                     params);
-        } else if (v.getId() == R.id.img_header_menu_left) {
-            //添加
+        } else if (v == backView) {
             Intent intent = new Intent(mContext, AddMeshActivity.class);
             startActivity(intent);
 

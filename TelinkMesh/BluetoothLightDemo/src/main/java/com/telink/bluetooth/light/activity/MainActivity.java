@@ -309,13 +309,10 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
      */
     private void autoConnect() {
         if (TelinkLightService.Instance() != null) {
-
             if (TelinkLightService.Instance().getMode() != LightAdapter.MODE_AUTO_CONNECT_MESH) {
-
 
                 if (this.mApplication.isEmptyMesh())
                     return;
-
 //                Lights.getInstance().clear();
                 this.mApplication.refreshLights();
 
@@ -328,7 +325,6 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
                     TelinkLightService.Instance().idleMode(true);
                     return;
                 }
-
                 //自动重连参数
                 LeAutoConnectParameters connectParams = Parameters.createAutoConnectParameters();
                 connectParams.setMeshName(mesh.name);

@@ -17,13 +17,13 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * author : Jeff  5899859876@qq.com
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
@@ -59,7 +59,7 @@ public class EventBus<T> {
     };
 
     public void addEventListener(T eventType, EventListener<T> listener) {
-
+        TelinkLog.d("addEventListener(T eventType, EventListener<T> listener)--------eventType="+eventType.toString()+"------listener"+listener.toString());
         synchronized (this.mEventListeners) {
             List<EventListener<T>> listeners;
 

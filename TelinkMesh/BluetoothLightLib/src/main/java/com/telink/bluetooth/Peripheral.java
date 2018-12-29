@@ -14,7 +14,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.telink.util.Arrays;
 
@@ -242,8 +241,6 @@ public class Peripheral extends BluetoothGattCallback {
 
     protected void onNotify(byte[] data, UUID serviceUUID,
                             UUID characteristicUUID, Object tag) {
-        //最终的notify数据对象
-        Log.d("最终的notify数据对象","onNotify() data="+data+"---serviceUUID="+serviceUUID+"---characteristicUUID="+characteristicUUID+"---tag="+tag);
     }
 
     protected void onRssiChanged() {
@@ -500,8 +497,6 @@ public class Peripheral extends BluetoothGattCallback {
             if (characteristic != null) {
 
                 characteristic.setValue(data);
-                //发送数据对象，，，，，，，最终的发送数据，在这里
-                Log.d("最终的发送数据","最终的发送数据data=="+data);
                 characteristic.setWriteType(writeType);
 
                 if (!this.gatt.writeCharacteristic(characteristic)) {

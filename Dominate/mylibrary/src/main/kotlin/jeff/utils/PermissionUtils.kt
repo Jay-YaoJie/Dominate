@@ -28,9 +28,20 @@ object PermissionUtils {
                     ToastUtil.show("用户拒绝了访问蓝牙")
                     isChecked = false;
                 }
-            }, Manifest.permission.BLUETOOTH,Manifest.permission.BLUETOOTH_ADMIN)
+            }, Manifest.permission.BLUETOOTH)
+            PermissionsUtil.requestPermission(instance, object : PermissionListener {
+                override fun permissionGranted(permissions: Array<String>) {
+                    isChecked = true;
+                    //Toast.makeText(MainActivity.this, "访问蓝牙", Toast.LENGTH_LONG).show();
+                }
 
-              /*访问位置**********************/
+                override fun permissionDenied(permissions: Array<String>) {
+                    ToastUtil.show("用户拒绝了访问蓝牙")
+                    isChecked = false;
+                }
+            }, Manifest.permission.BLUETOOTH_ADMIN)
+
+            /*访问位置**********************/
             PermissionsUtil.requestPermission(instance, object : PermissionListener {
                 override fun permissionGranted(permissions: Array<String>) {
                     isChecked = true;
@@ -41,7 +52,18 @@ object PermissionUtils {
                     ToastUtil.show("用户拒绝了访问位置")
                     isChecked = false;
                 }
-            }, Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+            }, Manifest.permission.ACCESS_FINE_LOCATION)
+            PermissionsUtil.requestPermission(instance, object : PermissionListener {
+                override fun permissionGranted(permissions: Array<String>) {
+                    isChecked = true;
+                    // Toast.makeText(MainActivity.this, "访问位置", Toast.LENGTH_LONG).show();
+                }
+
+                override fun permissionDenied(permissions: Array<String>) {
+                    ToastUtil.show("用户拒绝了访问位置")
+                    isChecked = false;
+                }
+            }, Manifest.permission.ACCESS_COARSE_LOCATION)
 
 
             /*访问网络*************************************/
@@ -60,14 +82,36 @@ object PermissionUtils {
             PermissionsUtil.requestPermission(instance, object : PermissionListener {
                 override fun permissionGranted(permissions: Array<String>) {
                     isChecked = true;
-                    //Toast.makeText(MainActivity.this, "访问网络", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MainActivity.this, "访问读写", Toast.LENGTH_LONG).show();
                 }
 
                 override fun permissionDenied(permissions: Array<String>) {
-                    // Toast.makeText(MainActivity.this, "用户拒绝了访问网络", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(MainActivity.this, "用户拒绝了访问读写", Toast.LENGTH_LONG).show();
                     isChecked = false;
                 }
-            }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE)
+            }, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            PermissionsUtil.requestPermission(instance, object : PermissionListener {
+                override fun permissionGranted(permissions: Array<String>) {
+                    isChecked = true;
+                    //Toast.makeText(MainActivity.this, "访问读写", Toast.LENGTH_LONG).show();
+                }
+
+                override fun permissionDenied(permissions: Array<String>) {
+                    // Toast.makeText(MainActivity.this, "用户拒绝了访问读写", Toast.LENGTH_LONG).show();
+                    isChecked = false;
+                }
+            }, Manifest.permission.READ_EXTERNAL_STORAGE)
+            PermissionsUtil.requestPermission(instance, object : PermissionListener {
+                override fun permissionGranted(permissions: Array<String>) {
+                    isChecked = true;
+                    //Toast.makeText(MainActivity.this, "访问读写", Toast.LENGTH_LONG).show();
+                }
+
+                override fun permissionDenied(permissions: Array<String>) {
+                    // Toast.makeText(MainActivity.this, "用户拒绝了访问读写", Toast.LENGTH_LONG).show();
+                    isChecked = false;
+                }
+            }, Manifest.permission.READ_PHONE_STATE)
         }
     }
 

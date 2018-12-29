@@ -11,7 +11,6 @@ import jeff.utils.ActivitiesManager.popActivity
 import jeff.utils.ActivitiesManager.pushActivity
 import jeff.utils.LogUtils
 import kotlinx.android.synthetic.main.top.view.*
-import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -24,8 +23,6 @@ import org.greenrobot.eventbus.EventBus
 @SuppressLint("NewApi")
 abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
     protected lateinit var binding: DB
-    // 创建默认的EventBus对象，相当于EventBus.getDefault()。
-    protected var eventBus: EventBus = EventBus.getDefault()
 
     protected lateinit var mActivity: AppCompatActivity
     protected abstract fun getContentViewId(): Int
@@ -93,23 +90,6 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
         }
         return textView;
     }
-
-    //如果要使用evnt就在这里注册，直接调用此方法
-    open fun eventReg() {
-        if (!eventBus.isRegistered(this)) {
-            eventBus.register(this)
-
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (eventBus.isRegistered(this)) {
-            eventBus.unregister(this)
-        }
-
-    }
-
     override fun onDestroy() {
         popActivity(this);//关闭当前activity
         super.onDestroy()

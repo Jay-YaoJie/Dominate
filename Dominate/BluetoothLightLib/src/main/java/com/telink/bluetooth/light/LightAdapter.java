@@ -462,7 +462,7 @@ public class LightAdapter {
 
         if (this.getMode() == MODE_SCAN_MESH)
             return;
-        TelinkLog.d("LightAdapter#startLeScan");
+        TelinkLog.d("LightAdapter#startLeScan------params="+params.toString());
         this.setMode(MODE_IDLE);
 
 //        stopLeScan();

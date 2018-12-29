@@ -33,7 +33,7 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
 open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
     override fun getContentViewId(): Int = R.layout.activity_device_scaning
     override fun initViews() {
-        topLeftView(null,R.mipmap.arrow_l,true)
+        //topLeftView(null,R.mipmap.arrow_l,true)
         topMiddleView(resources.getString(R.string.add_device),0)
     }
 
