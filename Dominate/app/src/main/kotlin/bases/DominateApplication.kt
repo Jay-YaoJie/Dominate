@@ -2,10 +2,13 @@ package bases
 
 import android.content.Context
 import android.support.multidex.MultiDex
+import com.jeff.dominate.R
 import com.telink.TelinkApplication
+import com.telink.bluetooth.LeBluetooth
 import jeff.bases.DominateApplication.Companion.instance
 import jeff.utils.ActivitiesManager
 import jeff.utils.DelegatesExt
+import jeff.utils.ToastUtil
 
 
 /**
@@ -44,6 +47,13 @@ class DominateApplication : TelinkApplication() {
         super.doInit()
         //启动LightService
         this.startLightService(LightService::class.java)
+
+        //检查是否支持蓝牙设备
+        if (!LeBluetooth.getInstance().isSupport(this)) {
+            ToastUtil(this.resources.getString(R.string.ble_not_support))
+            return
+        }
+
 
     }
 

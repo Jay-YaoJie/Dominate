@@ -899,8 +899,7 @@ public class LightAdapter {
         if (running) {
 
             if (!this.mainLoopRunning) {
-                this.mLoopHandler.postDelayed(this.mLoopTask,
-                        this.mInterval);
+                this.mLoopHandler.postDelayed(this.mLoopTask,this.mInterval);
 //                this.mLoopHandler.post(this.mLoopTask);
             }
 
@@ -1482,8 +1481,7 @@ public class LightAdapter {
                 return;
             }
 
-            int timeoutSeconds = mParams
-                    .getInt(Parameters.PARAM_TIMEOUT_SECONDS);
+            int timeoutSeconds = mParams.getInt(Parameters.PARAM_TIMEOUT_SECONDS);
             connect(light, timeoutSeconds);
         }
 

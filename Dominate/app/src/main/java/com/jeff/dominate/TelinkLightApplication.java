@@ -32,6 +32,7 @@ public  class TelinkLightApplication extends TelinkApplication {
         logInfo = new StringBuilder("log:");
         thiz = this;
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        doInit();
 
     }
 

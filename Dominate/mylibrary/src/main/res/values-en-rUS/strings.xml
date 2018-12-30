@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources >
     <!--当前系统不支持蓝牙-->
     <string name="ble_not_support">ble not support</string>
     <!--main tab-->
@@ -43,4 +43,8 @@
     <string name="loading">loading</string>
     <!--添加设备-->
     <string name="add_device">addDevice</string>
+    <!--账号异常。请重新次登录-->
+    <string name="account_exception">Account number is abnormal. Please log in again</string>
+    <!--添加异常请稍后重试-->
+    <string name="add_exception">Add exception. Please try again later</string>
 </resources>

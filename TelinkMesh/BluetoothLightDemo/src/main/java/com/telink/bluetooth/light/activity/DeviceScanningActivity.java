@@ -153,7 +153,7 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
 
                 //扫描参数
                 LeScanParameters params = LeScanParameters.create();
-                params.setMeshName(mesh.factoryName);
+                params.setMeshName("telink_mesh1");
                 params.setOutOfMeshName("out_of_mesh");
                 params.setTimeoutSeconds(10);
                 params.setScanMode(true);
@@ -187,10 +187,10 @@ public final class DeviceScanningActivity extends TelinkMeshErrorDealActivity im
             public void run() {
                 //更新参数
                 LeUpdateParameters params = Parameters.createUpdateParameters();
-                params.setOldMeshName(mesh.factoryName);
-                params.setOldPassword(mesh.factoryPassword);
-                params.setNewMeshName(mesh.name);
-                params.setNewPassword(mesh.password);
+                params.setOldMeshName("telink_mesh1");
+                params.setOldPassword("123");
+                params.setNewMeshName("abcdf");
+                params.setNewPassword("abcds");
 
                 DeviceInfo deviceInfo = event.getArgs();
                 deviceInfo.meshAddress = meshAddress;

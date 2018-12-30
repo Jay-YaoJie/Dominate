@@ -17,7 +17,7 @@ public class Mesh implements Serializable {
 
     public String name;
     public String password;
-    public String factoryName;
+    public String factoryName="";
     public String factoryPassword;
     public OtaDevice otaDevice;
 

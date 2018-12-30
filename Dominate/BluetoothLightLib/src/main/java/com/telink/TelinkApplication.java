@@ -36,6 +36,7 @@ import com.telink.util.Event;
 import com.telink.util.EventBus;
 import com.telink.util.EventListener;
 import com.telink.util.Strings;
+
 /**
  * author : Jeff  5899859876@qq.com
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
@@ -312,7 +313,7 @@ public class TelinkApplication extends Application {
         if (deviceInfo.status == LightAdapter.STATUS_LOGIN) {
             mCurrentConnect = deviceInfo;
             this.dispatchEvent(DeviceEvent.newInstance(this, DeviceEvent.CURRENT_CONNECT_CHANGED, deviceInfo));
-        }else if (deviceInfo.status == LightAdapter.STATUS_LOGOUT){
+        } else if (deviceInfo.status == LightAdapter.STATUS_LOGOUT) {
             mCurrentConnect = null;
         }
 

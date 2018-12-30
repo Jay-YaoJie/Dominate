@@ -103,11 +103,11 @@ public final class TelinkLightApplication extends TelinkApplication {
     public Mesh getMesh() {
         if (this.mesh == null) {
             this.mesh = new Mesh();
-            this.mesh.name = "telink_mesh1";
-            this.mesh.password = "123";
+            this.mesh.name = "abcd";
+            this.mesh.password = "abcd";
 
-//            this.mesh.factoryName = "telink_mesh1";
-//            this.mesh.factoryPassword = "123";
+            this.mesh.factoryName = "telink_mesh1";
+            this.mesh.factoryPassword = "123";
         }
         return this.mesh;
     }

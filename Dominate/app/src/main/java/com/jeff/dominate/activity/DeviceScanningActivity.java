@@ -190,10 +190,10 @@ public final class DeviceScanningActivity extends AppCompatActivity implements E
             public void run() {
                 //更新参数
                 LeUpdateParameters params = Parameters.createUpdateParameters();
-                params.setOldMeshName(mesh.factoryName);
-                params.setOldPassword(mesh.factoryPassword);
-                params.setNewMeshName(mesh.name);
-                params.setNewPassword(mesh.password);
+                params.setOldMeshName("telink_mesh1");
+                params.setOldPassword("123");
+                params.setNewMeshName("aaaaaa");
+                params.setNewPassword("bbbbbb");
 
                 DeviceInfo deviceInfo = event.getArgs();
                 deviceInfo.meshAddress = meshAddress;

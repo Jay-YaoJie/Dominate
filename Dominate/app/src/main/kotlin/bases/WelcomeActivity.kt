@@ -1,7 +1,10 @@
 package bases
 
+import android.app.AlertDialog
 import android.content.Intent
+import com.telink.bluetooth.LeBluetooth
 import jeff.bases.WelcomeActivity
+import jeff.utils.ToastUtil
 import login.LoginActivity
 
 /**
@@ -22,5 +25,18 @@ class WelcomeActivity : WelcomeActivity() {
       //进入主页
         startActivity(Intent(this ,MainActivity::class.java))
         this.finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!LeBluetooth.getInstance().isEnabled) {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("开启蓝牙，体验智能灯!")
+            builder.setNeutralButton("cancel") { dialog, _ -> finish() }
+            builder.setNegativeButton("enable") { dialog, _ -> LeBluetooth.getInstance().enable(applicationContext) }
+            builder.show()
+        }
+
+
     }
 }

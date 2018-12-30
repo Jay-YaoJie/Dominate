@@ -79,10 +79,8 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
     private TelinkLightApplication mApplication;
 
     private OnCheckedChangeListener checkedChangeListener = new OnCheckedChangeListener() {
-
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-
             if (checkedId == R.id.tab_devices) {
                 switchContent(mContent, deviceFragment);
             } else if (checkedId == R.id.tab_groups) {
@@ -162,7 +160,7 @@ public  class MainActivity extends AppCompatActivity implements EventListener<St
             this.mContent = this.deviceFragment;
         }
 
-        this.mApplication.doInit();
+     //   this.mApplication.doInit();
 
         TelinkLog.d("-------------------------------------------");
         TelinkLog.d(Build.MANUFACTURER);

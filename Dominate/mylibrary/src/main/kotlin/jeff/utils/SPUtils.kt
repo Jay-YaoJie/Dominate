@@ -214,13 +214,40 @@ class SPUtils {
         }
         /*********FragmentAdapterBeans  页面列表对象*************************************************/
         /**
-         * 获得列表对象
+         * 保存列表对象
          */
         fun setFragmentAdapterBeans(context: Context, listBeanName: String, list: ArrayList<deviceBean>) {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
             val helper = SPUtils(context, "FragmentAdapterBeans")
             val strJson = (Gson().toJson(list))
-            helper.putValues(SPUtils.ContentValue(listBeanName, strJson))
+            if (listBeanName.equals("deviceSingleList")) {//如果是单个设备的集合，则命名要为 deviceSingleList
+                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                        //保存当前集合对象的数量
+                        SPUtils.ContentValue("deviceSingleSize", list.size))
+            } else if (listBeanName.equals("deviceGroupList")) {//如果是组设备的集合，则命名要为 deviceGroupList
+                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                        //保存当前集合对象的数量
+                        SPUtils.ContentValue("deviceGropuSize", list.size))
+            }else if (listBeanName.equals("deviceSceneList")) {//如果是场景设备的集合，则命名要为 deviceSceneList
+                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                        //保存当前集合对象的数量
+                        SPUtils.ContentValue("deviceSceneSize", list.size))
+            }else{
+                //默认为 listBeanName+ size
+                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                        //保存当前集合对象的数量
+                        SPUtils.ContentValue(listBeanName+"Size", strJson))
+            }
+
+        }
+        /**
+         * 获得列表对象数量
+         */
+        fun getDeviceBeanSize(context: Context, listBeanNameSize: String): Int {
+            //获取SharedPreferences对象，使用自定义类的方法来获取对象
+            val helper = SPUtils(context, "FragmentAdapterBeans")
+            return  helper.getInt(listBeanNameSize)
+
         }
 
         /**
@@ -240,9 +267,9 @@ class SPUtils {
 
         }
 
-        //清除当前登录用户文件的所有的数据
+        //清除当列表对象的所有的数据
         fun FragmentAdapterBeansClear(context: Context) {
-            SPUtils(context, "Login").clear()
+            SPUtils(context, "FragmentAdapterBeans").clear()
         }
 
 
