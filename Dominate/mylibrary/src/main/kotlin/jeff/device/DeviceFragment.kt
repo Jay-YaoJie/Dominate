@@ -119,7 +119,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                 .dragListener { from, target ->
                     //当前移动的数据
 
-                    ToastUtil("item is dragged, from $from to $target")
+                    ToastUtil.show("item is dragged, from $from to $target")
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + BluetoothInfoList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + BluetoothInfoList)
@@ -128,7 +128,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                 .swipeListener { position, direction ->
                     //当前移动取消数据
 
-                    ToastUtil("position $position dismissed")
+                    ToastUtil.show("position $position dismissed")
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
@@ -224,7 +224,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                 .dragListener { from, target ->
                     //当前移动的数据
 
-                    ToastUtil("item is dragged, from $from to $target")
+                    ToastUtil.show("item is dragged, from $from to $target")
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
@@ -233,7 +233,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                 .swipeListener { position, direction ->
                     //当前移动取消数据
 
-                    ToastUtil("position $position dismissed")
+                    ToastUtil.show("position $position dismissed")
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())

@@ -96,4 +96,5 @@ public class ErrorReportEvent extends DataEvent<ErrorReportInfo> {
     public static ErrorReportEvent newInstance(Object sender, String type, ErrorReportInfo args) {
         return new ErrorReportEvent(sender, type, args);
     }
+
 }

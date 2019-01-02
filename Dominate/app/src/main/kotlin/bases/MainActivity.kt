@@ -36,6 +36,7 @@ import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificat
 import jeff.constants.Settings.factoryName
 import jeff.constants.Settings.factoryPassword
 import jeff.constants.Settings.masLogin
+import org.greenrobot.eventbus.EventBus
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -60,6 +61,8 @@ class MainActivity : MainActivity(), EventListener<String> {
                 // this.onOnlineStatusNotify(event as NotificationEvent)
                 notificationInfoList = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
                 LogUtils.d(tag, "获得当前数据对象列表"+notificationInfoList!!.toString())
+                //更新主页，单个设备列表
+                EventBus.getDefault().post("MainFragment")
             }
             DeviceEvent.STATUS_CHANGED -> {
                 val deviceInfo: DeviceInfo = (event as DeviceEvent).args
@@ -97,6 +100,7 @@ class MainActivity : MainActivity(), EventListener<String> {
             }
             MeshEvent.OFFLINE -> {// 连接到不任何设备的时候分发此事件
                 LogUtils.d(tag, "OFFLINE")
+                ToastUtil.show(mActivity.resources.getString(R.string.check_add_device))
 
             }
             ErrorReportEvent.ERROR_REPORT -> {
@@ -123,7 +127,7 @@ class MainActivity : MainActivity(), EventListener<String> {
                 if (name.isNullOrEmpty() || password.isNullOrEmpty()) {
                     mLightService.idleMode(true)//断开连接
                     /*账号异常。请重新次登录*/
-                    ToastUtil(mActivity.resources.getString(R.string.account_exception))
+                    ToastUtil.show(mActivity.resources.getString(R.string.account_exception))
                     mActivity.startActivity(Intent(mActivity, LoginActivity::class.java))
                     mActivity.finish()
                     return
@@ -168,6 +172,8 @@ class MainActivity : MainActivity(), EventListener<String> {
         dominate.doDestroy()
         //移除事件
         dominate.removeEventListener(this)
+        EventBus.getDefault().unregister(mActivity)
+
     }
 
     val mReceiver = object : BroadcastReceiver() {
@@ -195,10 +201,12 @@ class MainActivity : MainActivity(), EventListener<String> {
         mFragments.add(DeviceFragment())//设备管理
         mFragments.add(MeFragment())//我的
         super.initViews()
+        EventBus.getDefault().isRegistered(mActivity)
         val filter = IntentFilter()
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         filter.priority = IntentFilter.SYSTEM_HIGH_PRIORITY - 1
         registerReceiver(mReceiver, filter)
+
     }
 
 

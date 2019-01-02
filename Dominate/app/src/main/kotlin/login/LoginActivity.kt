@@ -26,14 +26,14 @@ class LoginActivity : LoginActivity() {
     override fun login(): Boolean {
         if (super.login()) {
             //登录成功
-            ToastUtil(R.string.login_success)
+            ToastUtil.show(R.string.login_success)
             startActivity(Intent(this, MainActivity::class.java))
             this.finish()
 
             return true
         } else {
             //登录失败
-            ToastUtil(R.string.logon_back)
+            ToastUtil.show(R.string.logon_back)
             logonBack()//清除数据
         }
         return false

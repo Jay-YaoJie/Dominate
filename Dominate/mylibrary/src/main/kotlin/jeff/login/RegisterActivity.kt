@@ -58,12 +58,12 @@ open class RegisterActivity : BaseActivity<RegisterActivityDB>() {
         password = binding.etRegisterPassword.text.toString().trim()//保存密码
         //先做一些基本的判断，比如输入的用户命为空，密码为空，网络不可用多大情况，都不需要去链接服务器了，而是直接返回提示错误
         if (name.isNullOrEmpty()) {
-            ToastUtil(mActivity.resources.getString(R.string.register_account))
+            ToastUtil.show(mActivity.resources.getString(R.string.register_account))
             return false
         }
 
         if (password.isNullOrEmpty()) {
-            ToastUtil(mActivity.resources.getString(R.string.register_password))
+            ToastUtil.show(mActivity.resources.getString(R.string.register_password))
             return false
         }
         //设置注册不可以点击   //正在注册是不可以点击注册按钮的

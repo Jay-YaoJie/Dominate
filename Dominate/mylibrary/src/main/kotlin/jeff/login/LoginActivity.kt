@@ -71,8 +71,10 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
         }
         //登录
         binding.btnLogin.setOnClickListener {
+            ToastUtil.togglesoftinput( binding.btnLogin)
             login()//登录，登录成功了之后保存用户名和密码
         }
+
         // //注册按钮
         binding.btnRegister.setOnClickListener {
             //点击注册按钮
@@ -97,11 +99,11 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
         password = binding.etPassword.text.toString().trim()//保存密码
         //先做一些基本的判断，比如输入的用户命为空，密码为空，网络不可用多大情况，都不需要去链接服务器了，而是直接返回提示错误
         if (name.isNullOrEmpty()) {
-            ToastUtil(mActivity.resources.getString(R.string.account))
+            ToastUtil.show(mActivity.resources.getString(R.string.account))
             return false
         }
         if (password.isNullOrEmpty()) {
-            ToastUtil(mActivity.resources.getString(R.string.password))
+            ToastUtil.show(mActivity.resources.getString(R.string.password))
             return false
         }
         //设置登录不可以点击   //正在登录是不可以点击登录按钮的

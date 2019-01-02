@@ -51,7 +51,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
     //top 最顶的一个横向列表
     lateinit var mainFragment_DSRV_top: DragAndSwipeRecyclerView;
-    private lateinit var topAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open var topAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>? = null
     open var topicList: ArrayList<DeviceBean> = ArrayList()
     //最顶层的列表
     private fun bindTopAdapter() {
@@ -73,7 +73,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 .match(DeviceBean::class, R.layout.fragment_main_top_item)
                 .holderCreateListener {}
                 .holderBindListener { holder, position ->
-                    val topic = topAdapter.getItem(position)
+                    val topic = topAdapter!!.getItem(position)
                     holder.withView<ImageView>(R.id.main_top_iv, {
                         //是否已经打开了场景的控制
                         //  connectionStatus OFF(0), ON(1), OFFLINE(2);  关，开，离线
@@ -88,7 +88,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                     }).withView<TextView>(R.id.main_top_tv, { text = topic.textStr })
                 }
                 .clickListener { holder, position ->
-                    val topic: DeviceBean = topAdapter.getItem(position)
+                    val topic: DeviceBean = topAdapter!!.getItem(position)
                     //点击事件
                     topClickListener(topic)
 
@@ -98,12 +98,12 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                     Toast.makeText(mActivity, "item is dragged, from $from to $target", Toast.LENGTH_LONG)
                     //移动后的items
                     Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
-                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
+                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter!!.getItems())
 
                 }
                 .attach(mainFragment_DSRV_top)
         //添加数据
-        topAdapter.putItems(topicList)
+        topAdapter!!.putItems(topicList)
     }
 
     //点击列表事件
@@ -114,7 +114,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
-    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open var groupAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>? = null
     open var groupList: ArrayList<DeviceBean> = ArrayList()
     //组 数据列表
     @SuppressLint("NewApi")
@@ -136,7 +136,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 .holderCreateListener {
                 }
                 .holderBindListener { holder, position ->
-                    val topic = groupAdapter.getItem(position)
+                    val topic = groupAdapter!!.getItem(position)
                     holder.withView<TextView>(R.id.all_single_item_tv, {
                         text = topic.textStr
 
@@ -173,7 +173,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                     })
                 }
                 .clickListener { holder, position ->
-                    val topic = groupAdapter.getItem(position)
+                    val topic = groupAdapter!!.getItem(position)
                     groupClickListener(topic)
                 }
                 .dragListener { from, target ->
@@ -192,7 +192,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
                 }
                 .attach(mainFragment_DSRV_group)
-        groupAdapter.putItems(groupList)
+        groupAdapter!!.putItems(groupList)
 
     }
 
@@ -216,7 +216,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
     // single  ////单个数据列表
     lateinit var mainFragment_DSRV_single: DragAndSwipeRecyclerView;
-    private lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>? = null
     open var singleList: ArrayList<DeviceBean> = ArrayList()
     //单个数据列表
     @SuppressLint("NewApi")
@@ -239,7 +239,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
                 }
                 .holderBindListener { holder, position ->
-                    val topic = singleAdapter.getItem(position)
+                    val topic = singleAdapter!!.getItem(position)
                     holder.withView<TextView>(R.id.all_single_item_tv, {
                         text = topic.textStr
 
@@ -276,7 +276,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                     })
                 }
                 .clickListener { holder, position ->
-                    val topic = singleAdapter.getItem(position)
+                    val topic = singleAdapter!!.getItem(position)
                     singleClickListener(topic)
                 }
                 .dragListener { from, target ->
@@ -295,7 +295,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
                 }
                 .attach(mainFragment_DSRV_single)
-        singleAdapter.putItems(singleList)
+        singleAdapter!!.putItems(singleList)
     }
 
     //点击按钮 开 返回的事件

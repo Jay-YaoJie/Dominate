@@ -13,6 +13,7 @@ import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseActivity
 import jeff.beans.FragmentAdapterBeans
+import jeff.beans.FragmentAdapterBeans.DeviceI
 import jeff.beans.FragmentAdapterBeans.DeviceBean
 import jeff.utils.LogUtils
 import jeff.widgets.LinearOffsetsItemDecoration
@@ -40,8 +41,8 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
 
     // single  ////单个数据列表
     private lateinit var mainFragment_DSRV_single: DragAndSwipeRecyclerView;
-    open lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
-    open var deviceList: ArrayList<DeviceBean> = ArrayList()
+    open var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceI>? = null
+    open var deviceList: ArrayList<DeviceI> = ArrayList()
     //单个数据列表
     open fun bindAdapter() {
         mainFragment_DSRV_single = binding.deviceScaningActivityDSRV
@@ -56,15 +57,15 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         decoration.setOffsetLast(true)
         mainFragment_DSRV_single.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + deviceList.toString())
-        singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
-                .match(DeviceBean::class, R.layout.all_single_item)
+        singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceI>(mActivity)
+                .match(DeviceI::class, R.layout.all_single_item)
                 .holderCreateListener {
 
                 }
                 .holderBindListener { holder, position ->
-                    val topic = singleAdapter.getItem(position)
+                    val topic = singleAdapter!!.getItem(position)
                     holder.withView<TextView>(R.id.all_single_item_tv, {
-                        text = topic.textStr
+                        text = topic.deviceName
 
                     }).withView<SwitchView>(R.id.all_single_item_sv, {
                         this.visibility = View.GONE
@@ -76,7 +77,7 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
                     })
                 }
                 .clickListener { holder, position ->
-                    val topic = singleAdapter.getItem(position)
+                    val topic = singleAdapter!!.getItem(position)
                     deviceScanningClickListener(topic)
                 }
                 .dragListener { from, target ->
@@ -95,18 +96,18 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
                 }
                 .attach(mainFragment_DSRV_single)
-        singleAdapter.putItems(deviceList)
+        singleAdapter!!.putItems(deviceList)
     }
 
     //单个控件点击事件
-    open fun deviceScanningChlidClick(deviceBean: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
+    open fun deviceScanningChlidClick(deviceInfo: DeviceI): Boolean {
+        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceInfo.toString()} ")
         return false
     }
 
     //点击列表事件
-    open fun deviceScanningClickListener(deviceBean: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
+    open fun deviceScanningClickListener(deviceInfo: DeviceI): Boolean {
+        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceInfo.toString()} ")
         return false
     }
 }

@@ -1,5 +1,9 @@
 package jeff.beans
 
+import android.os.Parcel
+import android.os.Parcelable
+import java.util.*
+
 /**
  * author : Jeff  5899859876@qq.com
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
@@ -33,6 +37,19 @@ class FragmentAdapterBeans {
                     "deviceName=$deviceName, " +
                     "index=$index)"
         }
-
     }
+
+    class DeviceI {//出厂设备信息
+
+        var macAddress: String? = null // Mac地址
+        var deviceName: String? = null//设备名称
+        var meshName: String? = null//网络名称
+        var meshAddress: Int = 0// 网络地址
+        var meshUUID: Int = 0
+        var productUUID: Int = 0 //设备的产品标识符
+        var status: Int = 0
+        var longTermKey = ByteArray(16)
+        var firmwareRevision: String? = null // 设备的firmware版本
+    }
+
 }

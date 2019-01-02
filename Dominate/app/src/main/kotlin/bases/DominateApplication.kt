@@ -55,7 +55,7 @@ class DominateApplication : TelinkApplication() {
 
         //检查是否支持蓝牙设备
         if (!LeBluetooth.getInstance().isSupport(this)) {
-            ToastUtil(this.resources.getString(R.string.ble_not_support))
+            ToastUtil.show(this.resources.getString(R.string.ble_not_support))
             return
         }
 

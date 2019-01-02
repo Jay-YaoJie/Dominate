@@ -1,6 +1,8 @@
 package jeff.utils
 
 import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import jeff.bases.DominateApplication.Companion.instance
 
@@ -48,6 +50,32 @@ object ToastUtil {
 
     operator fun invoke(text: CharSequence) {
         show(instance, text)
+    }
+
+    /*显示键盘*/
+    fun showkeyboard(view: View) {
+        val imm = view.context
+                .getSystemService(Context.INPUT_METHOD_SERVICE ) as InputMethodManager
+        if (imm != null) {
+            view.requestFocus()
+            imm!!.showSoftInput(view, 0)
+        }
+    }
+    //显示键盘
+    fun hidekeyboard(view: View) {
+        val imm = view.context
+                .getSystemService(Context.INPUT_METHOD_SERVICE ) as InputMethodManager
+        if (imm != null) {
+            imm!!.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+    //隐藏键盘
+    fun togglesoftinput(view: View) {
+        val imm = view.context
+                .getSystemService(Context.INPUT_METHOD_SERVICE ) as InputMethodManager
+        if (imm != null) {
+            imm!!.toggleSoftInput(0, 0)
+        }
     }
 
 

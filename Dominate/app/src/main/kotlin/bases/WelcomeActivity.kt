@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import com.telink.bluetooth.LeBluetooth
 import jeff.bases.WelcomeActivity
-import jeff.utils.ToastUtil
 import login.LoginActivity
 
 /**
