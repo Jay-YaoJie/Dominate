@@ -395,6 +395,7 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
                 break;
             case LightAdapter.STATUS_CONNECTING:
 //                this.showToast("login");
+                Log.d("登录","登录成功");
                 break;
             case LightAdapter.STATUS_LOGOUT:
 //                this.showToast("disconnect");
@@ -464,7 +465,7 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
         }*/
 
         for (OnlineStatusNotificationParser.DeviceNotificationInfo notificationInfo : notificationInfoList) {
-
+            Log.d("MainActivity","notificationInfo.toString()="+notificationInfo.toString());
             int meshAddress = notificationInfo.meshAddress;
             int brightness = notificationInfo.brightness;
 
@@ -475,9 +476,9 @@ public final class MainActivity extends TelinkMeshErrorDealActivity implements E
                 this.deviceFragment.addDevice(light);
             }
 
-            light.meshAddress = meshAddress;
-            light.brightness = brightness;
-            light.connectionStatus = notificationInfo.connectionStatus;
+            light.meshAddress = meshAddress;//前面一个灯的名称
+            light.brightness = brightness;//当前状态为0关 或着 100  开
+            light.connectionStatus = notificationInfo.connectionStatus;// OFF(0), ON(1), OFFLINE(2);
 
             if (light.meshAddress == this.connectMeshAddress) {
                 light.textColor = R.color.theme_positive_color;

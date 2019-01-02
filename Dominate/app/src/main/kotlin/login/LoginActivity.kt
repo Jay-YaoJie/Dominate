@@ -3,6 +3,7 @@ package login
 import android.app.AlertDialog
 import android.content.Intent
 import bases.DominateApplication
+import bases.MainActivity
 import com.jeff.dominate.R
 import com.telink.bluetooth.LeBluetooth
 import com.telink.bluetooth.light.LeAutoConnectParameters
@@ -26,7 +27,7 @@ class LoginActivity : LoginActivity() {
         if (super.login()) {
             //登录成功
             ToastUtil(R.string.login_success)
-            startActivity(Intent(this, DeviceScaningActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             this.finish()
 
             return true
@@ -37,39 +38,5 @@ class LoginActivity : LoginActivity() {
         }
         return false
     }
-    //自动重新连接，不管是退出或着添加灯都会断开连接，所以就要从新连接
-    private fun autoConnect() {
-        if (DominateApplication.mLightService.mode != LightAdapter.MODE_AUTO_CONNECT_MESH) {
 
-            val name = SPUtils.getLocalName(mActivity)
-            val password = SPUtils.getLocalPassword(mActivity)
-            if (name.isNullOrEmpty() || password.isNullOrEmpty()) {
-                DominateApplication.mLightService.idleMode(true)//断开连接
-                return
-            }
-
-            //自动重连参数
-            val connectParams: LeAutoConnectParameters = Parameters.createAutoConnectParameters()
-            connectParams.setMeshName(name)
-            connectParams.setPassword(password)
-            //连接通知
-            connectParams.autoEnableNotification(true)
-
-            // 之前是否有在做MeshOTA操作，是则继续
-            val mac = SPUtils.getConnectMac(mActivity)
-            if (!mac.isNullOrEmpty()) {
-                connectParams.setConnectMac(mac)
-            }
-            //开始连接
-            DominateApplication.mLightService.autoConnect(connectParams)
-        }
-
-        //刷新Notify参数
-        val refreshNotifyParams: LeRefreshNotifyParameters = Parameters.createRefreshNotifyParameters()
-        refreshNotifyParams.setRefreshRepeatCount(2)
-        refreshNotifyParams.setRefreshInterval(2000)
-        //开启自动刷新Notify
-        DominateApplication.mLightService.autoRefreshNotify(refreshNotifyParams)
-
-    }
 }

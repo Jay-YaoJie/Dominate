@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
-import jeff.beans.FragmentAdapterBeans.deviceBean
+import jeff.beans.FragmentAdapterBeans.DeviceBean
 import jeff.utils.LogUtils
 import jeff.widgets.LinearOffsetsItemDecoration
 import kotlin_adapter.adapter_core.*
@@ -41,14 +41,6 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     override fun getContentViewId(): Int = R.layout.fragment_main
 
     override fun initViews() {
-//        async {
-//            await<Unit> {
-//                //加载测试数据
-//
-//            }
-//
-//            info()//加载数据列表适配器
-//        }
     }
 
     open fun info() {
@@ -59,8 +51,8 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
     //top 最顶的一个横向列表
     lateinit var mainFragment_DSRV_top: DragAndSwipeRecyclerView;
-    private lateinit var topAdapter: DragAndSwipeRecyclerViewAdapter<deviceBean>
-    open var topicList: ArrayList<deviceBean> = ArrayList()
+    private lateinit var topAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open var topicList: ArrayList<DeviceBean> = ArrayList()
     //最顶层的列表
     private fun bindTopAdapter() {
         mainFragment_DSRV_top = binding.mainFragmentTopDSRV
@@ -76,15 +68,16 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         mainFragment_DSRV_top.layoutManager = GridLayoutManager(mActivity, 1, GridLayoutManager.HORIZONTAL, false)
         //没有移动之前的items
         LogUtils.d(tag, "没有移动之前的items  topicList.toString()=" + topicList.toString())
-        topAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(mActivity)
+        topAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
                 //加载item布局
-                .match(deviceBean::class, R.layout.fragment_main_top_item)
+                .match(DeviceBean::class, R.layout.fragment_main_top_item)
                 .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = topAdapter.getItem(position)
                     holder.withView<ImageView>(R.id.main_top_iv, {
                         //是否已经打开了场景的控制
-                        if (topic.checke) {
+                        //  connectionStatus OFF(0), ON(1), OFFLINE(2);  关，开，离线
+                        if (topic.connectionStatus == 1) {
                             //已经打开场景
                             Glide.with(mActivity).load(topic.imgAny).into(this)
                         } else {
@@ -95,7 +88,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                     }).withView<TextView>(R.id.main_top_tv, { text = topic.textStr })
                 }
                 .clickListener { holder, position ->
-                    val topic: deviceBean = topAdapter.getItem(position)
+                    val topic: DeviceBean = topAdapter.getItem(position)
                     //点击事件
                     topClickListener(topic)
 
@@ -114,15 +107,15 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     }
 
     //点击列表事件
-    open fun topClickListener(deviceBean: deviceBean): Boolean {
+    open fun topClickListener(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
-    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<deviceBean>
-    open var groupList: ArrayList<deviceBean> = ArrayList()
+    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open var groupList: ArrayList<DeviceBean> = ArrayList()
     //组 数据列表
     @SuppressLint("NewApi")
     private fun bindGroupAdapter() {
@@ -138,8 +131,8 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         decoration.setOffsetLast(true)
         mainFragment_DSRV_group.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  groupList.toString()=" + groupList.toString())
-        groupAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(mActivity)
-                .match(deviceBean::class, R.layout.all_single_item)
+        groupAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
+                .match(DeviceBean::class, R.layout.all_single_item)
                 .holderCreateListener {
                 }
                 .holderBindListener { holder, position ->
@@ -149,13 +142,17 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
                     }).withView<SwitchView>(R.id.all_single_item_sv, {
                         // //是否已经打开了当前组的控制
-                        if (topic.checke) {
+                        //  connectionStatus OFF(0), ON(1), OFFLINE(2);  关，开，离线
+                        if (topic.connectionStatus == 1) {
                             //当前组的灯已经打开
                             this.toggleSwitch(true);
 
-                        } else {
+                        } else if (topic.connectionStatus == 0) {
                             //当前组未打开
                             this.toggleSwitch(false);
+                        } else {
+                            this.toggleSwitch(false);
+                            return@withView
                         }
                         this.setOnStateChangedListener(object : SwitchView.OnStateChangedListener {
                             override fun toggleToOn(view: SwitchView) {
@@ -200,27 +197,27 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     }
 
     //点击按钮 开 返回的事件
-    open fun groupToggleToOn(deviceBean: deviceBean): Boolean {
+    open fun groupToggleToOn(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击按钮 开 返回的事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }
 
     //点击按钮 关 返回的事件
-    open fun groupToggleToOff(deviceBean: deviceBean): Boolean {
+    open fun groupToggleToOff(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击按钮 关 返回的事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }
 
     //点击列表事件
-    open fun groupClickListener(deviceBean: deviceBean): Boolean {
+    open fun groupClickListener(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }
 
     // single  ////单个数据列表
     lateinit var mainFragment_DSRV_single: DragAndSwipeRecyclerView;
-    private lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<deviceBean>
-    open var singleList: ArrayList<deviceBean> = ArrayList()
+    private lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open var singleList: ArrayList<DeviceBean> = ArrayList()
     //单个数据列表
     @SuppressLint("NewApi")
     private fun bindSingleAdapter() {
@@ -236,8 +233,8 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         decoration.setOffsetLast(true)
         mainFragment_DSRV_single.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + singleList.toString())
-        singleAdapter = DragAndSwipeRecyclerViewAdapter<deviceBean>(mActivity)
-                .match(deviceBean::class, R.layout.all_single_item)
+        singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
+                .match(DeviceBean::class, R.layout.all_single_item)
                 .holderCreateListener {
 
                 }
@@ -248,13 +245,17 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
                     }).withView<SwitchView>(R.id.all_single_item_sv, {
                         // //是否已经打开了当前组的控制
-                        if (topic.checke) {
+                        //  connectionStatus OFF(0), ON(1), OFFLINE(2);  关，开，离线
+                        if (topic.connectionStatus == 1) {
                             //当前组的灯已经打开
                             this.toggleSwitch(true);
 
-                        } else {
+                        } else if (topic.connectionStatus == 0) {
                             //当前组未打开
                             this.toggleSwitch(false);
+                        } else {
+                            this.toggleSwitch(false);
+                            return@withView
                         }
                         this.setOnStateChangedListener(object : SwitchView.OnStateChangedListener {
                             override fun toggleToOn(view: SwitchView) {
@@ -298,19 +299,19 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     }
 
     //点击按钮 开 返回的事件
-    open fun singleToggleToOn(deviceBean: deviceBean): Boolean {
+    open fun singleToggleToOn(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击按钮 开 返回的事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }
 
     //点击按钮 关 返回的事件
-    open fun singleToggleToOff(deviceBean: deviceBean): Boolean {
+    open fun singleToggleToOff(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击按钮 关 返回的事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }
 
     //点击列表事件
-    open fun singleClickListener(deviceBean: deviceBean): Boolean {
+    open fun singleClickListener(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }

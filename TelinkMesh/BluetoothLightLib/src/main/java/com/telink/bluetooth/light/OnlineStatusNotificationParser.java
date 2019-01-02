@@ -80,5 +80,16 @@ public final class OnlineStatusNotificationParser extends NotificationParser<Lis
         public int brightness;
         public int reserve;
         public ConnectionStatus connectionStatus = ConnectionStatus.OFFLINE;
+
+        @Override
+        public String toString() {
+            return "DeviceNotificationInfo{" +
+                    "meshAddress=" + meshAddress +
+                    ", status=" + status +
+                    ", brightness=" + brightness +
+                    ", reserve=" + reserve +
+                    ", connectionStatus=" + connectionStatus +
+                    '}';
+        }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data class="jeff.login.LoginActivityDB" />
+    <data class="jeff.login.RegisterActivityDB" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                     android:src="@mipmap/icon_login_account" />
 
                 <EditText
-                    android:id="@+id/et_account"
+                    android:id="@+id/et_register_account"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
@@ -38,7 +38,7 @@
                     android:background="@null"
 
                     android:gravity="center|bottom|left"
-                    android:hint="@string/account"
+                    android:hint="@string/register_account"
                     android:maxLines="1"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
@@ -66,21 +66,21 @@
                     android:src="@mipmap/icon_login_pw" />
 
                 <EditText
-                    android:id="@+id/et_password"
+                    android:id="@+id/et_register_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@+id/img_pw"
                     android:background="@null"
                     android:gravity="center|bottom|left"
-                    android:hint="@string/password"
+                    android:hint="@string/register_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
 
                 <ImageView
-                    android:id="@+id/iv_see_password"
+                    android:id="@+id/iv_see_register_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -96,56 +96,16 @@
                     android:background="@color/orange_light" />
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/checkBox_password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:padding="@dimen/padding"
-                    android:text="@string/check_password"
-                    android:textColor="@color/orange_deep"
-                    android:textSize="@dimen/text_size_small" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:padding="@dimen/padding"
-                    android:text="@string/check_login"
-                    android:textColor="@color/orange_deep"
-                    android:textSize="@dimen/text_size_small" />
-
-            </LinearLayout>
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/center_height"
                 android:background="@drawable/btn_orange_selector"
-                android:text="@string/login"
+                android:text="@string/register"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:id="@+id/btn_register"
-                android:layout_height="@dimen/margin_huge"
-                android:layout_marginTop="@dimen/layout_margin"
-                android:gravity="center"
-                android:text="@string/register" />
         </LinearLayout>
 
     </ScrollView>

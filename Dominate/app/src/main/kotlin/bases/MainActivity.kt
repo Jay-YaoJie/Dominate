@@ -10,6 +10,7 @@ import android.text.TextUtils
 import android.util.Log
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
+import bases.DominateApplication.Companion.notificationInfoList
 import com.jeff.dominate.MeshOTAService
 import com.jeff.dominate.R
 import com.jeff.dominate.TelinkLightApplication
@@ -31,7 +32,10 @@ import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
 import login.LoginActivity
 import main.MainFragment
-
+import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificationInfo
+import jeff.constants.Settings.factoryName
+import jeff.constants.Settings.factoryPassword
+import jeff.constants.Settings.masLogin
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -50,11 +54,12 @@ class MainActivity : MainActivity(), EventListener<String> {
     override fun performed(event: Event<String>) {
         //  T ODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         LogUtils.d(tag, " performed(event: Event<String>)=event.getType()=" + event.getType())
-
         when (event.type) {
             NotificationEvent.ONLINE_STATUS -> {//  设备的状态变化事件
-                //  获得当前在线数据
+                //  获得当前在线数据,离线数据，或着不存在的设备数据
                 // this.onOnlineStatusNotify(event as NotificationEvent)
+                notificationInfoList = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
+                LogUtils.d(tag, "获得当前数据对象列表"+notificationInfoList!!.toString())
             }
             DeviceEvent.STATUS_CHANGED -> {
                 val deviceInfo: DeviceInfo = (event as DeviceEvent).args
@@ -62,31 +67,29 @@ class MainActivity : MainActivity(), EventListener<String> {
                 LogUtils.d(tag, "当设备的状态发生改变时deviceInfo.toString()=" + deviceInfo.toString())
                 when (deviceInfo.status) {
                     LightAdapter.STATUS_LOGIN -> {
+                        LogUtils.d(tag, "STATUS_LOGIN~！")
                         //this.connectMeshAddress = dominate.getConnectDevice().meshAddress
                         //                this.showToast("login success");
-                        if (TelinkLightService.Instance().mode == LightAdapter.MODE_AUTO_CONNECT_MESH) {
+                        if (mLightService.mode == LightAdapter.MODE_AUTO_CONNECT_MESH) {
                             mHandler.postDelayed({ mLightService.sendCommandNoResponse(0xE4.toByte(), 0xFFFF, byteArrayOf()) }, (3 * 1000).toLong())
                         }
-
-                        if (TelinkLightApplication.getApp().mesh.isOtaProcessing && !MeshOTAService.isRunning) {
-                            // 获取本地设备OTA状态信息
-                            MeshCommandUtil.getDeviceOTAState()
-                        }
+//                        if (!MeshOTAService.isRunning) {
+//                            // 获取本地设备OTA状态信息
+//                            MeshCommandUtil.getDeviceOTAState()
+//                        }
                     }
                     LightAdapter.STATUS_CONNECTING -> {
                         LogUtils.d(tag, "登录成功~！")
-                        SPUtils.setConnectMac(mActivity, deviceInfo.macAddress)
                     }
                     LightAdapter.STATUS_LOGOUT -> {
                         LogUtils.d(tag, "登录失败~！")
-                        // this.showToast("disconnect");
-                        SPUtils.connectMacClear(mActivity)
+                        // this.showToast("disconnect");//第一次进来，没有设备，定会失败连接
                         //重新登录
                         autoConnect()
                     }
                     LightAdapter.STATUS_ERROR_N -> {
                         //登录异常 清除所有登录数据
-                        SPUtils.clearAll(mActivity)
+                        //SPUtils.clearAll(mActivity) //第一次进来，没有设备，定会失败连接
                         //重新登录
                         autoConnect()
                     }
@@ -103,25 +106,32 @@ class MainActivity : MainActivity(), EventListener<String> {
         }
     }
 
+
     //自动重新连接，不管是退出或着添加灯都会断开连接，所以就要从新连接
     private fun autoConnect() {
         if (mLightService.mode != LightAdapter.MODE_AUTO_CONNECT_MESH) {
-
-            val name = SPUtils.getLocalName(mActivity)
-            val password = SPUtils.getLocalPassword(mActivity)
-            if (name.isNullOrEmpty() || password.isNullOrEmpty()) {
-                mLightService.idleMode(true)//断开连接
-                /*账号异常。请重新次登录*/
-                ToastUtil(mActivity.resources.getString(R.string.account_exception))
-                mActivity.startActivity(Intent(mActivity, LoginActivity::class.java))
-                mActivity.finish()
-                return
-            }
-
             //自动重连参数
             val connectParams: LeAutoConnectParameters = Parameters.createAutoConnectParameters()
-            connectParams.setMeshName(name)
-            connectParams.setPassword(password)
+            if (masLogin) {
+                //如果使用默认名登录
+                connectParams.setMeshName(factoryName)
+                connectParams.setPassword(factoryPassword)
+            } else {
+                //否则使用自己的名字登录
+                val name = SPUtils.getLocalName(mActivity)
+                val password = SPUtils.getLocalPassword(mActivity)
+                if (name.isNullOrEmpty() || password.isNullOrEmpty()) {
+                    mLightService.idleMode(true)//断开连接
+                    /*账号异常。请重新次登录*/
+                    ToastUtil(mActivity.resources.getString(R.string.account_exception))
+                    mActivity.startActivity(Intent(mActivity, LoginActivity::class.java))
+                    mActivity.finish()
+                    return
+                }
+                connectParams.setMeshName(name)
+                connectParams.setPassword(password)
+            }
+
             //连接通知
             connectParams.autoEnableNotification(true)
 
@@ -152,7 +162,7 @@ class MainActivity : MainActivity(), EventListener<String> {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(tag, "onDestroy")
+        LogUtils.d(tag, "onDestroy")
         unregisterReceiver(mReceiver)
         this.mHandler.removeCallbacksAndMessages(null)
         dominate.doDestroy()
@@ -184,6 +194,7 @@ class MainActivity : MainActivity(), EventListener<String> {
         mFragments.add(SceneFragment())//情景
         mFragments.add(DeviceFragment())//设备管理
         mFragments.add(MeFragment())//我的
+        super.initViews()
         val filter = IntentFilter()
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         filter.priority = IntentFilter.SYSTEM_HIGH_PRIORITY - 1

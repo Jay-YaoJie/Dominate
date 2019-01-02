@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import jeff.beans.FragmentAdapterBeans.deviceBean
+import jeff.beans.FragmentAdapterBeans.DeviceBean
 
 
 /**
@@ -216,7 +216,7 @@ class SPUtils {
         /**
          * 保存列表对象
          */
-        fun setFragmentAdapterBeans(context: Context, listBeanName: String, list: ArrayList<deviceBean>) {
+        fun setFragmentAdapterBeans(context: Context, listBeanName: String, list: ArrayList<DeviceBean>) {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
             val helper = SPUtils(context, "FragmentAdapterBeans")
             val strJson = (Gson().toJson(list))
@@ -253,13 +253,13 @@ class SPUtils {
         /**
          * 获得列表对象
          */
-        fun getFragmentAdapterBeans(context: Context, listBeanName: String): ArrayList<deviceBean>? {
+        fun getFragmentAdapterBeans(context: Context, listBeanName: String): ArrayList<DeviceBean>? {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
             val helper = SPUtils(context, "FragmentAdapterBeans")
             val strJson = helper.getString(listBeanName)
             if (!listBeanName.isNullOrEmpty()) {
                 //使用TypeToken进行转化
-                val type = object : TypeToken<List<deviceBean>>() {}.type
+                val type = object : TypeToken<List<DeviceBean>>() {}.type
                 return (Gson().fromJson(strJson, type))
             } else {
                 return null;

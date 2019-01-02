@@ -29,12 +29,16 @@
     <string name="account">inputAccount</string>
     <!--请输入登录密码-->
     <string name="password">inputPassword</string>
+    <string name="register_account">inputAccount</string>
+    <string name="register_password">inputPassword</string>
     <!--记住密码-->
     <string name="check_password">savePassword</string>
     <!--自动登录-->
     <string name="check_login">AutoLogin</string>
     <!--登录-->
     <string name="login">login</string>
+    <!--注册-->
+    <string name="register">register</string>
     <!--登录成功-->
     <string name="login_success">success</string>
     <!--重新登录-->

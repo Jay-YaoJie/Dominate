@@ -13,6 +13,7 @@ import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseActivity
 import jeff.beans.FragmentAdapterBeans
+import jeff.beans.FragmentAdapterBeans.DeviceBean
 import jeff.utils.LogUtils
 import jeff.widgets.LinearOffsetsItemDecoration
 import kotlin_adapter.adapter_core.*
@@ -34,13 +35,13 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
     override fun getContentViewId(): Int = R.layout.activity_device_scaning
     override fun initViews() {
         //topLeftView(null,R.mipmap.arrow_l,true)
-        topMiddleView(resources.getString(R.string.add_device),0)
+        topMiddleView(resources.getString(R.string.add_device), 0)
     }
 
     // single  ////单个数据列表
     private lateinit var mainFragment_DSRV_single: DragAndSwipeRecyclerView;
-    open lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<FragmentAdapterBeans.deviceBean>
-    open var deviceList: ArrayList<FragmentAdapterBeans.deviceBean> = ArrayList()
+    open lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open var deviceList: ArrayList<DeviceBean> = ArrayList()
     //单个数据列表
     open fun bindAdapter() {
         mainFragment_DSRV_single = binding.deviceScaningActivityDSRV
@@ -55,8 +56,8 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         decoration.setOffsetLast(true)
         mainFragment_DSRV_single.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + deviceList.toString())
-        singleAdapter = DragAndSwipeRecyclerViewAdapter<FragmentAdapterBeans.deviceBean>(mActivity)
-                .match(FragmentAdapterBeans.deviceBean::class, R.layout.all_single_item)
+        singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
+                .match(DeviceBean::class, R.layout.all_single_item)
                 .holderCreateListener {
 
                 }
@@ -65,9 +66,9 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
                     holder.withView<TextView>(R.id.all_single_item_tv, {
                         text = topic.textStr
 
-                    }).withView<SwitchView>(R.id.all_single_item_sv,{
-                        this.visibility= View.GONE
-                    }).withView<ImageView>(R.id.all_single_item_iv,{
+                    }).withView<SwitchView>(R.id.all_single_item_sv, {
+                        this.visibility = View.GONE
+                    }).withView<ImageView>(R.id.all_single_item_iv, {
                         Glide.with(mActivity).load(R.mipmap.icon_add).into(this)
                         this.setOnClickListener {
                             deviceScanningChlidClick(topic)
@@ -96,13 +97,15 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
                 .attach(mainFragment_DSRV_single)
         singleAdapter.putItems(deviceList)
     }
+
     //单个控件点击事件
-    open fun  deviceScanningChlidClick(deviceBean: FragmentAdapterBeans.deviceBean):Boolean{
+    open fun deviceScanningChlidClick(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }
+
     //点击列表事件
-    open fun deviceScanningClickListener(deviceBean: FragmentAdapterBeans.deviceBean): Boolean {
+    open fun deviceScanningClickListener(deviceBean: DeviceBean): Boolean {
         LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }

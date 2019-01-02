@@ -31,7 +31,7 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
             //判断是否记住密码
             if (SPUtils.getRemenberPassword(mActivity)) {
                 binding.checkBoxPassword.isChecked = true//勾选记住密码
-                isSavePassword=true
+                isSavePassword = true
                 //)//把密码和账号输入到输入框中
                 binding.etAccount.setText(getLocalName(mActivity))
                 binding.etPassword.setText(getLocalPassword(mActivity))
@@ -51,7 +51,6 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
                 //密码可见
                 binding.ivSeePassword.isSelected = true
                 binding.etPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                binding.etPassword
             }
         }
         //选择事件记住密码
@@ -74,6 +73,10 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
         binding.btnLogin.setOnClickListener {
             login()//登录，登录成功了之后保存用户名和密码
         }
+        // //注册按钮
+        binding.btnRegister.setOnClickListener {
+            //点击注册按钮
+        }
     }
 
     //保存帐号
@@ -89,17 +92,16 @@ open class LoginActivity : BaseActivity<LoginActivityDB>() {
      * 模拟登录情况
      * 用户名csdn，密码123456，就能登录成功，否则登录失败
      */
-    open fun login() :Boolean{
+    open fun login(): Boolean {
         name = binding.etAccount.text.toString().trim()//保存用户名
         password = binding.etPassword.text.toString().trim()//保存密码
         //先做一些基本的判断，比如输入的用户命为空，密码为空，网络不可用多大情况，都不需要去链接服务器了，而是直接返回提示错误
         if (name.isNullOrEmpty()) {
-            ToastUtil("你输入的账号为空！")
+            ToastUtil(mActivity.resources.getString(R.string.account))
             return false
         }
-
         if (password.isNullOrEmpty()) {
-            ToastUtil("你输入的密码为空！")
+            ToastUtil(mActivity.resources.getString(R.string.password))
             return false
         }
         //设置登录不可以点击   //正在登录是不可以点击登录按钮的

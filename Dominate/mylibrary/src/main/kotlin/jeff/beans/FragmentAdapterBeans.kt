@@ -8,19 +8,30 @@ package jeff.beans
  * description ：FragmentAdapterBeans  保存为fragment里的adapter数据对象
  */
 class FragmentAdapterBeans {
-    class deviceBean {
+    class DeviceBean {
+        var meshAddress: Int = 0 //灯的名称 数据列表12345
+        var status: Int = 0
+        var brightness: Int = 0 ////当前状态为0关 或着 100  开
+        var reserve: Int = 0
+        //  connectionStatus OFF(0), ON(1), OFFLINE(2);  关，开，离线
+        //   OFF(0), ON(1), OFFLINE(2); var connectionStatus: ConnectionStatus? = null
+        var connectionStatus: Int = 0
+
         //主页里选择适配使用的对象
         var imgAny: Any? = null//图片
         var textStr: String? = null//文字
-        var groupId: Int = 0//当前id
-        var idInt:Int=0//单个设备时的id
+        var groupId: Int = -1//当前id
+
         var deviceName: String? = null//设备里的名称
-        var index: Int = 0 //当前所在的下标
-        var checke: Boolean = false//当前是否选择
-        // OFF(0), ON(1), OFFLINE(2);  关，开，离线
-        var connectionStatus:Int=0 //   OFF(0), ON(1), OFFLINE(2); var connectionStatus: ConnectionStatus? = null
+        var index: Int = -1 //当前所在的下标
+
+
         override fun toString(): String {
-            return "deviceBean(imgAny=$imgAny, textStr=$textStr, groupId=$groupId, deviceName=$deviceName, index=$index, checke=$checke)"
+            return "deviceBean(imgAny=$imgAny," +
+                    " textStr=$textStr," +
+                    " groupId=$groupId, " +
+                    "deviceName=$deviceName, " +
+                    "index=$index)"
         }
 
     }

@@ -40,8 +40,7 @@
                 android:layout_weight="1"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:overScrollMode="never"
-               />
+                android:overScrollMode="never" />
 
             <!--未分组设备-->
             <TextView
@@ -62,8 +61,7 @@
                 android:layout_weight="1"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:overScrollMode="never"
-                />
+                android:overScrollMode="never" />
 
         </LinearLayout>
     </ScrollView>

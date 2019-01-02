@@ -8,12 +8,14 @@ import bases.DominateApplication.Companion.mLightService
 import com.jeff.dominate.R
 import com.jeff.dominate.model.Light
 import com.telink.bluetooth.LeBluetooth
+import com.telink.bluetooth.TelinkLog
 import com.telink.bluetooth.event.DeviceEvent
 import com.telink.bluetooth.event.LeScanEvent
 import com.telink.bluetooth.event.MeshEvent
 import com.telink.bluetooth.light.*
 import com.telink.util.Event
 import com.telink.util.EventListener
+import jeff.constants.Settings
 import jeff.constants.Settings.factoryName
 import jeff.constants.Settings.factoryPassword
 import jeff.device.DeviceScaningActivity
@@ -31,7 +33,6 @@ import jeff.utils.ToastUtil
  */
 class DeviceScaningActivity : DeviceScaningActivity() {
 
-    var tempDeviceInfo: DeviceInfo? = null;
     var deviceInfo: DeviceInfo? = null
     val mListener = EventListener<String> { event: Event<String> ->
         //To change body of created functions use File | Settings | File Templates.
@@ -39,13 +40,11 @@ class DeviceScaningActivity : DeviceScaningActivity() {
         when (event.type) {
             LeScanEvent.LE_SCAN -> {
                 //扫描到设备
-                //扫描到设备
                 if (deviceInfo == null) {
                     deviceInfo = (event as LeScanEvent).getArgs()
                     LogUtils.d(tag, "扫描到设备，修改网络名" + deviceInfo.toString())
                     scanedList.add(deviceInfo!!);//添加到集合中
                     mHandler.postDelayed({
-
                         //更新参数,
                         val params: LeUpdateParameters = Parameters.createUpdateParameters()
 //                        if (!(Manufacture.getDefault().factoryName).isNullOrEmpty()) {
@@ -76,6 +75,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                 ToastUtil("扫描不到任何设备了")
             }
             LeScanEvent.LE_SCAN_COMPLETED -> {
+                TelinkLog.d("scan complete")
                 ////扫描改变,直到扫不到设备
             }
             DeviceEvent.STATUS_CHANGED -> {
@@ -101,8 +101,11 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         ToastUtil(mActivity.resources.getString(R.string.add_exception))
                         LogUtils.d(tag, "加灯异常")
                     }
+//                    0->{
+//                        LogUtils.d(tag,"status=0")
+//                    }
                 }
-                this.startScan(1000)
+              //  this.startScan(1000)
             }
             MeshEvent.ERROR -> {
                 mLightService.idleMode(true)//断开连接
@@ -116,6 +119,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
         scanedList.clear()
         dominate.removeEventListener(mListener)
         this.mHandler.removeCallbacksAndMessages(null)
+        Settings.masLogin = false
     }
 
     private var scanedList: ArrayList<DeviceInfo> = ArrayList()
@@ -140,6 +144,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
     }
 
     override fun initViews() {
+        Settings.masLogin = true
         super.initViews()
         //监听事件
         dominate.addEventListener(LeScanEvent.LE_SCAN, mListener)
