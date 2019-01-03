@@ -41,6 +41,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     override fun getContentViewId(): Int = R.layout.fragment_main
 
     override fun initViews() {
+        info()
     }
 
     open fun info() {

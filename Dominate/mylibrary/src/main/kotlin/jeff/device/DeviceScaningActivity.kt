@@ -2,6 +2,7 @@ package jeff.device
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.widget.ImageView
@@ -12,13 +13,14 @@ import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseActivity
-import jeff.beans.FragmentAdapterBeans
 import jeff.beans.FragmentAdapterBeans.DeviceI
-import jeff.beans.FragmentAdapterBeans.DeviceBean
 import jeff.utils.LogUtils
 import jeff.widgets.LinearOffsetsItemDecoration
-import kotlin_adapter.adapter_core.*
+import kotlin_adapter.adapter_core.attach
+import kotlin_adapter.adapter_core.clickListener
 import kotlin_adapter.adapter_core.extension.putItems
+import kotlin_adapter.adapter_core.holderBindListener
+import kotlin_adapter.adapter_core.match
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerViewAdapter
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.dragListener
@@ -50,7 +52,7 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         mainFragment_DSRV_single.isItemViewSwipeEnable = false
         mainFragment_DSRV_single.dragDirection = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         //  mainFragment_DSRV_single.swipeDirection = ItemTouchHelper.LEFT
-        mainFragment_DSRV_single.layoutManager = LinearLayoutManager(mActivity)
+        mainFragment_DSRV_single.layoutManager = LinearLayoutManager(mActivity) as RecyclerView.LayoutManager?
         val decoration = LinearOffsetsItemDecoration(LinearOffsetsItemDecoration.LINEAR_OFFSETS_VERTICAL)  //LINEAR_OFFSETS_HORIZONTAL  LINEAR_OFFSETS_VERTICAL
         decoration.setItemOffsets(ScreenUtils.dp2PxInt(mActivity, 10f))
         decoration.setOffsetEdge(true)
@@ -59,13 +61,11 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + deviceList.toString())
         singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceI>(mActivity)
                 .match(DeviceI::class, R.layout.all_single_item)
-                .holderCreateListener {
-
-                }
+               // .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = singleAdapter!!.getItem(position)
                     holder.withView<TextView>(R.id.all_single_item_tv, {
-                        text = topic.deviceName
+                        this.text = topic.deviceName
 
                     }).withView<SwitchView>(R.id.all_single_item_sv, {
                         this.visibility = View.GONE
@@ -96,7 +96,7 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
                 }
                 .attach(mainFragment_DSRV_single)
-        singleAdapter!!.putItems(deviceList)
+       singleAdapter!!.putItems(deviceList)
     }
 
     //单个控件点击事件

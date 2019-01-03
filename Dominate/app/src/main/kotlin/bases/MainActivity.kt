@@ -1,30 +1,28 @@
 package bases
 
 
-import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
-import android.content.*
-import android.os.Build
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Handler
-import android.text.TextUtils
-import android.util.Log
+import android.os.Message
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
 import bases.DominateApplication.Companion.notificationInfoList
-import com.jeff.dominate.MeshOTAService
 import com.jeff.dominate.R
-import com.jeff.dominate.TelinkLightApplication
 import com.jeff.dominate.TelinkLightService
-import com.jeff.dominate.model.Lights
-import com.jeff.dominate.util.MeshCommandUtil
-import com.telink.bluetooth.TelinkLog
 import com.telink.bluetooth.event.*
 import com.telink.bluetooth.light.*
-import com.telink.util.BuildUtils
+import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificationInfo
 import com.telink.util.Event
 import com.telink.util.EventListener
 import device.DeviceFragment
 import jeff.bases.MainActivity
+import jeff.constants.Settings.factoryName
+import jeff.constants.Settings.factoryPassword
+import jeff.constants.Settings.masLogin
 import jeff.me.MeFragment
 import jeff.scene.SceneFragment
 import jeff.utils.LogUtils
@@ -32,11 +30,7 @@ import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
 import login.LoginActivity
 import main.MainFragment
-import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificationInfo
-import jeff.constants.Settings.factoryName
-import jeff.constants.Settings.factoryPassword
-import jeff.constants.Settings.masLogin
-import org.greenrobot.eventbus.EventBus
+
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -46,7 +40,6 @@ import org.greenrobot.eventbus.EventBus
  * description ：bases.MainActivity
  */
 class MainActivity : MainActivity(), EventListener<String> {
-    val mHandler: Handler = Handler()
     /**
      * 事件处理方法
      *
@@ -60,9 +53,10 @@ class MainActivity : MainActivity(), EventListener<String> {
                 //  获得当前在线数据,离线数据，或着不存在的设备数据
                 // this.onOnlineStatusNotify(event as NotificationEvent)
                 notificationInfoList = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
-                LogUtils.d(tag, "获得当前数据对象列表"+notificationInfoList!!.toString())
-                //更新主页，单个设备列表
-                EventBus.getDefault().post("MainFragment")
+                LogUtils.d(tag, "获得当前数据对象列表" + notificationInfoList!!.toString())
+                //更新主页列表数据
+                mHandler.obtainMessage(1).sendToTarget()
+
             }
             DeviceEvent.STATUS_CHANGED -> {
                 val deviceInfo: DeviceInfo = (event as DeviceEvent).args
@@ -172,7 +166,6 @@ class MainActivity : MainActivity(), EventListener<String> {
         dominate.doDestroy()
         //移除事件
         dominate.removeEventListener(this)
-        EventBus.getDefault().unregister(mActivity)
 
     }
 
@@ -194,19 +187,31 @@ class MainActivity : MainActivity(), EventListener<String> {
             }
         }
     }
-
+    val mHandler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            when (msg.what) {
+                1 -> {
+                    //主页更新
+                    mainFragment.infoSingleList()
+                }
+            }
+        }
+    }
+    val mainFragment = MainFragment()//    mFragments.add(MainFragment())//主页
+    val sceneFragment = SceneFragment()//    mFragments.add(SceneFragment())//情景
+    val deviceFragment = DeviceFragment()//    mFragments.add(DeviceFragment())//设备管理
+    val meFragment = MeFragment()//    mFragments.add(MeFragment())//我的
     override fun initViews() {
-        mFragments.add(MainFragment())//主页
-        mFragments.add(SceneFragment())//情景
-        mFragments.add(DeviceFragment())//设备管理
-        mFragments.add(MeFragment())//我的
+        mFragments.add(mainFragment)//主页
+        mFragments.add(sceneFragment)//情景
+        mFragments.add(deviceFragment)//设备管理
+        mFragments.add(meFragment)//我的
         super.initViews()
-        EventBus.getDefault().isRegistered(mActivity)
         val filter = IntentFilter()
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         filter.priority = IntentFilter.SYSTEM_HIGH_PRIORITY - 1
         registerReceiver(mReceiver, filter)
-
     }
 
 

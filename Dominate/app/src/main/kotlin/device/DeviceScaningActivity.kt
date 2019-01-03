@@ -1,22 +1,15 @@
 package device
 
-import android.app.AlertDialog
 import android.os.Handler
-import android.widget.Toast
-import bases.DominateApplication
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
 import com.jeff.dominate.R
-import com.jeff.dominate.model.Light
-import com.telink.bluetooth.LeBluetooth
-import com.telink.bluetooth.TelinkLog
 import com.telink.bluetooth.event.DeviceEvent
 import com.telink.bluetooth.event.LeScanEvent
 import com.telink.bluetooth.event.MeshEvent
 import com.telink.bluetooth.light.*
 import com.telink.util.Event
 import com.telink.util.EventListener
-import jeff.beans.FragmentAdapterBeans
 import jeff.beans.FragmentAdapterBeans.DeviceI
 import jeff.constants.Settings
 import jeff.constants.Settings.factoryName
@@ -25,6 +18,7 @@ import jeff.device.DeviceScaningActivity
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
+import kotlin_adapter.adapter_core.extension.putItems
 
 
 /**
@@ -88,24 +82,22 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         //加灯完成继续扫描,直到扫不到设备
                         LogUtils.d(tag, "扫描完成。")
                         ////扫描改变,直到扫不到设备
-                        if (scanedList != null || scanedList.size > 0) {
-                            //更新列表
-                            var deviceI: DeviceI = DeviceI()
-                            deviceI.macAddress = deviceInfo.macAddress//: String? = null // Mac地址
-                            deviceI.deviceName = deviceInfo.deviceName//: String? = null//设备名称
-                            deviceI.meshName = deviceInfo.meshName//: String? = null//网络名称
-                            deviceI.meshAddress = deviceInfo.meshAddress//: Int = 0// 网络地址
-                            deviceI.meshUUID = deviceInfo.meshUUID//: Int = 0
-                            deviceI.productUUID = deviceInfo.productUUID//: Int = 0 //设备的产品标识符
-                            deviceI.status = deviceInfo.status//: Int = 0
-                            deviceI.longTermKey = deviceInfo.longTermKey
-                            deviceI.firmwareRevision = deviceInfo.firmwareRevision//: String? = null // 设备的firmware版本
-                            deviceList.add(deviceI)
-                        }
-                        if (singleAdapter != null) {
-                            //刷新页面
-                            singleAdapter!!.notifyDataSetChanged()
-                        }
+                        //更新列表
+                        var deviceI = DeviceI()
+                        deviceI.macAddress = deviceInfo.macAddress//: String? = null // Mac地址
+                        deviceI.deviceName = deviceInfo.deviceName//: String? = null//设备名称
+                        deviceI.meshName = deviceInfo.meshName//: String? = null//网络名称
+                        deviceI.meshAddress = deviceInfo.meshAddress//: Int = 0// 网络地址
+                        deviceI.meshUUID = deviceInfo.meshUUID//: Int = 0
+                        deviceI.productUUID = deviceInfo.productUUID//: Int = 0 //设备的产品标识符
+                        deviceI.status = deviceInfo.status//: Int = 0
+                        deviceI.longTermKey = deviceInfo.longTermKey
+                        deviceI.firmwareRevision = deviceInfo.firmwareRevision//: String? = null // 设备的firmware版本
+                       // singleAdapter!!.addItem(deviceI)
+                        deviceList.add(deviceI)
+                        singleAdapter!!.putItems(deviceList)
+                        //刷新页面
+                        singleAdapter!!.notifyDataSetChanged()
 
                         this.startScan(1000)
                     }
@@ -113,7 +105,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         //加灯失败继续扫描
                         LogUtils.d(tag, "加灯失败，继续扫描设备")
                         //  saveLog("Fail:  mac--" + deviceInfo.macAddress);
-                         this.startScan(1000)
+                        this.startScan(1000)
                     }
 
                     LightAdapter.STATUS_ERROR_N -> {
@@ -161,9 +153,10 @@ class DeviceScaningActivity : DeviceScaningActivity() {
     override fun initViews() {
         Settings.masLogin = true
         super.initViews()
+        bindAdapter()
         //扫描设备
         dominate.addEventListener(LeScanEvent.LE_SCAN, mListener)
-       // dominate.addEventListener(LeScanEvent.LE_SCAN_COMPLETED, mListener)
+        // dominate.addEventListener(LeScanEvent.LE_SCAN_COMPLETED, mListener)
         dominate.addEventListener(LeScanEvent.LE_SCAN_TIMEOUT, mListener)
         //修改设备名
         dominate.addEventListener(DeviceEvent.STATUS_CHANGED, mListener)

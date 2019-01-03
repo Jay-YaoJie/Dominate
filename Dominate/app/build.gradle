@@ -34,7 +34,7 @@ android {
         }
     }
     sourceSets {
-        main.java.srcDirs = ['src/main/java','src/main/kotlin']
+        main.java.srcDirs = ['src/main/java', 'src/main/kotlin']
     }
 
 }
@@ -60,22 +60,22 @@ dependencies {
     implementation 'com.google.zxing:android-core:3.2.1'
     implementation project(':BluetoothLightLib')
 
-   // kapt "com.android.databinding:compiler:3.1.2"//在kotlin3.0以后就不用这个了
+    // kapt "com.android.databinding:compiler:3.1.2"//在kotlin3.0以后就不用这个了
 
     // kotlin-adapter  https://github.com/wuhenzhizao/kotlin-adapter
     // 核心依赖
     //implementation 'com.wuhenzhizao:kotlin-adapter-core:1.2.1'
     // 拓展效果依赖
-   // implementation 'com.wuhenzhizao:kotlin-adapter-extension:1.2.1'
+    // implementation 'com.wuhenzhizao:kotlin-adapter-extension:1.2.1'
     implementation project(':mylibrary')
 
     // EventBus  https://github.com/greenrobot/EventBus
-   implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     //AsyncAwait  https://github.com/metalabdesign/AsyncAwait
     implementation 'co.metalab.asyncawait:asyncawait:1.0.0'
 
 
-    implementation'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
