@@ -65,8 +65,9 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
                // .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = singleAdapter!!.getItem(position)
+                    LogUtils.d(tag,"列表数据适配器topic.toString()="+topic.toString())
                     holder.withView<TextView>(R.id.all_single_item_tv, {
-                        this.text = topic.deviceName
+                        text = topic.deviceName
 
                     }).withView<SwitchView>(R.id.all_single_item_sv, {
                         this.visibility = View.GONE

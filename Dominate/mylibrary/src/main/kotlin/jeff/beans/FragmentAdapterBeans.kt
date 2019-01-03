@@ -50,6 +50,18 @@ class FragmentAdapterBeans {
         var status: Int = 0
         var longTermKey = ByteArray(16)
         var firmwareRevision: String? = null // 设备的firmware版本
+        override fun toString(): String {
+            return "DeviceI(macAddress=$macAddress, " +
+                    "deviceName=$deviceName, " +
+                    "meshName=$meshName, " +
+                    "meshAddress=$meshAddress, " +
+                    "meshUUID=$meshUUID, " +
+                    "productUUID=$productUUID, " +
+                    "status=$status, " +
+                    "longTermKey=${Arrays.toString(longTermKey)}, " +
+                    "firmwareRevision=$firmwareRevision)"
+        }
+
     }
 
 }

@@ -27,6 +27,7 @@ import jeff.me.MeFragment
 import jeff.scene.SceneFragment
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
+import jeff.utils.SPUtils.Companion.tag
 import jeff.utils.ToastUtil
 import login.LoginActivity
 import main.MainFragment
@@ -52,11 +53,29 @@ class MainActivity : MainActivity(), EventListener<String> {
             NotificationEvent.ONLINE_STATUS -> {//  设备的状态变化事件
                 //  获得当前在线数据,离线数据，或着不存在的设备数据
                 // this.onOnlineStatusNotify(event as NotificationEvent)
-                notificationInfoList = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
-                LogUtils.d(tag, "获得当前数据对象列表" + notificationInfoList!!.toString())
-                //更新主页列表数据
-                mHandler.obtainMessage(1).sendToTarget()
+                val notificationInfoListTemp = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
+                if (notificationInfoListTemp != null && notificationInfoListTemp.size > 0) {
+                    var isHave=true
+                    for (notificationInfo1: DeviceNotificationInfo in notificationInfoListTemp!!) {
+                        for (notificationInfo2: DeviceNotificationInfo in notificationInfoList!!){
+                            if (notificationInfo1.meshAddress.equals(notificationInfo2.meshAddress)){
+                                //如果有，则修改值
+                                notificationInfoList!!.remove(notificationInfo2)
+                                notificationInfoList!!.add(notificationInfo1)
+                                isHave=false
+                            }
+                        }
+                        if (isHave){
+                            isHave=true
+                            //如果列表中没有这个数据，那就添加
+                            notificationInfoList!!.add(notificationInfo1)
+                        }
 
+                    }
+                    LogUtils.d(tag, "获得当前数据对象列表" + notificationInfoList!!.toString())
+                    //更新主页列表数据
+                    mHandler.obtainMessage(1).sendToTarget()
+                }
             }
             DeviceEvent.STATUS_CHANGED -> {
                 val deviceInfo: DeviceInfo = (event as DeviceEvent).args
@@ -81,14 +100,21 @@ class MainActivity : MainActivity(), EventListener<String> {
                     LightAdapter.STATUS_LOGOUT -> {
                         LogUtils.d(tag, "登录失败~！")
                         // this.showToast("disconnect");//第一次进来，没有设备，定会失败连接
+                        for (notificationInfo: DeviceNotificationInfo in notificationInfoList!!){
+                            notificationInfo.connectionStatus=ConnectionStatus.OFFLINE
+                            notificationInfoList!!.remove(notificationInfo)
+                            notificationInfoList!!.add(notificationInfo)
+                        }
+                        //更新主页列表数据
+                        mHandler.obtainMessage(1).sendToTarget()
                         //重新登录
-                        autoConnect()
+                      //  autoConnect()
                     }
                     LightAdapter.STATUS_ERROR_N -> {
                         //登录异常 清除所有登录数据
                         //SPUtils.clearAll(mActivity) //第一次进来，没有设备，定会失败连接
                         //重新登录
-                        autoConnect()
+                       // autoConnect()
                     }
                 }
             }

@@ -27,7 +27,7 @@ class DominateApplication : TelinkApplication() {
         var dominate: DominateApplication by DelegatesExt.notNullSingleValue<DominateApplication>();
         var mLightService: LightService by DelegatesExt.notNullSingleValue<LightService>();
         //保存蓝牙灯的数据对象
-        var notificationInfoList: List<DeviceNotificationInfo>? = null
+        var notificationInfoList: ArrayList<DeviceNotificationInfo>? = null
     }
 
 

@@ -15,7 +15,7 @@
             <!--最顶使用的 RecyclerView  横向滚动，并可以拖拽的-->
             <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
                 android:id="@+id/main_fragment_top_DSRV"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_huge"
                 android:clipChildren="false"
                 android:clipToPadding="false"
