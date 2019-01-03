@@ -153,7 +153,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
     override fun initViews() {
         Settings.masLogin = true
         super.initViews()
-        bindAdapter()
+
         //扫描设备
         dominate.addEventListener(LeScanEvent.LE_SCAN, mListener)
         // dominate.addEventListener(LeScanEvent.LE_SCAN_COMPLETED, mListener)
