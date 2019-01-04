@@ -5,12 +5,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.widget.TextView
 import ch.ielse.view.SwitchView
+import co.metalab.asyncawait.async
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
 import jeff.beans.FragmentAdapterBeans
 import jeff.beans.FragmentAdapterBeans.DeviceBean
 import jeff.utils.LogUtils
+import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
 import jeff.widgets.LinearOffsetsItemDecoration
 import kotlin_adapter.adapter_core.*
@@ -35,23 +37,20 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
     }
 
     override fun getContentViewId(): Int = R.layout.fragment_device
-
     override fun initViews() {
-//        async {
-//            await<Unit> {
-//                //加载测试数据
-//
-//            }
-//
-//            info()//加载数据列表适配器
-//        }
+        async {
+            await<Unit> {
+                //加载测试数据
+                //group  //组 数据列表
+                groupList = SPUtils.getDeviceBeans(mActivity, "deviceGroupList") as ArrayList<DeviceBean>
+                // single  ////单个数据列表
+                singleList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList") as ArrayList<DeviceBean>
+            }
+            //加载数据列表适配器
+            bindGroupAdapter()  //组 数据列表
+            bindSingleAdapter()//  //单个数据列表
+        }
     }
-
-    open fun info() {
-        bindGroupAdapter()  //组 数据列表
-        bindSingleAdapter()//  //单个数据列表
-    }
-
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
@@ -161,7 +160,6 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
     private lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
     open var singleList: ArrayList<DeviceBean> = ArrayList()
     //单个数据列表
-
     private fun bindSingleAdapter() {
         mainFragment_DSRV_single = binding.deviceFragmentUngroupedDSRV
         mainFragment_DSRV_single.isLongPressDragEnable = true

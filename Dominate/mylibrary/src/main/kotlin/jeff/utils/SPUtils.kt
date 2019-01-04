@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import jeff.beans.FragmentAdapterBeans.DeviceBean
 
 
 /**
@@ -216,7 +215,7 @@ class SPUtils {
         /**
          * 保存列表对象
          */
-        fun setFragmentAdapterBeans(context: Context, listBeanName: String, list: ArrayList<DeviceBean>) {
+        fun setDeviceBeans(context: Context, listBeanName: String, list: List<Any>) {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
             val helper = SPUtils(context, "FragmentAdapterBeans")
             val strJson = (Gson().toJson(list))
@@ -228,41 +227,46 @@ class SPUtils {
                 helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
                         //保存当前集合对象的数量
                         SPUtils.ContentValue("deviceGropuSize", list.size))
-            }else if (listBeanName.equals("deviceSceneList")) {//如果是场景设备的集合，则命名要为 deviceSceneList
+            } else if (listBeanName.equals("deviceSceneList")) {//如果是场景设备的集合，则命名要为 deviceSceneList
                 helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
                         //保存当前集合对象的数量
                         SPUtils.ContentValue("deviceSceneSize", list.size))
-            }else{
+            } else if (listBeanName.equals("scanedList")) { //扫描出来的设备
+                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                        //保存当前集合对象的数量
+                        SPUtils.ContentValue("scanedListSize", list.size))
+            } else {
                 //默认为 listBeanName+ size
                 helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
                         //保存当前集合对象的数量
-                        SPUtils.ContentValue(listBeanName+"Size", strJson))
+                        SPUtils.ContentValue(listBeanName + "Size", strJson))
             }
 
         }
+
         /**
          * 获得列表对象数量
          */
         fun getDeviceBeanSize(context: Context, listBeanNameSize: String): Int {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
             val helper = SPUtils(context, "FragmentAdapterBeans")
-            return  helper.getInt(listBeanNameSize)
+            return helper.getInt(listBeanNameSize)
 
         }
 
         /**
          * 获得列表对象
          */
-        fun getFragmentAdapterBeans(context: Context, listBeanName: String): ArrayList<DeviceBean>? {
+        fun getDeviceBeans(context: Context, listBeanName: String): List<Any> {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
             val helper = SPUtils(context, "FragmentAdapterBeans")
             val strJson = helper.getString(listBeanName)
             if (!listBeanName.isNullOrEmpty()) {
                 //使用TypeToken进行转化
-                val type = object : TypeToken<List<DeviceBean>>() {}.type
+                val type = object : TypeToken<List<Any>>() {}.type
                 return (Gson().fromJson(strJson, type))
             } else {
-                return null;
+                return ArrayList();
             }
 
         }

@@ -10,12 +10,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import ch.ielse.view.SwitchView
+import co.metalab.asyncawait.async
 import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
 import jeff.beans.FragmentAdapterBeans.DeviceBean
 import jeff.utils.LogUtils
+import jeff.utils.SPUtils
 import jeff.widgets.LinearOffsetsItemDecoration
 import kotlin_adapter.adapter_core.*
 import kotlin_adapter.adapter_core.extension.getItems
@@ -41,14 +43,25 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     override fun getContentViewId(): Int = R.layout.fragment_main
 
     override fun initViews() {
-        info()
+        async {
+            await<Unit> {
+                //加载测试数据
+                //  //获得最顶上的数据
+                topicList = SPUtils.getDeviceBeans(mActivity, "infoTopList") as ArrayList<DeviceBean>
+                //   //获得组列表数据
+                groupList = SPUtils.getDeviceBeans(mActivity, "infoGroupList") as ArrayList<DeviceBean>
+                // //获得单个设备列表数据
+                singleList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList") as ArrayList<DeviceBean>
+            }
+            //加载数据列表适配器
+            bindTopAdapter()//最顶层的列表
+            bindGroupAdapter()  //组 数据列表
+            bindSingleAdapter()//  //单个数据列表
+        }
+
+
     }
 
-    open fun info() {
-        bindTopAdapter()//最顶层的列表
-        bindGroupAdapter()  //组 数据列表
-        bindSingleAdapter()//  //单个数据列表
-    }
 
     //top 最顶的一个横向列表
     lateinit var mainFragment_DSRV_top: DragAndSwipeRecyclerView;

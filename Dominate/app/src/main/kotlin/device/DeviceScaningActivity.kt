@@ -10,8 +10,7 @@ import com.telink.bluetooth.event.MeshEvent
 import com.telink.bluetooth.light.*
 import com.telink.util.Event
 import com.telink.util.EventListener
-import jeff.beans.FragmentAdapterBeans.DeviceI
-import jeff.constants.Settings
+import jeff.beans.FragmentAdapterBeans.DeviceBean
 import jeff.constants.Settings.factoryName
 import jeff.constants.Settings.factoryPassword
 import jeff.device.DeviceScaningActivity
@@ -83,7 +82,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         LogUtils.d(tag, "扫描完成。")
                         ////扫描改变,直到扫不到设备
                         //更新列表
-                        var deviceI = DeviceI()
+                        var deviceI = DeviceBean()
                         deviceI.macAddress = deviceInfo.macAddress//: String? = null // Mac地址
                         deviceI.deviceName = deviceInfo.deviceName//: String? = null//设备名称
                         deviceI.meshName = deviceInfo.meshName//: String? = null//网络名称
@@ -93,8 +92,9 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         deviceI.status = deviceInfo.status//: Int = 0
                         deviceI.longTermKey = deviceInfo.longTermKey
                         deviceI.firmwareRevision = deviceInfo.firmwareRevision//: String? = null // 设备的firmware版本
-                       // singleAdapter!!.addItem(deviceI)
+                        // singleAdapter!!.addItem(deviceI)
                         deviceList.add(deviceI)
+                        deviceListSev!!.add(deviceI)//添加到要保存 持久化的对象中
                         singleAdapter!!.putItems(deviceList)
                         //刷新页面
                         singleAdapter!!.notifyDataSetChanged()
@@ -121,19 +121,59 @@ class DeviceScaningActivity : DeviceScaningActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        scanedList.clear()
+    override fun onStart() {
+        super.onStart()
+        //获取数据对象
+        deviceListSev = SPUtils.getDeviceBeans(mActivity, "scanedList") as ArrayList<DeviceBean>
+        //清除数据对象
+        SPUtils.FragmentAdapterBeansClear(mActivity)
+        if (deviceListSev == null) {
+            deviceListSev = ArrayList()
+        }
+        //获得单个设备的数据对象
+        singleListSev = SPUtils.getDeviceBeans(mActivity, "deviceSingleList") as ArrayList<DeviceBean>
+        if (singleListSev == null) {
+            singleListSev = ArrayList()
+        }
+
+        //扫描设备
+        dominate.addEventListener(LeScanEvent.LE_SCAN, mListener)
+        // dominate.addEventListener(LeScanEvent.LE_SCAN_COMPLETED, mListener)
+        dominate.addEventListener(LeScanEvent.LE_SCAN_TIMEOUT, mListener)
+        //修改设备名
+        dominate.addEventListener(DeviceEvent.STATUS_CHANGED, mListener)
+        dominate.addEventListener(MeshEvent.UPDATE_COMPLETED, mListener)
+        //出错
+        dominate.addEventListener(MeshEvent.ERROR, mListener)
+        //开始扫描
+        this.startScan(0)
+    }
+
+    var singleListSev: ArrayList<DeviceBean> = ArrayList()///保存到单个设备数据对象中
+    //保存当前查询出来的数据对象
+    var deviceListSev: ArrayList<DeviceBean>? = ArrayList()
+
+    override fun onStop() {
+        super.onStop()
+        if (deviceListSev!!.size > 0) {
+            //保存数据对象，持久保存
+            SPUtils.setDeviceBeans(mActivity, "scanedList", deviceListSev!!)
+            singleListSev.addAll(deviceListSev!!)// //保存到单个设备数据对象中
+            SPUtils.setDeviceBeans(mActivity, "deviceSingleList", singleListSev!!)
+            singleListSev.clear()
+            scanedList.clear()
+        }
+
         dominate.removeEventListener(mListener)
         this.mHandler.removeCallbacksAndMessages(null)
-        Settings.masLogin = false
+
     }
+
 
     private var scanedList: ArrayList<DeviceInfo> = ArrayList()
     private val mHandler = Handler()
     //开始扫描
     private fun startScan(delay: Int) {
-        scanedList.clear()
         mLightService.idleMode(true)  //断开当前连接
         mHandler.postDelayed({
             //扫描参数
@@ -148,23 +188,6 @@ class DeviceScaningActivity : DeviceScaningActivity() {
             params.setScanMode(true)
             mLightService.startScan(params)
         }, delay.toLong())
-    }
-
-    override fun initViews() {
-        Settings.masLogin = true
-        super.initViews()
-
-        //扫描设备
-        dominate.addEventListener(LeScanEvent.LE_SCAN, mListener)
-        // dominate.addEventListener(LeScanEvent.LE_SCAN_COMPLETED, mListener)
-        dominate.addEventListener(LeScanEvent.LE_SCAN_TIMEOUT, mListener)
-        //修改设备名
-        dominate.addEventListener(DeviceEvent.STATUS_CHANGED, mListener)
-        dominate.addEventListener(MeshEvent.UPDATE_COMPLETED, mListener)
-        //出错
-        dominate.addEventListener(MeshEvent.ERROR, mListener)
-        //开始扫描
-        this.startScan(0)
     }
 
 

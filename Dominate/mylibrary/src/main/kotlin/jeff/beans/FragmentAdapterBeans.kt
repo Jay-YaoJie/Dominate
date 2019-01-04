@@ -1,9 +1,5 @@
 package jeff.beans
 
-import android.os.Parcel
-import android.os.Parcelable
-import java.util.*
-
 /**
  * author : Jeff  5899859876@qq.com
  * Csdn :https://blog.csdn.net/Jeff_YaoJie
@@ -14,6 +10,7 @@ import java.util.*
 class FragmentAdapterBeans {
     class DeviceBean {
         var meshAddress: Int = 0 //灯的名称 数据列表12345
+        var meshUUID: Int = 0
         var status: Int = 0
         var brightness: Int = 0 ////当前状态为0关 或着 100  开
         var reserve: Int = 0
@@ -26,8 +23,14 @@ class FragmentAdapterBeans {
         var textStr: String? = null//文字
         var groupId: Int = -1//当前id
 
+        var productUUID: Int = 0 //设备的产品标识符
+        var macAddress: String? = null // Mac地址
+        var meshName: String? = null//网络名称
         var deviceName: String? = null//设备里的名称
         var index: Int = -1 //当前所在的下标
+
+        var firmwareRevision: String? = null // 设备的firmware版本
+        var longTermKey = ByteArray(16)
 
 
         override fun toString(): String {
@@ -39,29 +42,5 @@ class FragmentAdapterBeans {
         }
     }
 
-    class DeviceI {//出厂设备信息
-
-        var macAddress: String? = null // Mac地址
-        var deviceName: String? = null//设备名称
-        var meshName: String? = null//网络名称
-        var meshAddress: Int = 0// 网络地址
-        var meshUUID: Int = 0
-        var productUUID: Int = 0 //设备的产品标识符
-        var status: Int = 0
-        var longTermKey = ByteArray(16)
-        var firmwareRevision: String? = null // 设备的firmware版本
-        override fun toString(): String {
-            return "DeviceI(macAddress=$macAddress, " +
-                    "deviceName=$deviceName, " +
-                    "meshName=$meshName, " +
-                    "meshAddress=$meshAddress, " +
-                    "meshUUID=$meshUUID, " +
-                    "productUUID=$productUUID, " +
-                    "status=$status, " +
-                    "longTermKey=${Arrays.toString(longTermKey)}, " +
-                    "firmwareRevision=$firmwareRevision)"
-        }
-
-    }
 
 }

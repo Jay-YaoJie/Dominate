@@ -5,14 +5,11 @@ import android.support.multidex.MultiDex
 import com.jeff.dominate.R
 import com.telink.TelinkApplication
 import com.telink.bluetooth.LeBluetooth
-import com.telink.bluetooth.event.NotificationEvent
-import com.telink.bluetooth.light.*
+import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificationInfo
 import jeff.bases.DominateApplication.Companion.instance
 import jeff.utils.ActivitiesManager
 import jeff.utils.DelegatesExt
-import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
-import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificationInfo
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -27,7 +24,7 @@ class DominateApplication : TelinkApplication() {
         var dominate: DominateApplication by DelegatesExt.notNullSingleValue<DominateApplication>();
         var mLightService: LightService by DelegatesExt.notNullSingleValue<LightService>();
         //保存蓝牙灯的数据对象
-        var notificationInfoList: ArrayList<DeviceNotificationInfo>? = null
+        var notificationInfoList: ArrayList<DeviceNotificationInfo>? = ArrayList()
     }
 
 

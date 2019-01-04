@@ -12,8 +12,7 @@ object Settings {
     //默认出厂名称
     const val factoryName="telink_mesh1"
     const val factoryPassword="123"
-    //这里保存连接，使用的是那一个名字连接
-    var masLogin:Boolean=false //true，使用原有的
+
 
     //全局属性   var是一个可变变量，val是一个只读变量相当于java中的final变量。
     //不可变的变量
