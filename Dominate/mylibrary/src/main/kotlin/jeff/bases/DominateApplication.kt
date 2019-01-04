@@ -1,6 +1,6 @@
 package jeff.bases
 
-import android.app.Application
+import android.content.Context
 
 
 /**
@@ -12,7 +12,7 @@ import android.app.Application
  */
 class DominateApplication {
     companion object {
-        lateinit var instance: Application;
+        lateinit var instance: Context;
     }
 
 }

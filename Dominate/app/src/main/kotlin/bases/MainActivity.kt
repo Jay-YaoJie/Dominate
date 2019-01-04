@@ -108,13 +108,13 @@ class MainActivity : MainActivity(), EventListener<String> {
                         //更新主页列表数据
                         mHandler.obtainMessage(1).sendToTarget()
                         //重新登录
-                      //  autoConnect()
+                      autoConnect()
                     }
                     LightAdapter.STATUS_ERROR_N -> {
                         //登录异常 清除所有登录数据
                         //SPUtils.clearAll(mActivity) //第一次进来，没有设备，定会失败连接
                         //重新登录
-                       // autoConnect()
+                       autoConnect()
                     }
                 }
             }
