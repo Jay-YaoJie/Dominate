@@ -26,7 +26,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
 
     protected lateinit var mActivity: AppCompatActivity
     protected abstract fun getContentViewId(): Int
-    protected var tag: String = "BaseActivity"
+    open protected var tag: String = "BaseActivity"
     protected abstract fun initViews()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +34,10 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
         LogUtils.d(tag, "getContentViewId" + getContentViewId())
         binding = DataBindingUtil.setContentView(this, getContentViewId())
         mActivity = this;
-        tag = this.localClassName
+        tag = this.javaClass.name
         pushActivity(this);//添加当前activity
         initViews()
+
     }
 
     /*顶部的 左 控件*/
@@ -51,8 +52,8 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
             nav_up.setBounds(0, 0, nav_up.minimumWidth, nav_up.minimumHeight)
             textView.setCompoundDrawables(nav_up, null, null, null)
         }
-        if (isblak){
-            textView.setOnClickListener( {
+        if (isblak) {
+            textView.setOnClickListener({
                 //关闭页面
                 mActivity.finish()
             })
@@ -80,7 +81,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
     open fun topRightView(text: String?, img: Int, ischke: Boolean): TextView {
         val textView: TextView = binding.root.top_right
         textView.visibility = View.VISIBLE
-        if (text .isNullOrEmpty()) {
+        if (text.isNullOrEmpty()) {
             textView.text = text
         }
         if (img > 0) {
@@ -90,6 +91,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
         }
         return textView;
     }
+
     override fun onDestroy() {
         popActivity(this);//关闭当前activity
         super.onDestroy()

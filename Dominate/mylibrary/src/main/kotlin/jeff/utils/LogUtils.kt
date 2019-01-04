@@ -24,7 +24,7 @@ object  LogUtils {
     private val tags:String="utils.LogUtils"
 
     fun v(tag: String, msg: String) = LOG_DEBUG.debugLog(tags, "${tag}==---==${msg}", Log.VERBOSE)
-    fun d(tag: String, msg: String) =LOG_DEBUG.debugLog(tags, "${tag}==---==${msg}", Log.DEBUG)
+    fun d(tag: String?, msg: String) =LOG_DEBUG.debugLog(tags, "${tag}==---==${msg}", Log.DEBUG)
     fun i(tag: String, msg: String) = LOG_DEBUG.debugLog(tags, "${tag}==---==${msg}", Log.INFO)
     fun w(tag: String, msg: String) = LOG_DEBUG.debugLog(tags, "${tag}==---==${msg}", Log.WARN)
     fun e(tag: String, msg: String) = LOG_DEBUG.debugLog(tags, "${tag}==---==${msg}", Log.ERROR)

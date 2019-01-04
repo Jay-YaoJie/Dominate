@@ -9,8 +9,7 @@ import co.metalab.asyncawait.async
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
-import jeff.beans.FragmentAdapterBeans
-import jeff.beans.FragmentAdapterBeans.DeviceBean
+import jeff.constants.DeviceBean
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
@@ -32,19 +31,17 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
  */
 @SuppressLint("NewApi")
 open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
-    override fun lazyLoad() {
-        //T ODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun getContentViewId(): Int = R.layout.fragment_device
     override fun initViews() {
         async {
             await<Unit> {
                 //加载测试数据
                 //group  //组 数据列表
-                groupList = SPUtils.getDeviceBeans(mActivity, "deviceGroupList") as ArrayList<DeviceBean>
+                groupList = SPUtils.getDeviceBeans(mActivity, "deviceGroupList")
                 // single  ////单个数据列表
-                singleList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList") as ArrayList<DeviceBean>
+                singleList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList")
+
+
             }
             //加载数据列表适配器
             bindGroupAdapter()  //组 数据列表
@@ -54,7 +51,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
-    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<FragmentAdapterBeans.DeviceBean>
+    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
     open var groupList: ArrayList<DeviceBean> = ArrayList()
     //组 数据列表
     private fun bindGroupAdapter() {
@@ -71,15 +68,15 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
         mainFragment_DSRV_group.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  groupList.toString()=" + groupList.toString())
         groupAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
-                .match(DeviceBean::class, R.layout.all_single_item)
+                .match(DeviceBean::class, R.layout.all_single_sv_item)
                 .holderCreateListener {
                 }
                 .holderBindListener { holder, position ->
                     val topic = groupAdapter.getItem(position)
-                    holder.withView<TextView>(R.id.all_single_item_tv, {
-                        text = topic.textStr
+                    holder.withView<TextView>(R.id.all_single_sv_item_tv, {
+                        text = topic.meshAddress.toString()
 
-                    }).withView<SwitchView>(R.id.all_single_item_sv, {
+                    }).withView<SwitchView>(R.id.all_single_sv_item_sv, {
                         // //是否已经打开了当前组的控制
                         //  connectionStatus OFF(0), ON(1), OFFLINE(2);  关，开，离线
                         if (topic.connectionStatus == 1) {
@@ -127,7 +124,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                 .swipeListener { position, direction ->
                     //当前移动取消数据
 
-                    ToastUtil.show("position $position dismissed")
+                    ToastUtil.show("position $position dismissed $direction")
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
@@ -174,16 +171,16 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
         mainFragment_DSRV_single.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + singleList.toString())
         singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
-                .match(DeviceBean::class, R.layout.all_single_item)
+                .match(DeviceBean::class, R.layout.all_single_sv_item)
                 .holderCreateListener {
 
                 }
                 .holderBindListener { holder, position ->
                     val topic = singleAdapter.getItem(position)
-                    holder.withView<TextView>(R.id.all_single_item_tv, {
-                        text = topic.textStr
+                    holder.withView<TextView>(R.id.all_single_sv_item_tv, {
+                        text = topic.macAddress!!.toString()
 
-                    }).withView<SwitchView>(R.id.all_single_item_sv, {
+                    }).withView<SwitchView>(R.id.all_single_sv_item_sv, {
                         // //是否已经打开了当前组的控制
                         //  connectionStatus OFF(0), ON(1), OFFLINE(2);  关，开，离线
                         if (topic.connectionStatus == 1) {
@@ -231,7 +228,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                 .swipeListener { position, direction ->
                     //当前移动取消数据
 
-                    ToastUtil.show("position $position dismissed")
+                    ToastUtil.show("position $position dismissed $direction")
                     //移动后的items
 //                    Log.d("", "移动后的items topicList.toString()=" + topicList.toString())
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())

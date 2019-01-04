@@ -10,7 +10,8 @@ import com.telink.bluetooth.event.MeshEvent
 import com.telink.bluetooth.light.*
 import com.telink.util.Event
 import com.telink.util.EventListener
-import jeff.beans.FragmentAdapterBeans.DeviceBean
+import jeff.constants.DeviceBean
+
 import jeff.constants.Settings.factoryName
 import jeff.constants.Settings.factoryPassword
 import jeff.device.DeviceScaningActivity
@@ -54,11 +55,11 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         params.setNewMeshName(SPUtils.getLocalName(mActivity))//新的网络名
                         params.setNewPassword(SPUtils.getLocalPassword(mActivity))//新的密码
                         //获得当前已经有的设备数量
-                        var deviceSingleList: Int = SPUtils.getDeviceBeanSize(mActivity, "deviceSingleList")
+                        var deviceSingleList: Int = SPUtils.getDeviceBeanSize(mActivity, "scanedListSize")
                         if (deviceSingleList <= 0) {
                             deviceSingleList = 1
                         }
-                        deviceInfo!!.meshAddress = deviceSingleList
+                        deviceInfo!!.meshAddress = deviceSingleList+1
                         //执行更新操作
                         params.setUpdateDeviceList(deviceInfo)
                         mLightService.updateMesh(params)
@@ -90,7 +91,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         deviceI.meshUUID = deviceInfo.meshUUID//: Int = 0
                         deviceI.productUUID = deviceInfo.productUUID//: Int = 0 //设备的产品标识符
                         deviceI.status = deviceInfo.status//: Int = 0
-                        deviceI.longTermKey = deviceInfo.longTermKey
+                       // deviceI.longTermKey = deviceInfo.longTermKey
                         deviceI.firmwareRevision = deviceInfo.firmwareRevision//: String? = null // 设备的firmware版本
                         // singleAdapter!!.addItem(deviceI)
                         deviceList.add(deviceI)
@@ -124,17 +125,9 @@ class DeviceScaningActivity : DeviceScaningActivity() {
     override fun onStart() {
         super.onStart()
         //获取数据对象
-        deviceListSev = SPUtils.getDeviceBeans(mActivity, "scanedList") as ArrayList<DeviceBean>
-        //清除数据对象
-        SPUtils.FragmentAdapterBeansClear(mActivity)
-        if (deviceListSev == null) {
-            deviceListSev = ArrayList()
-        }
+        deviceListSev = SPUtils.getDeviceBeans(mActivity, "deviceScanedList")
         //获得单个设备的数据对象
-        singleListSev = SPUtils.getDeviceBeans(mActivity, "deviceSingleList") as ArrayList<DeviceBean>
-        if (singleListSev == null) {
-            singleListSev = ArrayList()
-        }
+        singleListSev = SPUtils.getDeviceBeans(mActivity, "deviceSingleList")
 
         //扫描设备
         dominate.addEventListener(LeScanEvent.LE_SCAN, mListener)
@@ -157,13 +150,14 @@ class DeviceScaningActivity : DeviceScaningActivity() {
         super.onStop()
         if (deviceListSev!!.size > 0) {
             //保存数据对象，持久保存
-            SPUtils.setDeviceBeans(mActivity, "scanedList", deviceListSev!!)
+            SPUtils.deviceBeansClear(mActivity,"deviceScanedList")
+            SPUtils.setDeviceBeans(mActivity, "deviceScanedList", deviceListSev!!)
             singleListSev.addAll(deviceListSev!!)// //保存到单个设备数据对象中
+            SPUtils.deviceBeansClear(mActivity,"deviceSingleList")
             SPUtils.setDeviceBeans(mActivity, "deviceSingleList", singleListSev!!)
             singleListSev.clear()
             scanedList.clear()
         }
-
         dominate.removeEventListener(mListener)
         this.mHandler.removeCallbacksAndMessages(null)
 

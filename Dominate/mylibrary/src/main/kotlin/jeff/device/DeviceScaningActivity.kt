@@ -8,12 +8,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import ch.ielse.view.SwitchView
 import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseActivity
-import jeff.beans.FragmentAdapterBeans.DeviceBean
+import jeff.constants.DeviceBean
 import jeff.utils.LogUtils
 import jeff.widgets.LinearOffsetsItemDecoration
 import kotlin_adapter.adapter_core.attach
@@ -61,24 +60,23 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         mainFragment_DSRV_single.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + deviceList.toString())
         singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
-                .match(DeviceBean::class, R.layout.all_single_item)
+                .match(DeviceBean::class, R.layout.all_single_iv_item)
                // .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = singleAdapter!!.getItem(position)
                     LogUtils.d(tag,"列表数据适配器topic.toString()="+topic.toString())
-                    holder.withView<TextView>(R.id.all_single_item_tv, {
+                    holder.withView<TextView>(R.id.all_single_iv_item_tv, {
                         text = topic.meshAddress.toString()
 
-                    }).withView<SwitchView>(R.id.all_single_item_sv, {
-                        this.visibility = View.GONE
-                    }).withView<ImageView>(R.id.all_single_item_iv, {
+                    }).withView<ImageView>(R.id.all_single_iv_item_iv, {
+                        this.visibility = View.VISIBLE
                         Glide.with(mActivity).load(R.mipmap.icon_add).into(this)
                         this.setOnClickListener {
                             deviceScanningChlidClick(topic)
                         }
                     })
                 }
-                .clickListener { holder, position ->
+                .clickListener { _, position ->
                     val topic = singleAdapter!!.getItem(position)
                     deviceScanningClickListener(topic)
                 }

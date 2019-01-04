@@ -27,8 +27,12 @@ public final class Strings {
         }
 
         byte[] result = new byte[length];
+        if (str==null){
+            srcBytes=result;
+        }else {
+            srcBytes = str.getBytes(Charset.defaultCharset());
+        }
 
-        srcBytes = str.getBytes(Charset.defaultCharset());
 
         if (srcBytes.length <= length) {
             System.arraycopy(srcBytes, 0, result, 0, srcBytes.length);

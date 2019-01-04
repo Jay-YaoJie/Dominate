@@ -10,10 +10,6 @@ import jeff.device.DeviceFragment
  * description ：DeviceFragment
  */
 class DeviceFragment : DeviceFragment() {
-    override fun initViews() {
-        super.initViews()
-    }
-
     override fun lazyLoad() {
         super.lazyLoad()
         //可见时

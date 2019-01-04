@@ -10,7 +10,6 @@ import android.os.Handler
 import android.os.Message
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
-import bases.DominateApplication.Companion.notificationInfoList
 import com.jeff.dominate.R
 import com.jeff.dominate.TelinkLightService
 import com.telink.bluetooth.event.*
@@ -25,6 +24,7 @@ import jeff.scene.SceneFragment
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
+import kotlin_adapter.adapter_core.extension.putItems
 import login.LoginActivity
 import main.MainFragment
 
@@ -49,31 +49,11 @@ class MainActivity : MainActivity(), EventListener<String> {
             NotificationEvent.ONLINE_STATUS -> {//  设备的状态变化事件
                 //  获得当前在线数据,离线数据，或着不存在的设备数据
                 // this.onOnlineStatusNotify(event as NotificationEvent)
-                val notificationInfoListTemp = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
+                notificationInfoListTemp = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
                 LogUtils.d(tag, " performed(event: Event<String>)----notificationInfoListTemp.size=" + notificationInfoListTemp!!.size)
-                if (notificationInfoListTemp != null && notificationInfoListTemp.size > 0) {
-                    var isHave = true
-                    for (notificationInfo1: DeviceNotificationInfo in notificationInfoListTemp!!) {
-                        if (notificationInfoList != null && notificationInfoList!!.size > 0) {
-                            for (notificationInfo2: DeviceNotificationInfo in notificationInfoList!!) {
-                                if (notificationInfo1.meshAddress.equals(notificationInfo2.meshAddress)) {
-                                    //如果有，则修改值
-                                    notificationInfoList!!.remove(notificationInfo2)
-                                    notificationInfoList!!.add(notificationInfo1)
-                                    isHave = false
-                                }
-                            }
-                        }
-                        if (isHave) {
-                            isHave = true
-                            //如果列表中没有这个数据，那就添加
-                            notificationInfoList!!.add(notificationInfo1)
-                        }
-                    }
-                    LogUtils.d(tag, "获得当前数据对象列表" + notificationInfoList!!.toString())
-                    //更新主页列表数据
-                    mHandler.obtainMessage(1).sendToTarget()
-                }
+                //更新主页列表数据
+                mHandler.obtainMessage(200).sendToTarget()
+
             }
             DeviceEvent.STATUS_CHANGED -> {
                 val deviceInfo: DeviceInfo = (event as DeviceEvent).args
@@ -97,16 +77,8 @@ class MainActivity : MainActivity(), EventListener<String> {
                     }
                     LightAdapter.STATUS_LOGOUT -> {
                         LogUtils.d(tag, "登录失败~！")
-                        if (notificationInfoList != null && notificationInfoList!!.size > 0) {
-                            // this.showToast("disconnect");//第一次进来，没有设备，定会失败连接
-                            for (notificationInfo: DeviceNotificationInfo in notificationInfoList!!) {
-                                notificationInfo.connectionStatus = ConnectionStatus.OFFLINE
-                                notificationInfoList!!.remove(notificationInfo)
-                                notificationInfoList!!.add(notificationInfo)
-                            }
-                            //更新主页列表数据
-                            mHandler.obtainMessage(1).sendToTarget()
-                        }
+                        //更新主页列表数据
+                        mHandler.obtainMessage(400).sendToTarget()
                         //  重新登录
                         //  autoConnect()
                     }
@@ -224,13 +196,36 @@ class MainActivity : MainActivity(), EventListener<String> {
             }
         }
     }
+    var notificationInfoListTemp: List<DeviceNotificationInfo>? = null
     val mHandler = object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             when (msg.what) {
-                1 -> {
+                200 -> {//数据对象发生改变
+                    if (notificationInfoListTemp != null && notificationInfoListTemp!!.size > 0) {
+                        for (deviceInfo: DeviceNotificationInfo in notificationInfoListTemp!!) {
+                            for (i in mainFragment.singleList!!.indices) {
+                                if (mainFragment.singleList!!.get(i).meshAddress.equals(deviceInfo.meshAddress)) {
+                                    mainFragment.singleList.get(i).status = deviceInfo.status
+                                    mainFragment.singleList.get(i).brightness = deviceInfo.brightness
+                                    mainFragment.singleList.get(i).reserve = deviceInfo.reserve
+                                    mainFragment.singleList.get(i).connectionStatus = deviceInfo.connectionStatus.value
+                                }
+                            }
+                        }
+                    }
+                    mainFragment.singleAdapter!!.putItems(mainFragment.singleList)
                     //主页更新
-                    mainFragment.infoSingleList()
+                    mainFragment.singleAdapter!!.notifyDataSetChanged()
+                }
+                400 -> {
+                    //登录失败 或着说是退出登录
+                    for (i in mainFragment.singleList!!.indices) {
+                        mainFragment.singleList.get(i).connectionStatus = ConnectionStatus.OFFLINE.value
+                    }
+                    mainFragment.singleAdapter!!.putItems(mainFragment.singleList)
+                    //主页更新
+                    mainFragment.singleAdapter!!.notifyDataSetChanged()
                 }
             }
         }
@@ -250,8 +245,6 @@ class MainActivity : MainActivity(), EventListener<String> {
         filter.priority = IntentFilter.SYSTEM_HIGH_PRIORITY - 1
         registerReceiver(mReceiver, filter)
     }
-
-
 }
 
 
