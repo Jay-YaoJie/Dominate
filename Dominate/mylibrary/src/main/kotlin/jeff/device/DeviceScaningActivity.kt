@@ -8,12 +8,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import ch.ielse.view.SwitchView
 import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseActivity
-import jeff.beans.FragmentAdapterBeans.DeviceI
+import jeff.constants.DeviceBean
 import jeff.utils.LogUtils
 import jeff.widgets.LinearOffsetsItemDecoration
 import kotlin_adapter.adapter_core.attach
@@ -44,8 +43,8 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
 
     // single  ////单个数据列表
     private lateinit var mainFragment_DSRV_single: DragAndSwipeRecyclerView;
-    open var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceI>? = null
-    open var deviceList: ArrayList<DeviceI> = ArrayList()
+    open var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>? = null
+    open var deviceList: ArrayList<DeviceBean> = ArrayList()
     //单个数据列表
     open fun bindAdapter() {
         mainFragment_DSRV_single = binding.deviceScaningActivityDSRV
@@ -60,25 +59,24 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         decoration.setOffsetLast(true)
         mainFragment_DSRV_single.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + deviceList.toString())
-        singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceI>(mActivity)
-                .match(DeviceI::class, R.layout.all_single_item)
+        singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
+                .match(DeviceBean::class, R.layout.all_single_iv_item)
                // .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = singleAdapter!!.getItem(position)
                     LogUtils.d(tag,"列表数据适配器topic.toString()="+topic.toString())
-                    holder.withView<TextView>(R.id.all_single_item_tv, {
-                        text = topic.deviceName
+                    holder.withView<TextView>(R.id.all_single_iv_item_tv, {
+                        text = topic.meshAddress.toString()
 
-                    }).withView<SwitchView>(R.id.all_single_item_sv, {
-                        this.visibility = View.GONE
-                    }).withView<ImageView>(R.id.all_single_item_iv, {
+                    }).withView<ImageView>(R.id.all_single_iv_item_iv, {
+                        this.visibility = View.VISIBLE
                         Glide.with(mActivity).load(R.mipmap.icon_add).into(this)
                         this.setOnClickListener {
                             deviceScanningChlidClick(topic)
                         }
                     })
                 }
-                .clickListener { holder, position ->
+                .clickListener { _, position ->
                     val topic = singleAdapter!!.getItem(position)
                     deviceScanningClickListener(topic)
                 }
@@ -102,13 +100,13 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
     }
 
     //单个控件点击事件
-    open fun deviceScanningChlidClick(deviceInfo: DeviceI): Boolean {
+    open fun deviceScanningChlidClick(deviceInfo: DeviceBean): Boolean {
         LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceInfo.toString()} ")
         return false
     }
 
     //点击列表事件
-    open fun deviceScanningClickListener(deviceInfo: DeviceI): Boolean {
+    open fun deviceScanningClickListener(deviceInfo: DeviceBean): Boolean {
         LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceInfo.toString()} ")
         return false
     }

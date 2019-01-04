@@ -10,7 +10,6 @@ import android.os.Handler
 import android.os.Message
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
-import bases.DominateApplication.Companion.notificationInfoList
 import com.jeff.dominate.R
 import com.jeff.dominate.TelinkLightService
 import com.telink.bluetooth.event.*
@@ -20,15 +19,12 @@ import com.telink.util.Event
 import com.telink.util.EventListener
 import device.DeviceFragment
 import jeff.bases.MainActivity
-import jeff.constants.Settings.factoryName
-import jeff.constants.Settings.factoryPassword
-import jeff.constants.Settings.masLogin
 import jeff.me.MeFragment
 import jeff.scene.SceneFragment
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
-import jeff.utils.SPUtils.Companion.tag
 import jeff.utils.ToastUtil
+import kotlin_adapter.adapter_core.extension.putItems
 import login.LoginActivity
 import main.MainFragment
 
@@ -53,29 +49,11 @@ class MainActivity : MainActivity(), EventListener<String> {
             NotificationEvent.ONLINE_STATUS -> {//  设备的状态变化事件
                 //  获得当前在线数据,离线数据，或着不存在的设备数据
                 // this.onOnlineStatusNotify(event as NotificationEvent)
-                val notificationInfoListTemp = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
-                if (notificationInfoListTemp != null && notificationInfoListTemp.size > 0) {
-                    var isHave=true
-                    for (notificationInfo1: DeviceNotificationInfo in notificationInfoListTemp!!) {
-                        for (notificationInfo2: DeviceNotificationInfo in notificationInfoList!!){
-                            if (notificationInfo1.meshAddress.equals(notificationInfo2.meshAddress)){
-                                //如果有，则修改值
-                                notificationInfoList!!.remove(notificationInfo2)
-                                notificationInfoList!!.add(notificationInfo1)
-                                isHave=false
-                            }
-                        }
-                        if (isHave){
-                            isHave=true
-                            //如果列表中没有这个数据，那就添加
-                            notificationInfoList!!.add(notificationInfo1)
-                        }
+                notificationInfoListTemp = ((event as NotificationEvent).parse()) as List<DeviceNotificationInfo>?
+                LogUtils.d(tag, " performed(event: Event<String>)----notificationInfoListTemp.size=" + notificationInfoListTemp!!.size)
+                //更新主页列表数据
+                mHandler.obtainMessage(200).sendToTarget()
 
-                    }
-                    LogUtils.d(tag, "获得当前数据对象列表" + notificationInfoList!!.toString())
-                    //更新主页列表数据
-                    mHandler.obtainMessage(1).sendToTarget()
-                }
             }
             DeviceEvent.STATUS_CHANGED -> {
                 val deviceInfo: DeviceInfo = (event as DeviceEvent).args
@@ -99,22 +77,19 @@ class MainActivity : MainActivity(), EventListener<String> {
                     }
                     LightAdapter.STATUS_LOGOUT -> {
                         LogUtils.d(tag, "登录失败~！")
-                        // this.showToast("disconnect");//第一次进来，没有设备，定会失败连接
-                        for (notificationInfo: DeviceNotificationInfo in notificationInfoList!!){
-                            notificationInfo.connectionStatus=ConnectionStatus.OFFLINE
-                            notificationInfoList!!.remove(notificationInfo)
-                            notificationInfoList!!.add(notificationInfo)
-                        }
                         //更新主页列表数据
-                        mHandler.obtainMessage(1).sendToTarget()
-                        //重新登录
-                      autoConnect()
+
+                        mHandler.obtainMessage(400).sendToTarget()
+                        //  重新登录
+                       autoConnect()
+
                     }
                     LightAdapter.STATUS_ERROR_N -> {
                         //登录异常 清除所有登录数据
                         //SPUtils.clearAll(mActivity) //第一次进来，没有设备，定会失败连接
                         //重新登录
                        autoConnect()
+
                     }
                 }
             }
@@ -130,28 +105,39 @@ class MainActivity : MainActivity(), EventListener<String> {
         }
     }
 
+    var scanedListInt: Int = 0;
+    override fun onStart() {
+        super.onStart()
+        scanedListInt = SPUtils.getDeviceBeanSize(mActivity, "scanedListSize")
+        if (scanedListInt > 0) {
+            // 监听各种事件
+            dominate.addEventListener(NotificationEvent.ONLINE_STATUS, this)
+            dominate.addEventListener(DeviceEvent.STATUS_CHANGED, this)
+            dominate.addEventListener(MeshEvent.OFFLINE, this)//连接到不任何设备的时候分发此事件
+            dominate.addEventListener(ServiceEvent.SERVICE_CONNECTED, this) //服务启动
+            dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)////出现错误信息时
+            this.autoConnect()
+        } else {
+            ToastUtil.show(mActivity.resources.getString(R.string.account_no_device))
+        }
+
+    }
 
     //自动重新连接，不管是退出或着添加灯都会断开连接，所以就要从新连接
     private fun autoConnect() {
         if (mLightService.mode != LightAdapter.MODE_AUTO_CONNECT_MESH) {
             //自动重连参数
             val connectParams: LeAutoConnectParameters = Parameters.createAutoConnectParameters()
-            if (masLogin) {
-                //如果使用默认名登录
-                connectParams.setMeshName(factoryName)
-                connectParams.setPassword(factoryPassword)
-            } else {
-                //否则使用自己的名字登录
-                val name = SPUtils.getLocalName(mActivity)
-                val password = SPUtils.getLocalPassword(mActivity)
-                if (name.isNullOrEmpty() || password.isNullOrEmpty()) {
-                    mLightService.idleMode(true)//断开连接
-                    /*账号异常。请重新次登录*/
-                    ToastUtil.show(mActivity.resources.getString(R.string.account_exception))
-                    mActivity.startActivity(Intent(mActivity, LoginActivity::class.java))
-                    mActivity.finish()
-                    return
-                }
+            val name = SPUtils.getLocalName(mActivity)
+            val password = SPUtils.getLocalPassword(mActivity)
+            if (name.isNullOrEmpty() || password.isNullOrEmpty()) {
+                mLightService.idleMode(true)//断开连接
+                /*账号异常。请重新次登录*/
+                ToastUtil.show(mActivity.resources.getString(R.string.account_exception))
+                mActivity.startActivity(Intent(mActivity, LoginActivity::class.java))
+                mActivity.finish()
+                return
+
                 connectParams.setMeshName(name)
                 connectParams.setPassword(password)
             }
@@ -213,13 +199,36 @@ class MainActivity : MainActivity(), EventListener<String> {
             }
         }
     }
+    var notificationInfoListTemp: List<DeviceNotificationInfo>? = null
     val mHandler = object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             when (msg.what) {
-                1 -> {
+                200 -> {//数据对象发生改变
+                    if (notificationInfoListTemp != null && notificationInfoListTemp!!.size > 0) {
+                        for (deviceInfo: DeviceNotificationInfo in notificationInfoListTemp!!) {
+                            for (i in mainFragment.singleList!!.indices) {
+                                if (mainFragment.singleList!!.get(i).meshAddress.equals(deviceInfo.meshAddress)) {
+                                    mainFragment.singleList.get(i).status = deviceInfo.status
+                                    mainFragment.singleList.get(i).brightness = deviceInfo.brightness
+                                    mainFragment.singleList.get(i).reserve = deviceInfo.reserve
+                                    mainFragment.singleList.get(i).connectionStatus = deviceInfo.connectionStatus.value
+                                }
+                            }
+                        }
+                    }
+                    mainFragment.singleAdapter!!.putItems(mainFragment.singleList)
                     //主页更新
-                    mainFragment.infoSingleList()
+                    mainFragment.singleAdapter!!.notifyDataSetChanged()
+                }
+                400 -> {
+                    //登录失败 或着说是退出登录
+                    for (i in mainFragment.singleList!!.indices) {
+                        mainFragment.singleList.get(i).connectionStatus = ConnectionStatus.OFFLINE.value
+                    }
+                    mainFragment.singleAdapter!!.putItems(mainFragment.singleList)
+                    //主页更新
+                    mainFragment.singleAdapter!!.notifyDataSetChanged()
                 }
             }
         }
@@ -238,18 +247,6 @@ class MainActivity : MainActivity(), EventListener<String> {
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         filter.priority = IntentFilter.SYSTEM_HIGH_PRIORITY - 1
         registerReceiver(mReceiver, filter)
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        // 监听各种事件
-        dominate.addEventListener(NotificationEvent.ONLINE_STATUS, this)
-        dominate.addEventListener(DeviceEvent.STATUS_CHANGED, this)
-        dominate.addEventListener(MeshEvent.OFFLINE, this)//连接到不任何设备的时候分发此事件
-        dominate.addEventListener(ServiceEvent.SERVICE_CONNECTED, this) //服务启动
-        dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)////出现错误信息时
-        this.autoConnect()
     }
 }
 

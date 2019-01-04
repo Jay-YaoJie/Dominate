@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import jeff.beans.FragmentAdapterBeans.DeviceBean
+import jeff.constants.DeviceBean
 
 
 /**
@@ -216,60 +216,78 @@ class SPUtils {
         /**
          * 保存列表对象
          */
-        fun setFragmentAdapterBeans(context: Context, listBeanName: String, list: ArrayList<DeviceBean>) {
+        fun setDeviceBeans(context: Context, listBeanName: String, list: ArrayList<DeviceBean>) {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
-            val helper = SPUtils(context, "FragmentAdapterBeans")
+            val helper = SPUtils(context, listBeanName)
             val strJson = (Gson().toJson(list))
-            if (listBeanName.equals("deviceSingleList")) {//如果是单个设备的集合，则命名要为 deviceSingleList
-                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
-                        //保存当前集合对象的数量
-                        SPUtils.ContentValue("deviceSingleSize", list.size))
-            } else if (listBeanName.equals("deviceGroupList")) {//如果是组设备的集合，则命名要为 deviceGroupList
-                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
-                        //保存当前集合对象的数量
-                        SPUtils.ContentValue("deviceGropuSize", list.size))
-            }else if (listBeanName.equals("deviceSceneList")) {//如果是场景设备的集合，则命名要为 deviceSceneList
-                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
-                        //保存当前集合对象的数量
-                        SPUtils.ContentValue("deviceSceneSize", list.size))
-            }else{
-                //默认为 listBeanName+ size
-                helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
-                        //保存当前集合对象的数量
-                        SPUtils.ContentValue(listBeanName+"Size", strJson))
+            when (listBeanName) {
+                "deviceScanedList" -> {//扫描出来的设备
+                    helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                            //保存当前集合对象的数量
+                            SPUtils.ContentValue("deviceScanedListSize", list.size))
+                }
+                "deviceSingleList" -> {//如果是单个设备的集合，则命名要为 deviceSingleList
+                    helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                            //保存当前集合对象的数量
+                            SPUtils.ContentValue("deviceSingleSize", list.size))
+                }
+
+                "deviceGroupList" -> {//如果是组设备的集合，则命名要为 deviceGroupList
+                    helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                            //保存当前集合对象的数量
+                            SPUtils.ContentValue("deviceGropuSize", list.size))
+                }
+                "deviceTopList" -> {
+                    helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                            //保存当前集合对象的数量
+                            SPUtils.ContentValue("deviceTopListSize", list.size))
+                }
+                "deviceSceneList" -> {//如果是场景设备的集合，则命名要为 deviceSceneList
+                    helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                            //保存当前集合对象的数量
+                            SPUtils.ContentValue("deviceSceneSize", list.size))
+                }
+                else -> {
+                    //默认为 listBeanName+ size
+                    helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
+                            //保存当前集合对象的数量
+                            SPUtils.ContentValue(listBeanName + "Size", strJson))
+                }
             }
 
+
         }
+
         /**
          * 获得列表对象数量
          */
         fun getDeviceBeanSize(context: Context, listBeanNameSize: String): Int {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
-            val helper = SPUtils(context, "FragmentAdapterBeans")
-            return  helper.getInt(listBeanNameSize)
+            val helper = SPUtils(context, listBeanNameSize)
+            return helper.getInt(listBeanNameSize)
 
         }
 
         /**
          * 获得列表对象
          */
-        fun getFragmentAdapterBeans(context: Context, listBeanName: String): ArrayList<DeviceBean>? {
+        fun getDeviceBeans(context: Context, listBeanName: String): ArrayList<DeviceBean> {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
-            val helper = SPUtils(context, "FragmentAdapterBeans")
+            val helper = SPUtils(context, listBeanName)
             val strJson = helper.getString(listBeanName)
-            if (!listBeanName.isNullOrEmpty()) {
+            if (!strJson.isNullOrEmpty()) {
                 //使用TypeToken进行转化
                 val type = object : TypeToken<List<DeviceBean>>() {}.type
                 return (Gson().fromJson(strJson, type))
             } else {
-                return null;
+                return ArrayList<DeviceBean>();
             }
 
         }
 
         //清除当列表对象的所有的数据
-        fun FragmentAdapterBeansClear(context: Context) {
-            SPUtils(context, "FragmentAdapterBeans").clear()
+        fun deviceBeansClear(context: Context, clearListBeanName: String) {
+            SPUtils(context, clearListBeanName).clear()
         }
 
 
@@ -280,7 +298,11 @@ class SPUtils {
             //清除连接的mac地址
             connectMacClear(context)
             //清除当前登录用户文件的所有的数据
-            FragmentAdapterBeansClear(context)
+            deviceBeansClear(context, "deviceScanedList")
+            deviceBeansClear(context, "deviceSingleList")
+            deviceBeansClear(context, "deviceGroupList")
+            deviceBeansClear(context, "deviceTopList")
+            deviceBeansClear(context, "deviceSceneList")
         }
 
     }

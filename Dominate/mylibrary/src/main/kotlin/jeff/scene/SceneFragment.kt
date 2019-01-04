@@ -13,9 +13,6 @@ import jeff.bases.BaseFragment
  * description ：SceneFragment 场景模式
  */
 open class SceneFragment : BaseFragment<SceneFragmentDB>() {
-    override fun lazyLoad() {
-        //T ODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun getContentViewId(): Int = R.layout.fragment_scene
 

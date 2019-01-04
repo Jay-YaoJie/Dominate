@@ -33,6 +33,7 @@
     <string name="loading">正在加载数据</string>
 
     <string name="add_device">添加设备</string>
+    <string name="account_no_device">当前帐号没有设备</string>
 
     <string name="account_exception">账号异常，请重新次登录~！</string>
     <string name="add_exception">添加异常,请稍后重试~!</string>

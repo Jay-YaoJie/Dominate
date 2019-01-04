@@ -54,7 +54,7 @@ class Preference<T>(val context: Context, val name: String, val default: T) : Re
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         putPreference(name, value)
     }
-
+    @SuppressWarnings("unchecked")
     private fun findPreferenceByName(name: String, default: T): T = with(ref) {
         val res: Any = when (default) {
             is Int -> getInt(name, default)

@@ -47,6 +47,7 @@
     <string name="loading">loading</string>
     <!--添加设备-->
     <string name="add_device">addDevice</string>
+    <string name="account_no_device">Current Account No Device</string>
     <!--账号异常。请重新次登录-->
     <string name="account_exception">Account number is abnormal. Please log in again</string>
     <!--添加异常请稍后重试-->
