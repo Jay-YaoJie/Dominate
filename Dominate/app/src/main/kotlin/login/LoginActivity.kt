@@ -1,18 +1,10 @@
 package login
 
-import android.app.AlertDialog
+
 import android.content.Intent
-import bases.DominateApplication
 import bases.MainActivity
 import com.jeff.dominate.R
-import com.telink.bluetooth.LeBluetooth
-import com.telink.bluetooth.light.LeAutoConnectParameters
-import com.telink.bluetooth.light.LeRefreshNotifyParameters
-import com.telink.bluetooth.light.LightAdapter
-import com.telink.bluetooth.light.Parameters
-import device.DeviceScaningActivity
 import jeff.login.LoginActivity
-import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
 
 /**

@@ -2,6 +2,7 @@ package jeff.utils
 
 import android.os.Environment
 import jeff.constants.Settings.APP_NAME
+import jeff.constants.Settings.FILE_PATH
 import jeff.constants.Settings.ROOT_DIR
 import java.io.BufferedReader
 import java.io.File
@@ -21,14 +22,15 @@ object FileUtils {
     /**
      * 获取根目录
      */
-    var getRootDir: String? = null
+    var getRootDir: String
         get() {
         return if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
             Environment.getExternalStorageDirectory().absolutePath;
         } else {
             ""
         }
-
+    }set(value) {
+        getRootDir=value
     }
 
     /**
@@ -257,16 +259,16 @@ object FileUtils {
         var filePath: File? ;
         when (formatNmae) {
             "mp4", "h264", "3gp" -> {//保存为视频文件
-                filePath = File("${ROOT_DIR}/${APP_NAME}/videos/${time}.${formatNmae}");
+                filePath = File("${FILE_PATH}videos/${time}.${formatNmae}");
             }
             "jpg", "JPEG", "png", "PNG" -> {//保存为图片文件
-                filePath = File("${ROOT_DIR}/${APP_NAME}/images/${time}.${formatNmae}");
+                filePath = File("${FILE_PATH}images/${time}.${formatNmae}");
             }
             "aac" -> {//保存为声音文件
-                filePath = File("${ROOT_DIR}/${APP_NAME}/voices/${time}.${formatNmae}");
+                filePath = File("${FILE_PATH}voices/${time}.${formatNmae}");
             }
             else -> {//保存为其他文件
-                filePath = File("${ROOT_DIR}/${APP_NAME}/elses/${time}.${formatNmae}");
+                filePath = File("${FILE_PATH}elses/${time}.${formatNmae}");
             }
         }
         creatFile(filePath)

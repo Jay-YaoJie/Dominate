@@ -22,7 +22,7 @@ import jeff.utils.LogUtils
 abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
     protected lateinit var binding: DB
     protected lateinit var mActivity: FragmentActivity;
-    open var tagFragment: String = "BaseFragment"
+     open internal var tag: String = "BaseFragment"
     protected abstract fun getContentViewId(): Int
 
 
@@ -33,7 +33,7 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
         if (parent != null && parent is ViewGroup) {
             parent.removeView(rootView)
         }
-        tagFragment = this.javaClass.name
+        tag = this.javaClass.name
         mActivity = activity!!
         initViews()
         isLazyLoad = false

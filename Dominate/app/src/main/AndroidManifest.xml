@@ -5,6 +5,7 @@
     <!-- 蓝牙权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <uses-feature android:name="android.hardware.bluetooth_le" />
     <!--读写  往SDCard写入数据权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -25,9 +26,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--网络-->
     <uses-permission android:name="android.permission.INTERNET" />
-
-
-
 
 
     <application
@@ -125,7 +123,8 @@
         <activity android:name="bases.MainActivity" />
         <!--扫描页面-->
         <activity android:name="device.DeviceScaningActivity" />
-
+        <!--设备控制-->
+        <activity android:name="adjust.AdjustActivity" />
     </application>
 
 </manifest>

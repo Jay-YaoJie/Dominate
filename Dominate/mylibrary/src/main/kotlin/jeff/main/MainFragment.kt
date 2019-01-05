@@ -1,6 +1,8 @@
 package jeff.main
 
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -45,6 +47,13 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                 topicList = SPUtils.getDeviceBeans(mActivity, "deviceTopList")
                 //   //获得组列表数据
                 groupList = SPUtils.getDeviceBeans(mActivity, "deviceGroupList")
+                var deviceBean: DeviceBean = DeviceBean()
+                deviceBean.groupName = "All Device";
+                deviceBean.groupId = 1
+                deviceBean.meshAddress = 0xFFFF;
+                deviceBean.brightness = 100;
+                deviceBean.connectionStatus = 1;
+                groupList.add(0, deviceBean)
                 // //获得单个设备列表数据
                 singleList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList")
             }
@@ -89,12 +98,26 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                         if (topic.connectionStatus == 1) {
                             //已经打开场景
                             Glide.with(mActivity).load(topic.imgAny).into(this)
+                            val matrix = ColorMatrix()
+                            matrix.setSaturation(Float.fromBits(50)) //饱和度 0灰色 100过度彩色，50正常
+                            val filter = ColorMatrixColorFilter(matrix)
+                            this.setColorFilter(filter)
                         } else {
                             //未打开场景
                             Glide.with(mActivity).load(topic.imgAny).into(this)
+                            // 将ImageView变成灰色
+//                            ColorMatrix matrix = new ColorMatrix();
+//                            matrix.setSaturation(0);//饱和度 0灰色 100过度彩色，50正常
+//                            ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+//                            viewHolder.image.setColorFilter(filter);
+                            val matrix: ColorMatrix = ColorMatrix()
+                            matrix.setSaturation(Float.fromBits(0))
+                            val filter = ColorMatrixColorFilter(matrix)
+                            this.setColorFilter(filter)
+
                         }
 
-                    }).withView<TextView>(R.id.main_top_tv, { text = topic.textStr })
+                    }).withView<TextView>(R.id.main_top_tv, { text = topic.sceneName })
                 }
                 .clickListener { holder, position ->
                     val topic: DeviceBean = topAdapter!!.getItem(position)
@@ -117,7 +140,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
     //点击列表事件
     open fun topClickListener(deviceBean: DeviceBean): Boolean {
-        LogUtils.d(tagFragment, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
+        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
         return false
     }
 
@@ -138,14 +161,14 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         mainFragment_DSRV_group.addItemDecoration(decoration)
-        LogUtils.d(tagFragment, "没有移动之前的items  groupList.toString()=" + groupList.toString())
+        LogUtils.d(tag, "没有移动之前的items  groupList.toString()=" + groupList.toString())
         groupAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
                 .match(DeviceBean::class, R.layout.all_single_sv_item)
                 .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = groupAdapter!!.getItem(position)
                     holder.withView<TextView>(R.id.all_single_sv_item_tv, {
-                        text = topic.textStr
+                        text = topic.groupName
 
                     }).withView<SwitchView>(R.id.all_single_sv_item_sv, {
                         // //是否已经打开了当前组的控制

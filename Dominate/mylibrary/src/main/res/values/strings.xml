@@ -41,5 +41,9 @@
     <string name="check_add_device">请检查设备是否在线，或添加新的设备~!</string>
     <string name="not_found_device">查找不到新的设备 ~! </string>
 
+    <string name="brightness">亮度</string>
+    <string name="colour_temperature">色温</string>
+    <string name="colour">颜色</string>
+
 
 </resources>

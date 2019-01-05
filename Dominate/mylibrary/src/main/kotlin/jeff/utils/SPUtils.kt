@@ -220,32 +220,33 @@ class SPUtils {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
             val helper = SPUtils(context, listBeanName)
             val strJson = (Gson().toJson(list))
+            LogUtils.d(tag,"要保存的数据对象名listBeanName="+listBeanName+"---list.size="+list.size)
             when (listBeanName) {
                 "deviceScanedList" -> {//扫描出来的设备
                     helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
                             //保存当前集合对象的数量
-                            SPUtils.ContentValue("deviceScanedListSize", list.size))
+                            SPUtils.ContentValue("deviceScanedListSize", list.size as Int))
                 }
                 "deviceSingleList" -> {//如果是单个设备的集合，则命名要为 deviceSingleList
                     helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
                             //保存当前集合对象的数量
-                            SPUtils.ContentValue("deviceSingleSize", list.size))
+                            SPUtils.ContentValue("deviceSingleSize", list.size as Int))
                 }
 
                 "deviceGroupList" -> {//如果是组设备的集合，则命名要为 deviceGroupList
                     helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
                             //保存当前集合对象的数量
-                            SPUtils.ContentValue("deviceGropuSize", list.size))
+                            SPUtils.ContentValue("deviceGropuSize", list.size as Int))
                 }
                 "deviceTopList" -> {
                     helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
                             //保存当前集合对象的数量
-                            SPUtils.ContentValue("deviceTopListSize", list.size))
+                            SPUtils.ContentValue("deviceTopListSize", list.size as Int))
                 }
                 "deviceSceneList" -> {//如果是场景设备的集合，则命名要为 deviceSceneList
                     helper.putValues(SPUtils.ContentValue(listBeanName, strJson),
                             //保存当前集合对象的数量
-                            SPUtils.ContentValue("deviceSceneSize", list.size))
+                            SPUtils.ContentValue("deviceSceneSize", list.size as Int))
                 }
                 else -> {
                     //默认为 listBeanName+ size
@@ -261,9 +262,10 @@ class SPUtils {
         /**
          * 获得列表对象数量
          */
-        fun getDeviceBeanSize(context: Context, listBeanNameSize: String): Int {
+        fun getDeviceBeanSize(context: Context, listBeanName: String): Int {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
-            val helper = SPUtils(context, listBeanNameSize)
+            val helper = SPUtils(context, listBeanName)
+           var listBeanNameSize=listBeanName+"Size"
             return helper.getInt(listBeanNameSize)
 
         }

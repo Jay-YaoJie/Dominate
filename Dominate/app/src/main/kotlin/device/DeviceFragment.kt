@@ -1,6 +1,9 @@
 package device
 
+import android.content.Intent
+import bases.MainActivity
 import jeff.device.DeviceFragment
+import jeff.utils.LogUtils
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -10,6 +13,23 @@ import jeff.device.DeviceFragment
  * description ：DeviceFragment
  */
 class DeviceFragment : DeviceFragment() {
+    override fun initViews() {
+        super.initViews()
+        //点击所有设备事件
+        binding.deviceFragmentAllTV.setOnClickListener {
+            LogUtils.d(tag, "点击所有设备事件")
+        }
+        //点击组，添加组
+        binding.deviceFragmentGroupIv.setOnClickListener {
+            //
+        }
+        //点击设备，添加设备
+        binding.deviceFragmentUngroupedIv.setOnClickListener {
+            mActivity.startActivity(Intent(mActivity, DeviceScaningActivity::class.java))
+        }
+
+    }
+
     override fun lazyLoad() {
         super.lazyLoad()
         //可见时

@@ -21,8 +21,11 @@ class DeviceBean {
 
     //主页里选择适配使用的对象
     var imgAny: Any? = ""//图片
-    var textStr: String? = ""//文字
+    var sceneName: String? = ""//文字  情景的名称
+
     var groupId: Int = -1//当前id
+    var name: String? = ""//当前单个设备的名称
+    var groupName: String? = "" //当前组的名称
 
     var productUUID: Int = 0 //设备的产品标识符
     var macAddress: String? = "" // Mac地址
@@ -41,7 +44,7 @@ class DeviceBean {
                 "reserve=$reserve," +
                 "connectionStatus=$connectionStatus," +
                 "imgAny=$imgAny," +
-                "textStr=$textStr," +
+                "textStr=$sceneName," +
                 "groupId=$groupId," +
                 "productUUID=$productUUID," +
                 "macAddress=$macAddress," +

@@ -57,4 +57,10 @@
     <!--查找不到新的设备-->
     <string name="not_found_device">New device not found ~ </string>
 
+    <!--亮度-->
+    <string name="brightness">brightness</string>
+    <!--色温-->
+    <string name="colour_temperature">colourTemp</string>
+    <!--颜色-->
+    <string name="colour">colour</string>
 </resources>

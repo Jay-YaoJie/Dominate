@@ -55,15 +55,13 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         params.setNewMeshName(SPUtils.getLocalName(mActivity))//新的网络名
                         params.setNewPassword(SPUtils.getLocalPassword(mActivity))//新的密码
                         //获得当前已经有的设备数量
-                        var deviceSingleList: Int = SPUtils.getDeviceBeanSize(mActivity, "scanedListSize")
-                        if (deviceSingleList <= 0) {
-                            deviceSingleList = 1
-                        }
-                        deviceInfo!!.meshAddress = deviceSingleList+1
+
+                        deviceInfo!!.meshAddress = deviceSingleList
                         //执行更新操作
                         params.setUpdateDeviceList(deviceInfo)
                         mLightService.updateMesh(params)
                         deviceInfo = null
+                        deviceSingleList=deviceSingleList + 1
                     }, 200)
                 }
             }
@@ -91,7 +89,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
                         deviceI.meshUUID = deviceInfo.meshUUID//: Int = 0
                         deviceI.productUUID = deviceInfo.productUUID//: Int = 0 //设备的产品标识符
                         deviceI.status = deviceInfo.status//: Int = 0
-                       // deviceI.longTermKey = deviceInfo.longTermKey
+                        // deviceI.longTermKey = deviceInfo.longTermKey
                         deviceI.firmwareRevision = deviceInfo.firmwareRevision//: String? = null // 设备的firmware版本
                         // singleAdapter!!.addItem(deviceI)
                         deviceList.add(deviceI)
@@ -121,9 +119,15 @@ class DeviceScaningActivity : DeviceScaningActivity() {
             }
         }
     }
-
+    var deviceSingleList: Int = 0
     override fun onStart() {
         super.onStart()
+        deviceSingleList = SPUtils.getDeviceBeanSize(mActivity, "deviceScanedList")
+        if (deviceSingleList <= 0) {
+            deviceSingleList = 1
+        }else{
+            deviceSingleList=deviceSingleList + 1
+        }
         //获取数据对象
         deviceListSev = SPUtils.getDeviceBeans(mActivity, "deviceScanedList")
         //获得单个设备的数据对象
@@ -150,10 +154,10 @@ class DeviceScaningActivity : DeviceScaningActivity() {
         super.onStop()
         if (deviceListSev!!.size > 0) {
             //保存数据对象，持久保存
-            SPUtils.deviceBeansClear(mActivity,"deviceScanedList")
+            SPUtils.deviceBeansClear(mActivity, "deviceScanedList")
             SPUtils.setDeviceBeans(mActivity, "deviceScanedList", deviceListSev!!)
             singleListSev.addAll(deviceListSev!!)// //保存到单个设备数据对象中
-            SPUtils.deviceBeansClear(mActivity,"deviceSingleList")
+            SPUtils.deviceBeansClear(mActivity, "deviceSingleList")
             SPUtils.setDeviceBeans(mActivity, "deviceSingleList", singleListSev!!)
             singleListSev.clear()
             scanedList.clear()

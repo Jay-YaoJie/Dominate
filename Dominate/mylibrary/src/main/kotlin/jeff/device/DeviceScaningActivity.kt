@@ -37,8 +37,10 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
     override fun getContentViewId(): Int = R.layout.activity_device_scaning
     override fun initViews() {
         //topLeftView(null,R.mipmap.arrow_l,true)
-        topMiddleView(resources.getString(R.string.add_device), 0)
         bindAdapter()
+        binding.topLeft.setOnClickListener {
+            finish()
+        }
     }
 
     // single  ////单个数据列表
@@ -61,10 +63,10 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + deviceList.toString())
         singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
                 .match(DeviceBean::class, R.layout.all_single_iv_item)
-               // .holderCreateListener {}
+                // .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = singleAdapter!!.getItem(position)
-                    LogUtils.d(tag,"列表数据适配器topic.toString()="+topic.toString())
+                    LogUtils.d(tag, "列表数据适配器topic.toString()=" + topic.toString())
                     holder.withView<TextView>(R.id.all_single_iv_item_tv, {
                         text = topic.meshAddress.toString()
 
@@ -96,7 +98,7 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
 //                    Log.d("", "移动后的items  adapter.getItems()=" + topAdapter.getItems())
                 }
                 .attach(mainFragment_DSRV_single)
-       singleAdapter!!.putItems(deviceList)
+        singleAdapter!!.putItems(deviceList)
     }
 
     //单个控件点击事件

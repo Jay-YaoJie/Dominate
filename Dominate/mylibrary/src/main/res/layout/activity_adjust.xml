@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="jeff.adjust.AdjustActivityDB" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/adjust_top"
+            layout="@layout/top" />
+
+        <RadioGroup
+            android:id="@+id/adjust_tabs_RG"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/theme_positive_color"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/adjust_brightness_RB"
+                style="@style/Custom.TabRadioButton"
+                android:checked="true"
+                android:drawableTop="@drawable/tab_model"
+                android:text="@string/brightness" />
+
+            <RadioButton
+                android:id="@+id/adjust_colourTemperature_RB"
+                style="@style/Custom.TabRadioButton"
+                android:drawableTop="@drawable/tab_group"
+                android:text="@string/colour_temperature" />
+
+            <RadioButton
+                android:id="@+id/adjust_colour_RB"
+                style="@style/Custom.TabRadioButton"
+                android:drawableTop="@drawable/tab_device"
+                android:text="@string/colour" />
+
+        </RadioGroup>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/adjust_VP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tabs_RG" />
+    </LinearLayout>
+</layout>

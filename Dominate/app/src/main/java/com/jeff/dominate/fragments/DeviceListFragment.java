@@ -277,6 +277,8 @@ public final class DeviceListFragment extends Fragment implements OnClickListene
             byte[] params = new byte[]{0x00, 0x00, 0x00};
             TelinkLightService.Instance().sendCommandNoResponse(opcode, address,
                     params);
+
+
         } else if (v.getId() == R.id.img_header_menu_left) {
 
 

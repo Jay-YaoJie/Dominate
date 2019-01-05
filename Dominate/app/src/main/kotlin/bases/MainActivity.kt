@@ -1,17 +1,17 @@
 package bases
 
 
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.os.Handler
 import android.os.Message
+import android.widget.Toast
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
 import com.jeff.dominate.R
 import com.jeff.dominate.TelinkLightService
+import com.telink.bluetooth.LeBluetooth
 import com.telink.bluetooth.event.*
 import com.telink.bluetooth.light.*
 import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificationInfo
@@ -81,14 +81,14 @@ class MainActivity : MainActivity(), EventListener<String> {
 
                         mHandler.obtainMessage(400).sendToTarget()
                         //  重新登录
-                       autoConnect()
+                        // autoConnect()
 
                     }
                     LightAdapter.STATUS_ERROR_N -> {
                         //登录异常 清除所有登录数据
                         //SPUtils.clearAll(mActivity) //第一次进来，没有设备，定会失败连接
                         //重新登录
-                       autoConnect()
+                        autoConnect()
 
                     }
                 }
@@ -96,11 +96,15 @@ class MainActivity : MainActivity(), EventListener<String> {
             MeshEvent.OFFLINE -> {// 连接到不任何设备的时候分发此事件
                 LogUtils.d(tag, "OFFLINE")
                 ToastUtil.show(mActivity.resources.getString(R.string.check_add_device))
+                autoConnect()
 
             }
             ErrorReportEvent.ERROR_REPORT -> {
                 val info = (event as ErrorReportEvent).args
-                LogUtils.d(tag, info.toString())
+                LogUtils.d(tag, "MainActivity#performed#ERROR_REPORT: " + " stateCode-" + info.stateCode
+                        + " errorCode-" + info.errorCode
+                        + " deviceId-" + info.deviceId)
+                autoConnect()
             }
         }
     }
@@ -108,7 +112,7 @@ class MainActivity : MainActivity(), EventListener<String> {
     var scanedListInt: Int = 0;
     override fun onStart() {
         super.onStart()
-        scanedListInt = SPUtils.getDeviceBeanSize(mActivity, "scanedListSize")
+        scanedListInt = SPUtils.getDeviceBeanSize(mActivity, "deviceScanedList")
         if (scanedListInt > 0) {
             // 监听各种事件
             dominate.addEventListener(NotificationEvent.ONLINE_STATUS, this)
@@ -116,11 +120,33 @@ class MainActivity : MainActivity(), EventListener<String> {
             dominate.addEventListener(MeshEvent.OFFLINE, this)//连接到不任何设备的时候分发此事件
             dominate.addEventListener(ServiceEvent.SERVICE_CONNECTED, this) //服务启动
             dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)////出现错误信息时
+            dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)
+            //dominate.addEventListener(NotificationEvent.GET_ALARM, this)
+            //dominate.addEventListener(NotificationEvent.GET_DEVICE_STATE, this)
+
             this.autoConnect()
         } else {
-            ToastUtil.show(mActivity.resources.getString(R.string.account_no_device))
+            ToastUtil.show(mActivity, mActivity.resources.getString(R.string.account_no_device))
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //检查是否支持蓝牙设备
+        if (!LeBluetooth.getInstance().isSupport(applicationContext)) {
+            Toast.makeText(this, "ble not support", Toast.LENGTH_SHORT).show()
+            this.finish()
+            return
+        }
+
+        if (!LeBluetooth.getInstance().isEnabled) {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("开启蓝牙，体验智能灯!")
+            builder.setNeutralButton("cancel") { dialog, which -> finish() }
+            builder.setNegativeButton("enable") { dialog, which -> LeBluetooth.getInstance().enable(applicationContext) }
+            builder.show()
+        }
     }
 
     //自动重新连接，不管是退出或着添加灯都会断开连接，所以就要从新连接
@@ -137,14 +163,11 @@ class MainActivity : MainActivity(), EventListener<String> {
                 mActivity.startActivity(Intent(mActivity, LoginActivity::class.java))
                 mActivity.finish()
                 return
-
-                connectParams.setMeshName(name)
-                connectParams.setPassword(password)
             }
-
+            connectParams.setMeshName(name)
+            connectParams.setPassword(password)
             //连接通知
             connectParams.autoEnableNotification(true)
-
             // 之前是否有在做MeshOTA操作，是则继续
             val mac = SPUtils.getConnectMac(mActivity)
             if (!mac.isNullOrEmpty()) {
@@ -174,8 +197,8 @@ class MainActivity : MainActivity(), EventListener<String> {
         super.onDestroy()
         LogUtils.d(tag, "onDestroy")
         unregisterReceiver(mReceiver)
-        this.mHandler.removeCallbacksAndMessages(null)
         dominate.doDestroy()
+        this.mHandler.removeCallbacksAndMessages(null)
         //移除事件
         dominate.removeEventListener(this)
 
@@ -190,7 +213,7 @@ class MainActivity : MainActivity(), EventListener<String> {
                 when (state) {
                     BluetoothAdapter.STATE_ON -> {
                         LogUtils.d(tag, "蓝牙开启")
-                        TelinkLightService.Instance().idleMode(true)
+                        mLightService.idleMode(true)
                         //重新连接登录
                         autoConnect()
                     }
