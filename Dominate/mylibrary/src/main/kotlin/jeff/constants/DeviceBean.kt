@@ -35,6 +35,7 @@ class DeviceBean {
 
     var firmwareRevision: String? = "" // 设备的firmware版本
     var longTermKey = ByteArray(16)
+    var checkd: Boolean = false
     override fun toString(): String {
         return "DeviceBean(" +
                 "meshAddress=$meshAddress," +
@@ -44,15 +45,20 @@ class DeviceBean {
                 "reserve=$reserve," +
                 "connectionStatus=$connectionStatus," +
                 "imgAny=$imgAny," +
-                "textStr=$sceneName," +
+                "sceneName=$sceneName," +
                 "groupId=$groupId," +
+                "name=$name," +
+                "groupName=$groupName," +
                 "productUUID=$productUUID," +
                 "macAddress=$macAddress," +
                 "meshName=$meshName," +
                 "deviceName=$deviceName," +
                 "index=$index," +
                 "firmwareRevision=$firmwareRevision," +
-                "longTermKey=${Arrays.toString(longTermKey)}" +
+                "longTermKey=${Arrays.toString(longTermKey)}," +
+                "check=$checkd" +
                 ")"
     }
+
+
 }

@@ -62,20 +62,14 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         mainFragment_DSRV_single.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  singleList.toString()=" + deviceList.toString())
         singleAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
-                .match(DeviceBean::class, R.layout.all_single_iv_item)
+                .match(DeviceBean::class, R.layout.all_single_iv_r_item)
                 // .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = singleAdapter!!.getItem(position)
                     LogUtils.d(tag, "列表数据适配器topic.toString()=" + topic.toString())
-                    holder.withView<TextView>(R.id.all_single_iv_item_tv, {
+                    holder.withView<TextView>(R.id.all_single_iv_item_tv,{
                         text = topic.meshAddress.toString()
 
-                    }).withView<ImageView>(R.id.all_single_iv_item_iv, {
-                        this.visibility = View.VISIBLE
-                        Glide.with(mActivity).load(R.mipmap.icon_add).into(this)
-                        this.setOnClickListener {
-                            deviceScanningChlidClick(topic)
-                        }
                     })
                 }
                 .clickListener { _, position ->
@@ -101,11 +95,6 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         singleAdapter!!.putItems(deviceList)
     }
 
-    //单个控件点击事件
-    open fun deviceScanningChlidClick(deviceInfo: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceInfo.toString()} ")
-        return false
-    }
 
     //点击列表事件
     open fun deviceScanningClickListener(deviceInfo: DeviceBean): Boolean {

@@ -67,7 +67,7 @@ dependencies {
     
     // 支持与外围BLE设备进行扫描、连接、读、写、通知订阅与取消等基本操作
     // https://github.com/Jasonchenlijian/FastBle
-    implementation 'com.clj.fastble:FastBleLib:2.3.2'
+  // implementation 'com.clj.fastble:FastBleLib:2.3.2'
     // 添加权限检查 https://github.com/dfqin/PermissionGrantor
     implementation 'com.github.dfqin:grantor:2.5'
     //仿IOS圆角对话框、进度条、列表框、输入框，popup，支持横竖屏切换
@@ -91,6 +91,17 @@ dependencies {
 
     // 强大的图片和视频选择器 https://github.com/LuckSiege/PictureSelector
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+
+    //消息框、选择框、输入框、等待提示、警告提示、完成提示、错误提示等弹出样式
+    // https://github.com/kongzue/Dialog
+    implementation 'com.kongzue.dialog:dialog:2.4.6'
+
+    //RecyclerView，AbsListView适配器, 支持多种视图样式, 支持吸顶、侧滑删除、拖拽效果
+    // https://github.com/wuhenzhizao/kotlin-adapter
+    // 核心依赖
+    //compile 'com.wuhenzhizao:kotlin-adapter-core:1.2.1'
+    // 拓展效果依赖
+    //compile 'com.wuhenzhizao:kotlin-adapter-extension:1.2.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

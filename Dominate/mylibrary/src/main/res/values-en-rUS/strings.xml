@@ -6,7 +6,7 @@
     <!--主页-->
     <string name="main">main</string>
     <!--分组-->
-    <string name="group">group</string>
+    <string name="group">scene</string>
     <!--设备-->
     <string name="device">device</string>
     <!--我的-->

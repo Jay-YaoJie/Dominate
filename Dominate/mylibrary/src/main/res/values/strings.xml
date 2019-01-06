@@ -4,7 +4,7 @@
     <string name="ble_not_support">当前系统不支持蓝牙</string>
     <!--main tab-->
     <string name="main">主页</string>
-    <string name="group">分组</string>
+    <string name="group">情景</string>
     <string name="device">设备</string>
     <string name="me">我的</string>
 

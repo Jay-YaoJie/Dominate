@@ -62,15 +62,13 @@ open class SceneFragment : BaseFragment<SceneFragmentDB>() {
         decoration.setOffsetLast(true)
         scene_fragment_SSRV.addItemDecoration(decoration)
         sceneAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(context!!)
-                .match(DeviceBean::class, R.layout.all_single_iv_item)
+                .match(DeviceBean::class, R.layout.all_single_iv_r_item)
                 .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = sceneAdapter.getItem(position)
-                    holder.withView<TextView>(R.id.all_single_iv_item_iv) {
+                    holder.withView<TextView>(R.id.all_single_iv_item_iv, {
                         this.text = topic.sceneName
-                    }.withView<ImageView>(R.id.all_single_iv_item_iv) {
-                        this.setImageResource(R.mipmap.arrow_r)
-                    }
+                    })
                 }
                 .clickListener { holder, position ->
                     val topic = sceneAdapter.getItem(position)
