@@ -18,8 +18,8 @@ open class BrightnessFragment : BaseFragment<BrightnessFragmentDB>() {
     override fun initViews() {
         binding.brightnessProgress.progressChangedCallback = {
             val textStr = String.format("%.2f", it)
-            val sourceI = java.lang.Float.valueOf(it).toInt()
-            changeBrightness(sourceI)
+            val sourceI:String =textStr.subSequence(2,4).toString()
+            changeBrightness(sourceI.toInt())
             binding.brightnessProgressText.text = textStr
         }
     }

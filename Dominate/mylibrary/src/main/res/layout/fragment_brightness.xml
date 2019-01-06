@@ -27,14 +27,14 @@
             android:id="@+id/brightness_progressText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.00"
+            android:text="0.50"
             android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="@id/brightness_progress"
             app:layout_constraintLeft_toLeftOf="@id/brightness_progress"
             app:layout_constraintRight_toRightOf="@id/brightness_progress"
             app:layout_constraintTop_toTopOf="@id/brightness_progress"
             tools:ignore="HardcodedText"
-            tools:text="0.1" />
+            tools:text="0.5" />
     </android.support.constraint.ConstraintLayout>
 
 </layout>

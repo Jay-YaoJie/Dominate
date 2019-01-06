@@ -31,7 +31,7 @@
     <application
         android:name="bases.DominateApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:theme="@style/AppTheme">
         <!--<service
             android:name=".LightService"
@@ -125,6 +125,8 @@
         <activity android:name="device.DeviceScaningActivity" />
         <!--设备控制-->
         <activity android:name="adjust.AdjustActivity" />
+        <!--添加情景页面，选择图片和输入-->
+        <activity android:name="scene.AddSceneActivity"/>
     </application>
 
 </manifest>

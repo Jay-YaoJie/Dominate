@@ -1,5 +1,6 @@
 package scene
 
+import android.content.Intent
 import co.metalab.asyncawait.async
 import jeff.scene.SceneFragment
 import jeff.utils.SPUtils
@@ -33,6 +34,7 @@ class SceneFragment : SceneFragment() {
         //添加
         binding.topRight.setOnClickListener {
             //添加情景页面
+            mActivity.startActivity(Intent(mActivity, AddSceneActivity::class.java))
         }
     }
 }

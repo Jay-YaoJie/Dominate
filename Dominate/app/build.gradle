@@ -10,8 +10,8 @@ android {
         applicationId "com.jeff.dominate"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 200
-        versionName "2.0.0"
+        versionCode 202
+        versionName "2.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // RenderScript支持库未启用，要启用模糊效果，请在您的app的Gradle配置文件中添加以下语句：
         renderscriptTargetApi 19
@@ -27,10 +27,29 @@ android {
     lintOptions {
         abortOnError false
     }
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'jeffsigned'
+            keyPassword 'jeff520'
+            storeFile file('signed/jeffsigned.jks')
+            storePassword 'jeff520'
+        }
+//        buildConfig {
+//            keyAlias 'gdx production signature'
+//            keyPassword 'gdx9234'
+//            storeFile file('E:/AndroidProject/prod.jks')
+//            storePassword 'gdx9234'
+//        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.releaseConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.releaseConfig
         }
     }
     sourceSets {

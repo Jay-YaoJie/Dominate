@@ -26,6 +26,9 @@ open class AdjustActivity : BaseActivity<AdjustActivityDB>() {
 //        mFragments.add(ColourTemperatureFragment())//色温
 //        mFragments.add(ColourFragment())//颜色
         mTabRadioGroup()// TabRadioGroup  的点击或着滑动切换
+        binding.topLeft.setOnClickListener {
+            mActivity.finish()
+        }
     }
 
     open var mFragments: MutableList<Fragment> = ArrayList()

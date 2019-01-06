@@ -73,8 +73,9 @@ object ToastUtil {
     fun togglesoftinput(view: View) {
         val imm = view.context
                 .getSystemService(Context.INPUT_METHOD_SERVICE ) as InputMethodManager
-        if (imm != null) {
-            imm!!.toggleSoftInput(0, 0)
+        if (imm != null&&imm.isActive) {
+          //  imm!!.toggleSoftInput(0, 0)
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 

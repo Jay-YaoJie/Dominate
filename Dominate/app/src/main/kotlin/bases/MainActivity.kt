@@ -10,7 +10,6 @@ import android.widget.Toast
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
 import com.jeff.dominate.R
-import com.jeff.dominate.TelinkLightService
 import com.telink.bluetooth.LeBluetooth
 import com.telink.bluetooth.event.*
 import com.telink.bluetooth.light.*
@@ -20,7 +19,7 @@ import com.telink.util.EventListener
 import device.DeviceFragment
 import jeff.bases.MainActivity
 import jeff.me.MeFragment
-import jeff.scene.SceneFragment
+import  scene.SceneFragment
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.utils.ToastUtil

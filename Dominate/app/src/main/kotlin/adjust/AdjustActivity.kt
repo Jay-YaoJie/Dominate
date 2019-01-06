@@ -19,7 +19,7 @@ class AdjustActivity : AdjustActivity() {
         mFragments.add(BrightnessFragment())//亮度
         mFragments.add(ColourTemperatureFragment())//色温
         mFragments.add(ColourFragment())//颜色
-
         super.initViews()
+
     }
 }

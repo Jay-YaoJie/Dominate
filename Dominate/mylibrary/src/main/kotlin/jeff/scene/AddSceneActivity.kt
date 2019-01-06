@@ -65,7 +65,7 @@ open class AddSceneActivity : BaseActivity<AddSceneActivityDB>() {
                 .setOutputCameraPath("${FILE_PATH}/images")// 自定义拍照保存路径,可不填
                 .enableCrop(true)// 是否裁剪 true or false
                 .compress(true)// 是否压缩 true or false
-                .withAspectRatio(3, 2)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .withAspectRatio(1, 1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
                 .hideBottomControls(true)// 是否显示uCrop工具栏，默认不显示 true or false
                 .isGif(true)// 是否显示gif图片 true or false
                 .compressSavePath("${FILE_PATH}/images")//压缩图片保存地址
@@ -104,7 +104,7 @@ open class AddSceneActivity : BaseActivity<AddSceneActivityDB>() {
                         //直接使用 裁剪后path
                         imgPath = selectList[0].cutPath
                     }
-                    Glide.with(mActivity).load(imgPath)
+                    Glide.with(mActivity).load(imgPath).into(binding.sceneImg)
                 }
             }
         }
