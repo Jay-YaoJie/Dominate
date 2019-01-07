@@ -2,9 +2,7 @@ package jeff.bases
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
 import jeff.utils.PermissionUtils
 import jeff.utils.SPUtils
@@ -21,7 +19,7 @@ open class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welocme)
         //添加当前页面
-        Glide.with(this).load(R.drawable.welcome).into((findViewById(R.id.welcome) as ImageView))
+     //   Glide.with(this).load(R.drawable.welcome).into((findViewById(R.id.welcome) as ImageView))
         PermissionUtils.checkPermission()//访问权限
 
         ( this.findViewById<TextView>(R.id.weclome_tv)).setOnClickListener {

@@ -1,16 +1,16 @@
 package bases
 
 
-import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Handler
 import android.os.Message
-import android.widget.Toast
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
 import com.jeff.dominate.R
-import com.telink.bluetooth.LeBluetooth
 import com.telink.bluetooth.event.*
 import com.telink.bluetooth.light.*
 import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificationInfo
@@ -19,13 +19,13 @@ import com.telink.util.EventListener
 import device.DeviceFragment
 import jeff.bases.MainActivity
 import jeff.me.MeFragment
-import  scene.SceneFragment
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
 import kotlin_adapter.adapter_core.extension.putItems
 import login.LoginActivity
 import main.MainFragment
+import scene.SceneFragment
 
 
 /**
@@ -129,25 +129,6 @@ class MainActivity : MainActivity(), EventListener<String> {
         }
 
     }
-
-    override fun onResume() {
-        super.onResume()
-        //检查是否支持蓝牙设备
-        if (!LeBluetooth.getInstance().isSupport(applicationContext)) {
-            Toast.makeText(this, "ble not support", Toast.LENGTH_SHORT).show()
-            this.finish()
-            return
-        }
-
-        if (!LeBluetooth.getInstance().isEnabled) {
-            val builder = AlertDialog.Builder(this)
-            builder.setMessage("开启蓝牙，体验智能灯!")
-            builder.setNeutralButton("cancel") { dialog, which -> finish() }
-            builder.setNegativeButton("enable") { dialog, which -> LeBluetooth.getInstance().enable(applicationContext) }
-            builder.show()
-        }
-    }
-
     //自动重新连接，不管是退出或着添加灯都会断开连接，所以就要从新连接
     private fun autoConnect() {
         if (mLightService.mode != LightAdapter.MODE_AUTO_CONNECT_MESH) {

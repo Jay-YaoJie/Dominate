@@ -2,6 +2,7 @@ package bases
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.widget.Toast
 import com.telink.bluetooth.LeBluetooth
 import jeff.bases.WelcomeActivity
 import login.LoginActivity
@@ -28,6 +29,12 @@ class WelcomeActivity : WelcomeActivity() {
 
     override fun onResume() {
         super.onResume()
+        //检查是否支持蓝牙设备
+        if (!LeBluetooth.getInstance().isSupport(applicationContext)) {
+            Toast.makeText(this, "ble not support", Toast.LENGTH_SHORT).show()
+            this.finish()
+            return
+        }
         if (!LeBluetooth.getInstance().isEnabled) {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("开启蓝牙，体验智能灯!")
@@ -35,6 +42,7 @@ class WelcomeActivity : WelcomeActivity() {
             builder.setNegativeButton("enable") { dialog, _ -> LeBluetooth.getInstance().enable(applicationContext) }
             builder.show()
         }
+
 
 
     }
