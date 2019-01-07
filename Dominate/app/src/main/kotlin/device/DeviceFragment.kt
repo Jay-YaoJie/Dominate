@@ -1,6 +1,7 @@
 package device
 
 import android.content.Intent
+import android.os.Handler
 import bases.DominateApplication.Companion.mLightService
 import co.metalab.asyncawait.async
 import com.telink.bluetooth.event.NotificationEvent
@@ -58,23 +59,26 @@ class DeviceFragment() : DeviceFragment(), EventListener<String> {
     lateinit var deviceBeanList: ArrayList<DeviceBean>
 
     //点击添加按钮，组里添加设备
-    override fun groupAdd(groupName: GroupBean, singleList: ArrayList<DeviceBean>) {
+    override fun groupAdd(groupName: GroupBean, addsingleList: ArrayList<DeviceBean>) {
         LogUtils.d(tag, "向组里添加设备")
         group = groupName
-        addDeviceBeanList = singleList
+        addDeviceBeanList = addsingleList
         deviceBeanList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList")
         forAddDevice()
     }
-
+    val mHandler = Handler()
     fun forAddDevice() {
-        //循环添加组数据
-        for (deviceBean: DeviceBean in addDeviceBeanList) {
-            meshAddress = deviceBean.meshAddress
-            addDeviceBeanList.remove(deviceBean)
-            getDeviceGroup()//先发送更新命令
-            allocDeviceGroup()//最后发送添加命令
-
+        for (i in addDeviceBeanList!!.indices) {
+            mHandler.postDelayed({
+                if (addDeviceBeanList[i].checkd){
+                    meshAddress = addDeviceBeanList[i].meshAddress
+                    addDeviceBeanList[i].checkd=false
+                    getDeviceGroup()//先发送更新命令
+                    allocDeviceGroup()//最后发送添加命令
+                }
+            }, (3 * 1000).toLong())
         }
+
     }
 
     private fun getDeviceGroup() {
@@ -120,11 +124,6 @@ class DeviceFragment() : DeviceFragment(), EventListener<String> {
                         deviceBeanList[i].groupIndexId = deviceBeanList[i].groupIndexId + 1
                     }
                 }
-                if (addDeviceBeanList.size > 0) {
-                    //更新成功，继续添加
-                    forAddDevice()
-                }
-
             }
 
         }
