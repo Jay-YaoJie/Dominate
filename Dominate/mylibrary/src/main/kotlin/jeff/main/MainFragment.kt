@@ -165,7 +165,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         mainFragment_DSRV_group.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  groupList.toString()=" + groupList.toString())
         groupAdapter = DragAndSwipeRecyclerViewAdapter<GroupBean>(mActivity)
-                .match(DeviceBean::class, R.layout.all_single_sv_item)
+                .match(GroupBean::class, R.layout.all_single_sv_item)
                 .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = groupAdapter!!.getItem(position)

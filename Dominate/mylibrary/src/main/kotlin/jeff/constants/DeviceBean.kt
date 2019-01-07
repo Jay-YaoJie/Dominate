@@ -2,6 +2,7 @@ package jeff.constants
 
 import android.content.res.ColorStateList
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -21,13 +22,15 @@ class DeviceBean {
     var connectionStatus: Int = 0
 
     //主页里选择适配使用的对象
-    var imgAny: Any? = ""//图片
-    var sceneName: String? = ""//文字  情景的名称
+    var sceneImgAnyList: ArrayList<Any> = ArrayList() //图片
+    var sceneNameList: ArrayList<String> = ArrayList() //文字  情景的名称
+    var sceneMeshAddressList: ArrayList<Int> = ArrayList()  //当前情景的Mesh
+    var sceneIndexId: Int = 0;//当前在多少个组里面
 
-    var groupId: Int = -1//当前id
-    var name: String? = ""//当前单个设备的名称
-    var groupName: String? = "" //当前组的名称
+    var groupMeshAddressList: ArrayList<Int> = ArrayList()//当前组的Mesh
+    var groupNameList: ArrayList<String> = ArrayList()//当前组的名称
     var groupIndexId: Int = 0;//当前在多少个组里面
+
 
     var productUUID: Int = 0 //设备的产品标识符
     var macAddress: String? = "" // Mac地址
@@ -38,29 +41,7 @@ class DeviceBean {
     var firmwareRevision: String? = "" // 设备的firmware版本
     var longTermKey = ByteArray(16)
     var checkd: Boolean = false
-    override fun toString(): String {
-        return "DeviceBean(" +
-                "meshAddress=$meshAddress," +
-                "meshUUID=$meshUUID," +
-                "status=$status," +
-                "brightness=$brightness," +
-                "reserve=$reserve," +
-                "connectionStatus=$connectionStatus," +
-                "imgAny=$imgAny," +
-                "sceneName=$sceneName," +
-                "groupId=$groupId," +
-                "name=$name," +
-                "groupName=$groupName," +
-                "productUUID=$productUUID," +
-                "macAddress=$macAddress," +
-                "meshName=$meshName," +
-                "deviceName=$deviceName," +
-                "index=$index," +
-                "firmwareRevision=$firmwareRevision," +
-                "longTermKey=${Arrays.toString(longTermKey)}," +
-                "check=$checkd" +
-                ")"
-    }
+
 }
 
 //分组

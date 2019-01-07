@@ -62,14 +62,14 @@ class SPUtils {
             if (contentValue.value is String) {
                 editor.putString(contentValue.key, contentValue.value.toString()).commit()
             }
-            //如果是int类型
-            if (contentValue.value is Int) {
-                editor.putInt(contentValue.key, Integer.parseInt(contentValue.value.toString())).commit()
+            //如果是Long类型 //如果是int类型
+            if (contentValue.value is Long||contentValue.value is Int) {
+                editor.putInt(contentValue.key , Integer.parseInt(contentValue.value.toString())).commit()
             }
             //如果是Long类型
-            if (contentValue.value is Long) {
-                editor.putLong(contentValue.key, java.lang.Long.parseLong(contentValue.value.toString())).commit()
-            }
+//            if (contentValue.value is Long) {
+//                editor.putLong(contentValue.key, java.lang.Long.parseLong(contentValue.value.toString())).commit()
+//            }
             //如果是布尔类型
             if (contentValue.value is Boolean) {
                 editor.putBoolean(contentValue.key, java.lang.Boolean.parseBoolean(contentValue.value.toString())).commit()
@@ -220,7 +220,7 @@ class SPUtils {
          */
         fun setDeviceBeans(context: Context, listBeanName: String, list: ArrayList<DeviceBean>) {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
-            val helper = SPUtils(context, listBeanName+"root")
+            val helper = SPUtils(context, listBeanName+"Root")
             val strJson = (Gson().toJson(list))
             LogUtils.d(tag, "要保存的数据对象名listBeanName=" + listBeanName + "---list.size=" + list.size)
 
@@ -235,7 +235,7 @@ class SPUtils {
          */
         fun getDeviceBeans(context: Context, listBeanName: String): ArrayList<DeviceBean> {
             //获取SharedPreferences对象，使用自定义类的方法来获取对象
-            val helper = SPUtils(context, listBeanName+"root")
+            val helper = SPUtils(context, listBeanName+"Root")
             val strJson = helper.getString(listBeanName)
             if (!strJson.isNullOrEmpty()) {
                 //使用TypeToken进行转化

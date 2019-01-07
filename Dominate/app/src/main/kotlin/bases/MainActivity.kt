@@ -1,6 +1,7 @@
 package bases
 
 
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -8,9 +9,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
 import android.os.Message
+import android.widget.Toast
 import bases.DominateApplication.Companion.dominate
 import bases.DominateApplication.Companion.mLightService
 import com.jeff.dominate.R
+import com.telink.bluetooth.LeBluetooth
 import com.telink.bluetooth.event.*
 import com.telink.bluetooth.light.*
 import com.telink.bluetooth.light.OnlineStatusNotificationParser.DeviceNotificationInfo
@@ -80,7 +83,7 @@ class MainActivity : MainActivity(), EventListener<String> {
 
                         mHandler.obtainMessage(400).sendToTarget()
                         //  重新登录
-                        // autoConnect()
+                        autoConnect()
 
                     }
                     LightAdapter.STATUS_ERROR_N -> {
@@ -107,7 +110,22 @@ class MainActivity : MainActivity(), EventListener<String> {
             }
         }
     }
-
+    override fun onResume() {
+        super.onResume()
+        //检查是否支持蓝牙设备
+        if (!LeBluetooth.getInstance().isSupport(applicationContext)) {
+            Toast.makeText(this, "ble not support", Toast.LENGTH_SHORT).show()
+            this.finish()
+            return
+        }
+        if (!LeBluetooth.getInstance().isEnabled) {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("开启蓝牙，体验智能灯!")
+            builder.setNeutralButton("cancel") { dialog, _ -> finish() }
+            builder.setNegativeButton("enable") { dialog, _ -> LeBluetooth.getInstance().enable(applicationContext) }
+            builder.show()
+        }
+    }
     var scanedListInt: Int = 0;
     override fun onStart() {
         super.onStart()
@@ -181,7 +199,6 @@ class MainActivity : MainActivity(), EventListener<String> {
         this.mHandler.removeCallbacksAndMessages(null)
         //移除事件
         dominate.removeEventListener(this)
-
     }
 
     val mReceiver = object : BroadcastReceiver() {

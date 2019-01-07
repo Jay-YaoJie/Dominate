@@ -42,8 +42,5 @@ class WelcomeActivity : WelcomeActivity() {
             builder.setNegativeButton("enable") { dialog, _ -> LeBluetooth.getInstance().enable(applicationContext) }
             builder.show()
         }
-
-
-
     }
 }

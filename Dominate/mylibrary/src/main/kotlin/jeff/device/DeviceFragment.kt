@@ -80,9 +80,6 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 
     //分组昵称
     open fun inputGroupName(nputText: String?): Boolean {
-        if (nputText.isNullOrEmpty()) {
-            return false
-        }
         var groupNamelist: ArrayList<GroupBean> = SPUtils.getGroupBeans(mActivity, "grouplist")
         for (groupNme: GroupBean in groupNamelist) {
             if (groupNme.equals(nputText)) {
@@ -90,15 +87,21 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                 return false
             }
         }
-        var groupNme: GroupBean = GroupBean()
+        var groupNme = GroupBean()
         groupNme.brightness = 0
         //分组的组名
         groupNme.groupName = nputText //当前组的名称
         groupNme.groupId = groupNamelist.size + 1//当前id
         //以下是 组里的控制器
-        groupNme.meshAddress = groupNamelist.last().meshAddress + 1//灯的名称 数据列表12345
+        if (groupNamelist.size > 0) {
+            groupNme.meshAddress = groupNamelist.last().meshAddress + 1//灯的名称 数据列表12345
+        } else {
+            groupNme.meshAddress = 0x8001
+        }
+        LogUtils.d(tag, "分组昵称groupNme=" + groupNme)
         groupNamelist.add(groupNme)
-        SPUtils.deviceBeansClear(mActivity,"grouplist")
+
+        SPUtils.deviceBeansClear(mActivity, "grouplist")
         SPUtils.setGroupBeans(mActivity, "grouplist", groupNamelist)
         return true
     }
@@ -106,8 +109,8 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
-    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<GroupBean>
-    open var groupList: ArrayList< GroupBean> = ArrayList()
+    open lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<GroupBean>
+    open var groupList: ArrayList<GroupBean> = ArrayList()
     //组 数据列表
     private fun bindGroupAdapter() {
         mainFragment_DSRV_group = binding.deviceFragmentGroupDSRV
@@ -131,33 +134,37 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                         text = topic.meshAddress.toString()
 
                     }).withView<ImageView>(R.id.all_single_iv_item_iv, {
-                        //点击添加按钮 弹出选择列表
-                        val customView = LayoutInflater.from(mActivity).inflate(R.layout.add_list, null)
-                        customDialog = CustomDialog.show(mActivity, customView, CustomDialog.BindView {
-                            listview = this.findViewById<ListView>(R.id.add_list)
-                            findViewById<TextView>(R.id.btn_cancel).setOnClickListener {
-                                customDialog!!.doDismiss()
-                            }
-                            findViewById<TextView>(R.id.btn_ok).setOnClickListener {
-                                customDialog!!.doDismiss()
-                                groupAdd(groupName, groupAddList)
-                            }
+                        this.setOnClickListener {
+                            //点击添加按钮 弹出选择列表
+                            val customView = LayoutInflater.from(mActivity).inflate(R.layout.add_list, null)
+                            customDialog = CustomDialog.show(mActivity, customView, {
+                                listview = customView.findViewById<ListView>(R.id.add_list)
+                                customView.findViewById<TextView>(R.id.btn_cancel).setOnClickListener {
+                                    customDialog!!.doDismiss()
+                                }
+                                customView.findViewById<TextView>(R.id.btn_ok).setOnClickListener {
+                                    //向组里添加设备
+                                    customDialog!!.doDismiss()
+                                    groupAdd(groupBean, groupAddList)
+                                }
 
-                        })
-                        //，如果没有单个设备则不能选择
-                        async {
-                            await<Unit> {
-                                groupName = topic
-                                for (deviceBean: DeviceBean in singleList) {
-                                    if (deviceBean.groupId <= 10) {
-                                        //如果添加的当前组没有10个
-                                        groupAddList.add(groupName)
+                            })
+                            //，如果没有单个设备则不能选择
+                            async {
+                                await<Unit> {
+                                    groupBean = topic
+                                    for (deviceBean: DeviceBean in singleList) {
+                                        if (deviceBean.groupIndexId <= 10) {
+                                            //如果添加的当前组没有10个
+                                            groupAddList.add(deviceBean)
+                                        }
                                     }
                                 }
+                                groupAddDialog()
+                                groupAddAdapter.putItems(groupAddList)
                             }
-                            groupAddDialog()
-                            groupAddAdapter.putItems(groupAddList)
                         }
+
                     })
                 }
                 .clickListener { holder, position ->
@@ -186,37 +193,41 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
     }
 
     //点击添加按钮，组里添加设备
-    open fun groupAdd(groupName: GroupBean, singleList: ArrayList<GroupBean>) {}
+    open fun groupAdd(groupName: GroupBean, singleList: ArrayList<DeviceBean>) {
+        LogUtils.d(tag, "向组里添加设备")
+    }
 
     private var customDialog: CustomDialog? = null
-    private lateinit var groupAddAdapter: ListViewAdapter<GroupBean>
-    private lateinit var groupAddList: ArrayList<GroupBean>
+    private lateinit var groupAddAdapter: ListViewAdapter<DeviceBean>
+    private val groupAddList: ArrayList<DeviceBean> = ArrayList()
     private lateinit var listview: ListView
-    private lateinit var groupName: GroupBean
+    private lateinit var groupBean: GroupBean
     //点击组添加设备显示列表
     private fun groupAddDialog() {
-        LogUtils.d(tag, "点击添加按钮，组里添加设备 groupName= ${groupName.toString()} ")
+        LogUtils.d(tag, "点击添加按钮，组里添加设备 groupName= ${groupBean.toString()} ")
         groupAddAdapter = ListViewAdapter(context!!, groupAddList)
                 .match(DeviceBean::class, R.layout.all_single_iv_c_item)
                 .holderCreateListener {
                 }
                 .holderBindListener { holder, position ->
-                    val province: GroupBean = groupAddList[position]
-                    holder.withView<TextView>(R.id.all_single_iv_c_tv, { text = province.meshAddress.toString() })
-                            .withView<CheckBox>(R.id.all_single_iv_c_cb, { isChecked = province.checkd })
+                    val province: DeviceBean = groupAddList[position]
+                    holder.withView<TextView>(R.id.all_single_iv_c_tv, {
+                        text = province.meshAddress.toString()
+                    }).withView<CheckBox>(R.id.all_single_iv_c_cb, {
+                        isChecked = province.checkd
+                    })
                 }
                 .clickListener { holder, position ->
-                    val province = groupAddList[position]
+                    //val province = groupAddList[position]
                     // showToast("position $position, ${province.name} clicked")
-                    groupAddAdapter.getItems().forEachIndexed { index, item ->
-                        //当前选择的；item
-                        // item.checked = (index == position)
-                        if (groupAddList[position].checkd) {
-                            groupAddList[position].checkd = false
-                        } else {
-                            groupAddList[position].checkd = true
-                        }
+                    //当前选择的；item
+                    // item.checked = (index == position)
+                    if (groupAddList[position].checkd) {
+                        groupAddList[position].checkd = false
+                    } else {
+                        groupAddList[position].checkd = true
                     }
+
                     groupAddAdapter.notifyDataSetChanged()
                 }
                 .longClickListener { holder, position ->
@@ -234,7 +245,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 
     // single  ////单个数据列表
     lateinit var mainFragment_DSRV_single: DragAndSwipeRecyclerView;
-    private lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open lateinit var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
     open var singleList: ArrayList<DeviceBean> = ArrayList()
     //单个数据列表
     private fun bindSingleAdapter() {
