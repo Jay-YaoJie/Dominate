@@ -72,7 +72,7 @@ dependencies {
     implementation 'com.github.dfqin:grantor:2.5'
     //仿IOS圆角对话框、进度条、列表框、输入框，popup，支持横竖屏切换
     // https://github.com/mylhyl/Android-CircleDialog
-    implementation 'com.mylhyl:circleDialog:3.0.2'
+    //implementation 'com.mylhyl:circleDialog:3.0.2'
 
     //iOS风格SwitchButton  https://github.com/iielse/SwitchButton
     implementation 'ch.ielse:switchbutton:1.0.1'
