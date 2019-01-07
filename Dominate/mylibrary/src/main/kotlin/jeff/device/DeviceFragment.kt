@@ -8,7 +8,7 @@ import co.metalab.asyncawait.async
 import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
-import jeff.constants.DeviceBean
+import jeff.constants.*
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
@@ -27,7 +27,6 @@ import com.kongzue.dialog.v2.DialogSettings
 import com.kongzue.dialog.v2.InputDialog
 import kotlin_adapter.adapter_core.extension.getItems
 import android.view.LayoutInflater
-import com.jeff.mylibrary.R.string.me
 import com.kongzue.dialog.v2.CustomDialog
 
 
@@ -46,7 +45,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
             await<Unit> {
                 //加载测试数据
                 //group  //组 数据列表
-                groupList = SPUtils.getDeviceBeans(mActivity, "deviceGroupList")
+                groupList = SPUtils.getGroupBeans(mActivity, "grouplist")
                 // single  ////单个数据列表
                 singleList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList")
 
@@ -73,25 +72,42 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                         if (inputGroupName(inputText)) {
                             dialog!!.dismiss()
                         }
-
                     }
-
                 }
             }).setInputInfo(InputInfo().setMAX_LENGTH(10).setInputType(InputType.TYPE_CLASS_TEXT))
-
         }
     }
 
     //分组昵称
     open fun inputGroupName(nputText: String?): Boolean {
+        if (nputText.isNullOrEmpty()) {
+            return false
+        }
+        var groupNamelist: ArrayList<GroupBean> = SPUtils.getGroupBeans(mActivity, "grouplist")
+        for (groupNme: GroupBean in groupNamelist) {
+            if (groupNme.equals(nputText)) {
+                ToastUtil.show("当前输入的昵称已存在，请重新输入！")
+                return false
+            }
+        }
+        var groupNme: GroupBean = GroupBean()
+        groupNme.brightness = 0
+        //分组的组名
+        groupNme.groupName = nputText //当前组的名称
+        groupNme.groupId = groupNamelist.size + 1//当前id
+        //以下是 组里的控制器
+        groupNme.meshAddress = groupNamelist.last().meshAddress + 1//灯的名称 数据列表12345
+        groupNamelist.add(groupNme)
+        SPUtils.deviceBeansClear(mActivity,"grouplist")
+        SPUtils.setGroupBeans(mActivity, "grouplist", groupNamelist)
         return true
     }
 
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
-    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
-    open var groupList: ArrayList<DeviceBean> = ArrayList()
+    private lateinit var groupAdapter: DragAndSwipeRecyclerViewAdapter<GroupBean>
+    open var groupList: ArrayList< GroupBean> = ArrayList()
     //组 数据列表
     private fun bindGroupAdapter() {
         mainFragment_DSRV_group = binding.deviceFragmentGroupDSRV
@@ -105,8 +121,8 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         mainFragment_DSRV_group.addItemDecoration(decoration)
-        groupAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
-                .match(DeviceBean::class, R.layout.all_single_iv_a_item)
+        groupAdapter = DragAndSwipeRecyclerViewAdapter<GroupBean>(mActivity)
+                .match(GroupBean::class, R.layout.all_single_iv_a_item)
                 .holderCreateListener {
                 }
                 .holderBindListener { holder, position ->
@@ -124,18 +140,18 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                             }
                             findViewById<TextView>(R.id.btn_ok).setOnClickListener {
                                 customDialog!!.doDismiss()
-                                groupAdd(deviceBean, groupAddList)
+                                groupAdd(groupName, groupAddList)
                             }
 
                         })
                         //，如果没有单个设备则不能选择
                         async {
                             await<Unit> {
-                                deviceBean = topic
+                                groupName = topic
                                 for (deviceBean: DeviceBean in singleList) {
                                     if (deviceBean.groupId <= 10) {
                                         //如果添加的当前组没有10个
-                                        groupAddList.add(deviceBean)
+                                        groupAddList.add(groupName)
                                     }
                                 }
                             }
@@ -170,22 +186,22 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
     }
 
     //点击添加按钮，组里添加设备
-    open fun groupAdd(groupDeviceBean: DeviceBean, singleList: ArrayList<DeviceBean>) {}
+    open fun groupAdd(groupName: GroupBean, singleList: ArrayList<GroupBean>) {}
 
     private var customDialog: CustomDialog? = null
-    private lateinit var groupAddAdapter: ListViewAdapter<DeviceBean>
-    private lateinit var groupAddList: ArrayList<DeviceBean>
+    private lateinit var groupAddAdapter: ListViewAdapter<GroupBean>
+    private lateinit var groupAddList: ArrayList<GroupBean>
     private lateinit var listview: ListView
-    private lateinit var deviceBean: DeviceBean
+    private lateinit var groupName: GroupBean
     //点击组添加设备显示列表
     private fun groupAddDialog() {
-        LogUtils.d(tag, "点击添加按钮，组里添加设备 deviceBean= ${deviceBean.toString()} ")
+        LogUtils.d(tag, "点击添加按钮，组里添加设备 groupName= ${groupName.toString()} ")
         groupAddAdapter = ListViewAdapter(context!!, groupAddList)
                 .match(DeviceBean::class, R.layout.all_single_iv_c_item)
                 .holderCreateListener {
                 }
                 .holderBindListener { holder, position ->
-                    val province: DeviceBean = groupAddList[position]
+                    val province: GroupBean = groupAddList[position]
                     holder.withView<TextView>(R.id.all_single_iv_c_tv, { text = province.meshAddress.toString() })
                             .withView<CheckBox>(R.id.all_single_iv_c_cb, { isChecked = province.checkd })
                 }
@@ -211,8 +227,8 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
     }
 
     //点击列表事件
-    open fun groupClickListener(deviceBean: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
+    open fun groupClickListener(groupName: GroupBean): Boolean {
+        LogUtils.d(tag, "点击列表事件 deviceBean= ${groupName.toString()} ")
         return true
     }
 

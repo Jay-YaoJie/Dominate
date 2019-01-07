@@ -4,6 +4,7 @@ import android.content.Intent
 import bases.MainActivity
 import jeff.device.DeviceFragment
 import jeff.utils.LogUtils
+import jeff.utils.SPUtils
 
 /**
  * author : Jeff  5899859876@qq.com
@@ -27,4 +28,5 @@ class DeviceFragment : DeviceFragment() {
         super.lazyLoad()
         //可见时
     }
+
 }

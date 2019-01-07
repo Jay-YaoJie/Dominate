@@ -10,6 +10,7 @@ import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
 import jeff.constants.DeviceBean
+import jeff.constants.SceneBean
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.widgets.LinearOffsetsItemDecoration
@@ -36,7 +37,7 @@ open class SceneFragment : BaseFragment<SceneFragmentDB>() {
             await<Unit> {
                 //加载测试数据
                 // single  ///情景数据列表
-                sceneList = SPUtils.getDeviceBeans(mActivity, "deviceSceneList")
+                sceneList = SPUtils.getSceneBeans(mActivity, "sceneList")
             }
             //加载数据列表适配器
             bindSeceneAdapter()//情景列表
@@ -44,9 +45,9 @@ open class SceneFragment : BaseFragment<SceneFragmentDB>() {
     }
 
 
-    open lateinit var sceneAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
+    open lateinit var sceneAdapter: DragAndSwipeRecyclerViewAdapter<SceneBean>
     lateinit var scene_fragment_SSRV: DragAndSwipeRecyclerView;
-    open var sceneList: ArrayList<DeviceBean> = ArrayList()
+    open var sceneList: ArrayList<SceneBean> = ArrayList()
     //单个数据列表
     @SuppressLint("NewApi")
     private fun bindSeceneAdapter() {
@@ -61,8 +62,8 @@ open class SceneFragment : BaseFragment<SceneFragmentDB>() {
         decoration.setOffsetEdge(true)
         decoration.setOffsetLast(true)
         scene_fragment_SSRV.addItemDecoration(decoration)
-        sceneAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(context!!)
-                .match(DeviceBean::class, R.layout.all_single_iv_r_item)
+        sceneAdapter = DragAndSwipeRecyclerViewAdapter<SceneBean>(context!!)
+                .match(SceneBean::class, R.layout.all_single_iv_r_item)
                 .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = sceneAdapter.getItem(position)
@@ -95,8 +96,8 @@ open class SceneFragment : BaseFragment<SceneFragmentDB>() {
     }
 
     //点击列表事件
-    open fun seceneClickListener(deviceInfo: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceInfo.toString()} ")
+    open fun seceneClickListener(sceneBean: SceneBean): Boolean {
+        LogUtils.d(tag, "点击列表事件 deviceBean= ${sceneBean.toString()} ")
         return false
     }
 }

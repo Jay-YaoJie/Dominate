@@ -6,6 +6,7 @@ import bases.DominateApplication.Companion.mLightService
 import co.metalab.asyncawait.async
 import com.jeff.dominate.TelinkLightService
 import jeff.constants.DeviceBean
+import jeff.constants.GroupBean
 import jeff.main.MainFragment
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
@@ -27,16 +28,17 @@ class MainFragment : MainFragment() {
             await<Unit> {
                 //加载测试数据
                 //  //获得最顶上的数据
-                topicList = SPUtils.getDeviceBeans(mActivity, "deviceTopList")
+                topicList = SPUtils.getSceneBeans(mActivity, "sceneList")
                 //   //获得组列表数据
-                groupList = SPUtils.getDeviceBeans(mActivity, "deviceGroupList")
-                var deviceBean: DeviceBean = DeviceBean()
-                deviceBean.groupName = "All Device";
-                deviceBean.groupId = 1
-                deviceBean.meshAddress = 0xFFFF;
-                deviceBean.brightness = 100;
-                deviceBean.connectionStatus = 1;
-                groupList.add(0, deviceBean)
+                groupList = SPUtils.getGroupBeans(mActivity, "grouplist")
+                var groupBean: GroupBean = GroupBean()
+                groupBean.groupName = "All Device";
+                groupBean.groupId = 1
+                groupBean.meshAddress = 0xFFFF;
+                groupBean.brightness = 100;
+                groupBean.connectionStatus = 1;
+                groupList.add(0, groupBean)
+
                 // //获得单个设备列表数据
                 singleList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList")
             }
@@ -58,17 +60,17 @@ class MainFragment : MainFragment() {
     //关
     val paramsOff = byteArrayOf(0x00, 0x00, 0x00)
 
-    override fun groupClickListener(deviceBean: DeviceBean): Boolean {
+    override fun groupClickListener(groupBean: GroupBean): Boolean {
         return true
     }
 
-    override fun groupToggleToOn(deviceBean: DeviceBean): Boolean {
-        mLightService.sendCommandNoResponse(opcode, deviceBean.meshAddress, paramsOn)
+    override fun groupToggleToOn(groupBean: GroupBean): Boolean {
+        mLightService.sendCommandNoResponse(opcode, groupBean.meshAddress, paramsOn)
         return true
     }
 
-    override fun groupToggleToOff(deviceBean: DeviceBean): Boolean {
-        mLightService.sendCommandNoResponse(opcode, deviceBean.meshAddress, paramsOff)
+    override fun groupToggleToOff(groupBean: GroupBean): Boolean {
+        mLightService.sendCommandNoResponse(opcode, groupBean.meshAddress, paramsOff)
         return true
     }
 

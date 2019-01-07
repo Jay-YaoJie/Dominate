@@ -20,7 +20,7 @@ class SceneFragment : SceneFragment() {
             await<Unit> {
                 //加载测试数据
                 // single  ///情景数据列表
-                sceneList = SPUtils.getDeviceBeans(mActivity, "deviceSceneList")
+                sceneList = SPUtils.getSceneBeans(mActivity, "sceneList")
             }
             //加载数据列表适配器
             //情景列表

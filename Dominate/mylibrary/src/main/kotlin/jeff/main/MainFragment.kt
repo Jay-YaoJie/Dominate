@@ -17,6 +17,8 @@ import com.jeff.mylibrary.R
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
 import jeff.constants.DeviceBean
+import jeff.constants.GroupBean
+import jeff.constants.SceneBean
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.widgets.LinearOffsetsItemDecoration
@@ -44,16 +46,16 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
             await<Unit> {
                 //加载测试数据
                 //  //获得最顶上的数据
-                topicList = SPUtils.getDeviceBeans(mActivity, "deviceTopList")
+                topicList = SPUtils.getSceneBeans(mActivity, "sceneList")
                 //   //获得组列表数据
-                groupList = SPUtils.getDeviceBeans(mActivity, "deviceGroupList")
-                var deviceBean: DeviceBean = DeviceBean()
-                deviceBean.groupName = "All Device";
-                deviceBean.groupId = 1
-                deviceBean.meshAddress = 0xFFFF;
-                deviceBean.brightness = 100;
-                deviceBean.connectionStatus = 1;
-                groupList.add(0, deviceBean)
+                groupList = SPUtils.getGroupBeans(mActivity, "grouplist")
+                var groupName: GroupBean = GroupBean()
+                groupName.groupName = "All Device";
+                groupName.groupId = 1
+                groupName.meshAddress = 0xFFFF;
+                groupName.brightness = 100;
+                groupName.connectionStatus = 1;
+                groupList.add(0, groupName)
                 // //获得单个设备列表数据
                 singleList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList")
             }
@@ -69,8 +71,8 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
 
     //top 最顶的一个横向列表
     lateinit var mainFragment_DSRV_top: DragAndSwipeRecyclerView;
-    open var topAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>? = null
-    open var topicList: ArrayList<DeviceBean> = ArrayList()
+    open var topAdapter: DragAndSwipeRecyclerViewAdapter<SceneBean>? = null
+    open var topicList: ArrayList<SceneBean> = ArrayList()
     //最顶层的列表
     private fun bindTopAdapter() {
         mainFragment_DSRV_top = binding.mainFragmentTopDSRV
@@ -86,9 +88,9 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         mainFragment_DSRV_top.layoutManager = GridLayoutManager(mActivity, 1, GridLayoutManager.HORIZONTAL, false)
         //没有移动之前的items
         LogUtils.d(tag, "没有移动之前的items  topicList.toString()=" + topicList.toString())
-        topAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
+        topAdapter = DragAndSwipeRecyclerViewAdapter<SceneBean>(mActivity)
                 //加载item布局
-                .match(DeviceBean::class, R.layout.fragment_main_top_item)
+                .match(SceneBean::class, R.layout.fragment_main_top_item)
                 .holderCreateListener {}
                 .holderBindListener { holder, position ->
                     val topic = topAdapter!!.getItem(position)
@@ -120,7 +122,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
                     }).withView<TextView>(R.id.main_top_tv, { text = topic.sceneName })
                 }
                 .clickListener { holder, position ->
-                    val topic: DeviceBean = topAdapter!!.getItem(position)
+                    val topic: SceneBean = topAdapter!!.getItem(position)
                     //点击事件
                     topClickListener(topic)
 
@@ -139,15 +141,15 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     }
 
     //点击列表事件
-    open fun topClickListener(deviceBean: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
+    open fun topClickListener(topicBean: SceneBean): Boolean {
+        LogUtils.d(tag, "点击列表事件 deviceBean= ${topicBean.toString()} ")
         return false
     }
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
-    open var groupAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>? = null
-    open var groupList: ArrayList<DeviceBean> = ArrayList()
+    open var groupAdapter: DragAndSwipeRecyclerViewAdapter<GroupBean>? = null
+    open var groupList: ArrayList<GroupBean> = ArrayList()
     //组 数据列表
     private fun bindGroupAdapter() {
         mainFragment_DSRV_group = binding.mainFragmentGroupDSRV
@@ -162,7 +164,7 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
         decoration.setOffsetLast(true)
         mainFragment_DSRV_group.addItemDecoration(decoration)
         LogUtils.d(tag, "没有移动之前的items  groupList.toString()=" + groupList.toString())
-        groupAdapter = DragAndSwipeRecyclerViewAdapter<DeviceBean>(mActivity)
+        groupAdapter = DragAndSwipeRecyclerViewAdapter<GroupBean>(mActivity)
                 .match(DeviceBean::class, R.layout.all_single_sv_item)
                 .holderCreateListener {}
                 .holderBindListener { holder, position ->
@@ -227,20 +229,20 @@ open class MainFragment : BaseFragment<MainFragmentDB>() {
     }
 
     //点击按钮 开 返回的事件
-    open fun groupToggleToOn(deviceBean: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击按钮 开 返回的事件 deviceBean= ${deviceBean.toString()} ")
+    open fun groupToggleToOn(groupName: GroupBean): Boolean {
+        LogUtils.d(tag, "点击按钮 开 返回的事件 deviceBean= ${groupName.toString()} ")
         return false
     }
 
     //点击按钮 关 返回的事件
-    open fun groupToggleToOff(deviceBean: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击按钮 关 返回的事件 deviceBean= ${deviceBean.toString()} ")
+    open fun groupToggleToOff(groupName: GroupBean): Boolean {
+        LogUtils.d(tag, "点击按钮 关 返回的事件 deviceBean= ${groupName.toString()} ")
         return false
     }
 
     //点击列表事件
-    open fun groupClickListener(deviceBean: DeviceBean): Boolean {
-        LogUtils.d(tag, "点击列表事件 deviceBean= ${deviceBean.toString()} ")
+    open fun groupClickListener(groupName: GroupBean): Boolean {
+        LogUtils.d(tag, "点击列表事件 deviceBean= ${groupName.toString()} ")
         return false
     }
 
