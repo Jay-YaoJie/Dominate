@@ -37,38 +37,46 @@ class DeviceScaningActivity : DeviceScaningActivity() {
         when (event.type) {
             LeScanEvent.LE_SCAN -> {
                 //扫描到设备
-                if (deviceInfo == null) {
-                    deviceInfo = (event as LeScanEvent).getArgs()
+                deviceInfo = (event as LeScanEvent).getArgs()
+                if (deviceInfo != null) {
                     LogUtils.d(tag, "扫描到设备，修改网络名" + deviceInfo.toString())
-                    scanedList.add(deviceInfo!!);//添加到集合中
-                    mHandler.postDelayed({
-                        //更新参数,
-                        val params: LeUpdateParameters = Parameters.createUpdateParameters()
+                    //查询当前是否保存了当前设备
+                    for (device: DeviceBean in singleListSev) {
+                        if (deviceInfo!!.meshAddress == device.meshAddress) {
+                            deviceInfo = null
+                        }
+                    }
+                    if (deviceInfo != null) {
+                        mHandler.postDelayed({
+                            //更新参数,
+                            val params: LeUpdateParameters = Parameters.createUpdateParameters()
 //                        if (!(Manufacture.getDefault().factoryName).isNullOrEmpty()) {
 //                            params.setOldMeshName(Manufacture.getDefault().factoryName)//旧的网络名
 //                            params.setOldPassword(Manufacture.getDefault().factoryPassword)//旧的密码
 //                        } else {
 //
 //                        }
-                        params.setOldMeshName(factoryName)//旧的网络名
-                        params.setOldPassword(factoryPassword)//旧的密码
-                        params.setNewMeshName(SPUtils.getLocalName(mActivity))//新的网络名
-                        params.setNewPassword(SPUtils.getLocalPassword(mActivity))//新的密码
-                        //获得当前已经有的设备数量
+                            params.setOldMeshName(factoryName)//旧的网络名
+                            params.setOldPassword(factoryPassword)//旧的密码
+                            params.setNewMeshName(SPUtils.getLocalName(mActivity))//新的网络名
+                            params.setNewPassword(SPUtils.getLocalPassword(mActivity))//新的密码
+                            //获得当前已经有的设备数量
 
-                        deviceInfo!!.meshAddress = deviceSingleList
-                        //执行更新操作
-                        params.setUpdateDeviceList(deviceInfo)
-                        mLightService.updateMesh(params)
-                        deviceInfo = null
-                        deviceSingleList=deviceSingleList + 1
-                    }, 200)
+                            deviceInfo!!.meshAddress = deviceSingleList
+                            //执行更新操作
+                            params.setUpdateDeviceList(deviceInfo)
+                            mLightService.updateMesh(params)
+                            deviceInfo = null
+                            deviceSingleList = deviceSingleList + 1
+                        }, 200)
+                    }
                 }
             }
             LeScanEvent.LE_SCAN_TIMEOUT -> {
                 //  扫描不到任何设备了
                 ToastUtil.show(mActivity.resources.getString(R.string.not_found_device))
                 //更新列表
+                waitDismiss()
             }
             DeviceEvent.STATUS_CHANGED -> {
                 //当设备的状态发生改变时,会分发此事件.可以根据事件参数{@link DeviceInfo#status}获取状态.
@@ -125,8 +133,8 @@ class DeviceScaningActivity : DeviceScaningActivity() {
         deviceSingleList = SPUtils.getDeviceBeanSize(mActivity, "deviceScanedList")
         if (deviceSingleList <= 0) {
             deviceSingleList = 1
-        }else{
-            deviceSingleList=deviceSingleList + 1
+        } else {
+            deviceSingleList = deviceSingleList + 1
         }
         //获取数据对象
         deviceListSev = SPUtils.getDeviceBeans(mActivity, "deviceScanedList")
@@ -144,6 +152,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
         dominate.addEventListener(MeshEvent.ERROR, mListener)
         //开始扫描
         this.startScan(0)
+
     }
 
     var singleListSev: ArrayList<DeviceBean> = ArrayList()///保存到单个设备数据对象中
@@ -160,7 +169,7 @@ class DeviceScaningActivity : DeviceScaningActivity() {
             SPUtils.deviceBeansClear(mActivity, "deviceSingleList")
             SPUtils.setDeviceBeans(mActivity, "deviceSingleList", singleListSev!!)
             singleListSev.clear()
-            scanedList.clear()
+            deviceListSev!!.clear()
         }
         dominate.removeEventListener(mListener)
         this.mHandler.removeCallbacksAndMessages(null)
@@ -168,7 +177,6 @@ class DeviceScaningActivity : DeviceScaningActivity() {
     }
 
 
-    private var scanedList: ArrayList<DeviceInfo> = ArrayList()
     private val mHandler = Handler()
     //开始扫描
     private fun startScan(delay: Int) {

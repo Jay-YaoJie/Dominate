@@ -16,8 +16,8 @@
 
             <ImageView
                 android:id="@+id/top_left"
-                android:layout_width="40dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/center_height"
+                android:layout_height="@dimen/img_r_l"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/arrow_l" />
 

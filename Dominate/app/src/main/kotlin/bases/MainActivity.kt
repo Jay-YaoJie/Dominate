@@ -110,8 +110,10 @@ class MainActivity : MainActivity(), EventListener<String> {
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
+        LogUtils.d(tag, "override fun onResume()")
         //检查是否支持蓝牙设备
         if (!LeBluetooth.getInstance().isSupport(applicationContext)) {
             Toast.makeText(this, "ble not support", Toast.LENGTH_SHORT).show()
@@ -126,27 +128,29 @@ class MainActivity : MainActivity(), EventListener<String> {
             builder.show()
         }
     }
+
     var scanedListInt: Int = 0;
     override fun onStart() {
         super.onStart()
-        scanedListInt = SPUtils.getDeviceBeanSize(mActivity, "deviceScanedList")
-        if (scanedListInt > 0) {
-            // 监听各种事件
-            dominate.addEventListener(NotificationEvent.ONLINE_STATUS, this)
-            dominate.addEventListener(DeviceEvent.STATUS_CHANGED, this)
-            dominate.addEventListener(MeshEvent.OFFLINE, this)//连接到不任何设备的时候分发此事件
-            dominate.addEventListener(ServiceEvent.SERVICE_CONNECTED, this) //服务启动
-            dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)////出现错误信息时
-            dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)
-            //dominate.addEventListener(NotificationEvent.GET_ALARM, this)
-            //dominate.addEventListener(NotificationEvent.GET_DEVICE_STATE, this)
-
-            this.autoConnect()
-        } else {
-            ToastUtil.show(mActivity, mActivity.resources.getString(R.string.account_no_device))
-        }
-
+        mHandler.postDelayed({
+            scanedListInt = SPUtils.getDeviceBeanSize(mActivity, "deviceScanedList")
+            if (scanedListInt > 0) {
+                // 监听各种事件
+                dominate.addEventListener(NotificationEvent.ONLINE_STATUS, this)
+                dominate.addEventListener(DeviceEvent.STATUS_CHANGED, this)
+                dominate.addEventListener(MeshEvent.OFFLINE, this)//连接到不任何设备的时候分发此事件
+                dominate.addEventListener(ServiceEvent.SERVICE_CONNECTED, this) //服务启动
+                dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)////出现错误信息时
+                dominate.addEventListener(ErrorReportEvent.ERROR_REPORT, this)
+                //dominate.addEventListener(NotificationEvent.GET_ALARM, this)
+                //dominate.addEventListener(NotificationEvent.GET_DEVICE_STATE, this)
+                this.autoConnect()
+            } else {
+                ToastUtil.show(mActivity, mActivity.resources.getString(R.string.account_no_device))
+            }
+        }, (3 * 1000).toLong())
     }
+
     //自动重新连接，不管是退出或着添加灯都会断开连接，所以就要从新连接
     private fun autoConnect() {
         if (mLightService.mode != LightAdapter.MODE_AUTO_CONNECT_MESH) {
@@ -267,6 +271,11 @@ class MainActivity : MainActivity(), EventListener<String> {
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         filter.priority = IntentFilter.SYSTEM_HIGH_PRIORITY - 1
         registerReceiver(mReceiver, filter)
+    }
+
+    override fun onActivityReenter(resultCode: Int, data: Intent?) {
+        super.onActivityReenter(resultCode, data)
+        LogUtils.d(tag, "onActivityReenter(resultCode: Int, data: Intent?)---resultCode=" + resultCode)
     }
 }
 

@@ -15,9 +15,10 @@
             android:paddingLeft="@dimen/layout_margin"
             android:paddingRight="@dimen/layout_margin">
 
+
             <ImageView
                 android:id="@+id/top_left"
-                android:layout_width="@dimen/img_r_l"
+                android:layout_width="@dimen/center_height"
                 android:layout_height="@dimen/img_r_l"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/arrow_l" />

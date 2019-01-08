@@ -1,5 +1,6 @@
 package device
 
+import adjust.AdjustActivity.Companion.meshAddress
 import android.content.Intent
 import android.os.Handler
 import bases.DominateApplication.Companion.mLightService
@@ -22,11 +23,8 @@ import com.telink.util.EventListener
  * description ：DeviceFragment
  */
 class DeviceFragment() : DeviceFragment(), EventListener<String> {
-
-
     override fun initViews() {
         super.initViews()
-
         //点击设备，添加设备
         binding.deviceFragmentUngroupedIv.setOnClickListener {
             mActivity.startActivity(Intent(mActivity, DeviceScaningActivity::class.java))
@@ -53,6 +51,12 @@ class DeviceFragment() : DeviceFragment(), EventListener<String> {
         }
     }
 
+    override fun inputGroupNameOk() {
+        super.inputGroupNameOk()
+        //添加成功，刷新列表数据
+        lazyLoad()
+    }
+
     var meshAddress: Int = 0
     lateinit var group: GroupBean
     lateinit var addDeviceBeanList: ArrayList<DeviceBean>
@@ -65,19 +69,24 @@ class DeviceFragment() : DeviceFragment(), EventListener<String> {
         addDeviceBeanList = addsingleList
         deviceBeanList = SPUtils.getDeviceBeans(mActivity, "deviceSingleList")
         forAddDevice()
+        //添加完了返回主信息
+        super.groupAdd(groupName, singleList)
+
     }
+
     val mHandler = Handler()
     fun forAddDevice() {
-        for (i in addDeviceBeanList!!.indices) {
-            mHandler.postDelayed({
-                if (addDeviceBeanList[i].checkd){
+        mHandler.postDelayed({
+            for (i in addDeviceBeanList!!.indices) {
+                if (addDeviceBeanList[i].checkd) {
                     meshAddress = addDeviceBeanList[i].meshAddress
-                    addDeviceBeanList[i].checkd=false
+                    addDeviceBeanList[i].checkd = false
                     getDeviceGroup()//先发送更新命令
                     allocDeviceGroup()//最后发送添加命令
                 }
-            }, (3 * 1000).toLong())
-        }
+            }
+            waitDismiss()
+        }, (3 * 1000).toLong())
 
     }
 

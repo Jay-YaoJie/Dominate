@@ -16,6 +16,7 @@ import com.kongzue.dialog.util.InputInfo
 import com.kongzue.dialog.v2.CustomDialog
 import com.kongzue.dialog.v2.DialogSettings
 import com.kongzue.dialog.v2.InputDialog
+import com.kongzue.dialog.v2.WaitDialog
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
 import jeff.constants.DeviceBean
@@ -25,11 +26,13 @@ import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
 import jeff.widgets.LinearOffsetsItemDecoration
 import kotlin_adapter.adapter_core.*
+import kotlin_adapter.adapter_core.extension.clear
 import kotlin_adapter.adapter_core.extension.putItems
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerViewAdapter
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.dragListener
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
+import java.util.logging.Handler
 
 
 /**
@@ -62,10 +65,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
         }
         //点击组，添加组
         binding.deviceFragmentGroupIv.setOnClickListener {
-            //iOS 风格对应 DialogSettings.STYLE_IOS
-            DialogSettings.style = DialogSettings.STYLE_IOS
-            //设置提示框主题为亮色主题
-            DialogSettings.tip_theme = DialogSettings.THEME_LIGHT;
+
             InputDialog.show(mActivity, "分组昵称", "请输入分组昵称：", object : InputDialogOkButtonClickListener {
                 override fun onClick(dialog: Dialog?, inputText: String?) {
                     if (inputText!!.isNullOrEmpty()) {
@@ -73,6 +73,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                     } else {
                         if (inputGroupName(inputText)) {
                             dialog!!.dismiss()
+                            inputGroupNameOk()
                         }
                     }
                 }
@@ -81,7 +82,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
     }
 
     //分组昵称
-    open fun inputGroupName(nputText: String?): Boolean {
+    private fun inputGroupName(nputText: String?): Boolean {
         var groupNamelist: ArrayList<GroupBean> = SPUtils.getGroupBeans(mActivity, "grouplist")
         for (groupNme: GroupBean in groupNamelist) {
             if (groupNme.equals(nputText)) {
@@ -107,7 +108,6 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
         SPUtils.setGroupBeans(mActivity, "grouplist", groupNamelist)
         return true
     }
-
 
     //group  //组 数据列表
     lateinit var mainFragment_DSRV_group: DragAndSwipeRecyclerView;
@@ -147,23 +147,26 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                                 customView.findViewById<TextView>(R.id.btn_ok).setOnClickListener {
                                     //向组里添加设备
                                     customDialog!!.doDismiss()
+                                    wait = WaitDialog.show(mActivity, "${topic.groupName}组正在添加设备...").setCanCancel(false);
                                     groupAdd(groupBean, groupAddList)
+
                                 }
 
                             })
+                            groupAddList = ArrayList()
                             //，如果没有单个设备则不能选择
                             async {
                                 await<Unit> {
                                     groupBean = topic
                                     for (deviceBean: DeviceBean in singleList) {
-                                        if (deviceBean.groupIndexId <= 10) {
+                                        if (!deviceBean.groupMeshAddressList.contains(groupBean.meshAddress)) {
                                             //如果添加的当前组没有10个
                                             groupAddList.add(deviceBean)
                                         }
                                     }
                                 }
                                 groupAddDialog()
-                                groupAddAdapter.putItems(groupAddList)
+                                groupAddAdapter!!.putItems(groupAddList)
                             }
                         }
 
@@ -194,15 +197,22 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
 
     }
 
+    open fun inputGroupNameOk() {
+    }
+
+    private lateinit var wait: WaitDialog
+    open fun waitDismiss(){
+        wait.doDismiss()
+    }
     //点击添加按钮，组里添加设备
     open fun groupAdd(groupName: GroupBean, singleList: ArrayList<DeviceBean>) {
-        LogUtils.d(tag, "向组里添加设备")
+        LogUtils.d(tag, "向组里添加设备完成")
     }
 
     private var customDialog: CustomDialog? = null
-    private lateinit var groupAddAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
-    private val groupAddList: ArrayList<DeviceBean> = ArrayList()
-    private lateinit var  groupAdd: DragAndSwipeRecyclerView;
+    private var groupAddAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>? = null
+    private lateinit var groupAddList: ArrayList<DeviceBean>
+    private lateinit var groupAdd: DragAndSwipeRecyclerView;
     private lateinit var groupBean: GroupBean
     //点击组添加设备显示列表
     private fun groupAddDialog() {
@@ -240,10 +250,10 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                         groupAddList[position].checkd = true
                     }
 
-                    groupAddAdapter.notifyDataSetChanged()
+                    groupAddAdapter!!.notifyDataSetChanged()
                 }
                 .longClickListener { holder, position ->
-                    val province = groupAddAdapter.getItem(position)
+                    val province = groupAddAdapter!!.getItem(position)
                     //showToast("position $position, ${province.name} long clicked")
                 }
                 .attach(groupAdd)

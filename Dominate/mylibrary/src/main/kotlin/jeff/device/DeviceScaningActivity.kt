@@ -1,6 +1,7 @@
 package jeff.device
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -10,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.jeff.mylibrary.R
+import com.kongzue.dialog.v2.WaitDialog
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseActivity
 import jeff.constants.DeviceBean
@@ -41,8 +43,13 @@ open class DeviceScaningActivity : BaseActivity<DeviceScaningActivityDB>() {
         binding.topLeft.setOnClickListener {
             finish()
         }
-    }
+        wait = WaitDialog.show(mActivity, "正在查找并自动添加设备...").setCanCancel(false);
 
+    }
+    private lateinit var wait: WaitDialog
+    open fun waitDismiss(){
+        wait.doDismiss()
+    }
     // single  ////单个数据列表
     private lateinit var mainFragment_DSRV_single: DragAndSwipeRecyclerView;
     open var singleAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>? = null

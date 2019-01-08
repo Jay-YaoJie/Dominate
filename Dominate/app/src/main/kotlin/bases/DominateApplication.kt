@@ -5,6 +5,7 @@ import android.support.multidex.MultiDex
 import com.jeff.dominate.R
 import com.telink.TelinkApplication
 import com.telink.bluetooth.LeBluetooth
+import jeff.bases.DominateApplication.Companion.dialogSetting
 import jeff.bases.DominateApplication.Companion.instance
 import jeff.utils.ActivitiesManager
 import jeff.utils.DelegatesExt
@@ -35,11 +36,14 @@ class DominateApplication : TelinkApplication() {
         super.onCreate()
         instance = this;
         dominate = this;
+        //初始化全局的风格样式 dialog
+        dialogSetting()
         ////初始货Activity堆管理
         ActivitiesManager.getActivitiesManager()
 
         //初始化
         doInit()
+
     }
 
     override fun doInit() {
