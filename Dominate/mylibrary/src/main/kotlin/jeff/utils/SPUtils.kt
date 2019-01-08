@@ -128,7 +128,7 @@ class SPUtils {
                         SPUtils.ContentValue("remenberPassword", false),
                         SPUtils.ContentValue("autoLogin", false),
                         SPUtils.ContentValue("name", name),
-                        SPUtils.ContentValue("password", ""))
+                        SPUtils.ContentValue("password", password))
             } else if (isSavePassword) {   //如果保存密码，没有自动登录
                 //创建记住密码为选中和自动登录是默认不选,保存密码数据
                 helper.putValues(
