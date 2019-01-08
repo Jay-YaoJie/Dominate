@@ -4,11 +4,22 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.text.InputType
+import android.view.LayoutInflater
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.TextView
 import co.metalab.asyncawait.async
 import com.jeff.mylibrary.R
+import com.kongzue.dialog.listener.InputDialogOkButtonClickListener
+import com.kongzue.dialog.util.InputInfo
+import com.kongzue.dialog.v2.CustomDialog
+import com.kongzue.dialog.v2.DialogSettings
+import com.kongzue.dialog.v2.InputDialog
 import com.wuhenzhizao.titlebar.utils.ScreenUtils
 import jeff.bases.BaseFragment
-import jeff.constants.*
+import jeff.constants.DeviceBean
+import jeff.constants.GroupBean
 import jeff.utils.LogUtils
 import jeff.utils.SPUtils
 import jeff.utils.ToastUtil
@@ -19,15 +30,6 @@ import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerViewAdapter
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.dragListener
 import kotlin_adapter.adapter_exension.dragSwipeDismiss.swipeListener
-import android.text.InputType
-import android.widget.*
-import com.kongzue.dialog.listener.InputDialogOkButtonClickListener
-import com.kongzue.dialog.util.InputInfo
-import com.kongzue.dialog.v2.DialogSettings
-import com.kongzue.dialog.v2.InputDialog
-import kotlin_adapter.adapter_core.extension.getItems
-import android.view.LayoutInflater
-import com.kongzue.dialog.v2.CustomDialog
 
 
 /**
@@ -138,7 +140,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                             //点击添加按钮 弹出选择列表
                             val customView = LayoutInflater.from(mActivity).inflate(R.layout.add_list, null)
                             customDialog = CustomDialog.show(mActivity, customView, {
-                                listview = customView.findViewById<ListView>(R.id.add_list)
+                                groupAdd = customView.findViewById<DragAndSwipeRecyclerView>(R.id.add_list_groupadd_DSRV)
                                 customView.findViewById<TextView>(R.id.btn_cancel).setOnClickListener {
                                     customDialog!!.doDismiss()
                                 }
@@ -198,14 +200,24 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
     }
 
     private var customDialog: CustomDialog? = null
-    private lateinit var groupAddAdapter: ListViewAdapter<DeviceBean>
+    private lateinit var groupAddAdapter: DragAndSwipeRecyclerViewAdapter<DeviceBean>
     private val groupAddList: ArrayList<DeviceBean> = ArrayList()
-    private lateinit var listview: ListView
+    private lateinit var  groupAdd: DragAndSwipeRecyclerView;
     private lateinit var groupBean: GroupBean
     //点击组添加设备显示列表
     private fun groupAddDialog() {
+        groupAdd.isLongPressDragEnable = true
+        groupAdd.isItemViewSwipeEnable = false
+        groupAdd.dragDirection = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        // mainFragment_DSRV_group.swipeDirection = ItemTouchHelper.LEFT
+        groupAdd.layoutManager = LinearLayoutManager(mActivity)
+        val decoration = LinearOffsetsItemDecoration(LinearOffsetsItemDecoration.LINEAR_OFFSETS_VERTICAL)  //LINEAR_OFFSETS_HORIZONTAL  LINEAR_OFFSETS_VERTICAL
+        //decoration.setItemOffsets(ScreenUtils.dp2PxInt(mActivity, 10f))
+        decoration.setOffsetEdge(true)
+        decoration.setOffsetLast(true)
+        groupAdd.addItemDecoration(decoration)
         LogUtils.d(tag, "点击添加按钮，组里添加设备 groupName= ${groupBean.toString()} ")
-        groupAddAdapter = ListViewAdapter(context!!, groupAddList)
+        groupAddAdapter = DragAndSwipeRecyclerViewAdapter(context!!, groupAddList)
                 .match(DeviceBean::class, R.layout.all_single_iv_c_item)
                 .holderCreateListener {
                 }
@@ -234,7 +246,7 @@ open class DeviceFragment : BaseFragment<DeviceFragmentDB>() {
                     val province = groupAddAdapter.getItem(position)
                     //showToast("position $position, ${province.name} long clicked")
                 }
-                .attach(listview as AbsListView)
+                .attach(groupAdd)
     }
 
     //点击列表事件

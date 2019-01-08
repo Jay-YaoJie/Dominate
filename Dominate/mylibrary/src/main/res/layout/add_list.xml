@@ -32,12 +32,15 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size" />
         </LinearLayout>
-
-        <ListView
-            android:id="@+id/add_list"
+        <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
+            android:id="@+id/add_list_groupadd_DSRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:overScrollMode="never" />
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:padding="5dp" />
+
     </LinearLayout>
 </layout>
