@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="15dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/item_manage_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_scene_custom_manage"/>
+
+        <TextView
+            android:id="@+id/item_manage_center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:singleLine="true"
+            android:layout_weight="1"/>
+
+        <cn.xlink.telinkoffical.view.togglebutton.zcw.togglebutton.ToggleButton
+            android:id="@+id/item_manage_right"
+            android:layout_width="60dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color_dadada"/>
+
+</LinearLayout>

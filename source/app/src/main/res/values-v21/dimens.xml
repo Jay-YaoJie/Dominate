@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="clip_to_padding">20dp</dimen>
+</resources>

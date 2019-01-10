@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.xlink.telinkoffical">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <!-- 联网权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- wifi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- wifi状态改变 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <application
+        android:name=".MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon_device_on"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar" >
+
+        <service
+            android:name=".service.TelinkLightService"
+            android:enabled="true" />
+
+        <service android:name=".service.RefreshTokenService"
+            android:enabled="true"/>
+
+        <!-- XLINK 内网服务 -->
+        <service android:name="io.xlink.wifi.sdk.XlinkUdpService" />
+
+        <!-- XLINK 公网服务 -->
+        <service android:name="io.xlink.wifi.sdk.XlinkTcpService" />
+
+        <activity
+            android:name=".activity.GuideActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FindNewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BlubbActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RenameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GroupActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.ManageGroupDevice"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.JoinGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.SceneActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.ManageSceneDevice"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.TimerListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.NewTimerActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.HomeGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.HomeSceneActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.HomeDeviceActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.OTAActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.OTATipsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.OtaUpdataActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.ShareActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.ShareToActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.EditPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.EditNickActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

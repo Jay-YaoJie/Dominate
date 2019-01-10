@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="litepal_xm">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../crazyboaMobile/libs/litepal_xm.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

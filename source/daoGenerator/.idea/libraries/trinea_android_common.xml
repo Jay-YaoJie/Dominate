@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="trinea-android-common">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../crazyboaMobile/libs/trinea-android-common.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

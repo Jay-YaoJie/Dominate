@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="fragment-master">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../crazyboaMobile/libs/fragment-master.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

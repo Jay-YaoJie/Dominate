@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_popwindow_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7f000000" />
+
+    <LinearLayout
+        android:id="@+id/popwindow_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_popwindow_topview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/view_popwindow_list_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/view_popwindow_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="0px"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:divider="@null"
+                android:layout_marginBottom="8dp" />
+
+            <include
+                layout="@layout/view_popwindow_item" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_popwindow_bottomview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

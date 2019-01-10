@@ -1,0 +1,41 @@
+<resources>
+    <!-- have v21 -->
+    <dimen name="clip_to_padding">0dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="large_margin">48dp</dimen>
+
+    <dimen name="act_fgt_padding">30dp</dimen>
+    <dimen name="item_padding_top">14dp</dimen>
+    <dimen name="item_padding_left">17dp</dimen>
+
+    <dimen name="popupwind_line_padding">10dp</dimen>
+    <dimen name="popupwind_bg_padding">7dp</dimen>
+
+    <!-- TitleBar -->
+    <dimen name="title_padding">18dp</dimen>
+    <dimen name="title_padding_tb">3dp</dimen>
+    <dimen name="title_left">45dp</dimen>
+    <dimen name="title_right">45dp</dimen>
+    <dimen name="title_center_text">20sp</dimen>
+    <dimen name="title_both_text">17sp</dimen>
+
+    <dimen name="find_new_text_size">18sp</dimen>
+    
+    <dimen name="button_padding">14dp</dimen>
+    <dimen name="button_margin">30dp</dimen>
+    <dimen name="button_margin_bottom">40dp</dimen>
+    <dimen name="button_text_size">18sp</dimen>
+
+    <dimen name="edittext_padding">10dp</dimen>
+    <dimen name="edittext_size">18sp</dimen>
+
+    <dimen name="view_dialog_textsize">20sp</dimen>
+
+    <dimen name="commmon_text_size">16sp</dimen>
+
+    <dimen name="toast_padding">15dp</dimen>
+    <dimen name="toast_size">6sp</dimen>
+
+</resources>

@@ -1,0 +1,38 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- 设置为透明是因为我们不再需要系统的status bar -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- 设置为true，系统将在你的window里面绘制status bar，默认为TRUE。之所以要写出来是因为你的theme有可能是继承过来的，确保为true。-->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="AppTheme.SeekBar.Music" parent="AppTheme">
+        <item name="android:colorControlNormal">#e98749</item>
+        <item name="android:colorControlActivated">#ffffff</item>
+        <item name="android:colorControlHighlight">#dddddd</item>
+        <item name="android:disabledAlpha">0.6</item>
+    </style>
+
+    <style name="AppTheme.SeekBar.PhotoPixel" parent="AppTheme">
+        <item name="android:colorControlNormal">#b4b2b2</item>
+        <item name="android:colorControlActivated">#c6c6c6</item>
+        <item name="android:colorControlHighlight">#aaff7200</item>
+        <item name="android:disabledAlpha">0.7</item>
+    </style>
+
+    <style name="AppStyle.SeekBar.Music" parent="Widget.AppCompat.SeekBar" />
+</resources>

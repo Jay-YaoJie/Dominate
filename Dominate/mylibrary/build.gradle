@@ -107,5 +107,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
    // kapt 'com.android.databinding:compiler:3.1.2'
+
+   // ObjectBox，这是一个新的面向对象的数据库，它比SQLite快得多并且更易于使用
+   //寻找比SQLite更快的对象持久性
+   // https://github.com/greenrobot/greenDAO  详细配置见网址
+  //  implementation 'org.greenrobot:greendao:3.2.2' // add library
 }
 

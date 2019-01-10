@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FancyCoverFlow">
+        <attr name="unselectedAlpha" format="float" />
+        <attr name="unselectedSaturation" format="float" />
+        <attr name="unselectedScale" format="float" />
+        <attr name="maxRotation" format="integer" />
+        <attr name="scaleDownGravity" format="float" />
+        <attr name="actionDistance" format="integer">
+            <enum name="auto" value="2147483647" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ToggleButton">
+        <attr name="toggleborderWidth" format="dimension" />
+        <attr name="offBorderColor" format="reference|color" />
+        <attr name="offColor" format="reference|color" />
+        <attr name="onColor" format="reference|color" />
+        <attr name="spotColor" format="reference|color" />
+        <attr name="animate" format="reference|boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorPicker">
+        <attr name="handleStrokeColor" format="color" />
+        <attr name="hue" format="float" />
+        <attr name="saturation" format="float" />
+        <attr name="value" format="float" />
+    </declare-styleable>
+</resources>

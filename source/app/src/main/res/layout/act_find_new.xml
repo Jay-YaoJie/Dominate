@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/act_fgt_bg"
+    android:orientation="vertical">
+
+    <cn.xlink.telinkoffical.view.TitleBar
+        android:id="@+id/act_find_new_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <cn.xlink.telinkoffical.view.IndexViewPager
+        android:id="@+id/act_findnew_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </cn.xlink.telinkoffical.view.IndexViewPager>
+
+</LinearLayout>

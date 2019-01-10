@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_email_send"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_email"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/act_fgt_padding"
+    android:visibility="gone">
+
+    <TextView
+        android:id="@+id/view_email_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="@string/create_account"
+        android:textColor="@color/text_color_454545"
+        android:textSize="28sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/view_email_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/not_received"
+        android:textColor="@color/text_color_454545"
+        android:textSize="22sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/not_received_tips1"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/view_email_resend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_not_received_tips2"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9" />
+
+    <TextView
+        android:id="@+id/view_email_button"
+        style="@style/Blue.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_back" />
+
+</LinearLayout>
