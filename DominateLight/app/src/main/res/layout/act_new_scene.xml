@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/act_fgt_bg"
+    android:orientation="vertical">
+
+    <com.jeff.dominatelight.view.TitleBar
+        android:id="@+id/act_scene_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jeff.dominatelight.view.IndexViewPager
+        android:id="@+id/act_scene_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.jeff.dominatelight.view.IndexViewPager>
+
+</LinearLayout>

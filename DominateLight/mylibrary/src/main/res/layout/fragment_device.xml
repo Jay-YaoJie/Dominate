@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="jeff.device.DeviceFragmentDB" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_height"
+                android:paddingLeft="@dimen/layout_margin"
+                android:paddingRight="@dimen/layout_margin">
+
+                <TextView
+                    android:id="@+id/top_middle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:text="设备管理" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/device_fragment_all_TV"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/center_height"
+                android:layout_margin="@dimen/layout_margin"
+                android:background="@drawable/bg_radius_main"
+                android:drawableRight="@mipmap/arrow_r"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/text_padding"
+                android:paddingRight="@dimen/text_padding"
+                android:text="@string/all_device" />
+
+            <!--分组 ，点击按钮选择添加-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/center_height"
+                android:padding="@dimen/padding"
+                android:paddingLeft="@dimen/layout_margin"
+                android:paddingRight="@dimen/layout_margin">
+
+                <TextView
+                    android:id="@+id/top_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="分组"
+                    android:textSize="@dimen/text_size" />
+
+
+                <ImageView
+                    android:id="@+id/device_fragment_group_iv"
+                    android:layout_width="@dimen/center_height"
+                    android:layout_height="@dimen/img_r_l"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_add" />
+
+            </RelativeLayout>
+
+
+            <!--//分组 数据列表-->
+            <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
+                android:id="@+id/device_fragment_group_DSRV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:padding="5dp" />
+            <!--未分组设备-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_height"
+                android:paddingLeft="@dimen/layout_margin"
+                android:paddingRight="@dimen/layout_margin">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/ungrouped" />
+
+
+                <ImageView
+                    android:id="@+id/device_fragment_ungrouped_iv"
+                    android:layout_width="@dimen/center_height"
+                    android:layout_height="@dimen/img_r_l"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_add" />
+            </RelativeLayout>
+
+
+            <!--//未分组 数据列表-->
+            <kotlin_adapter.adapter_exension.dragSwipeDismiss.DragAndSwipeRecyclerView
+                android:id="@+id/device_fragment_ungrouped_DSRV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:padding="5dp" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="EasylinkSDKVer2.4">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../crazyboaMobile/libs/EasylinkSDKVer2.4.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

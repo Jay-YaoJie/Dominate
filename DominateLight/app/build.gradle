@@ -1,0 +1,120 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.jeff.dominatelight"
+        minSdkVersion 19
+      //  targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+           }
+    lintOptions {
+        abortOnError false
+    }
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'jeffsigned'
+            keyPassword 'jeff520'
+            storeFile file('signed/jeffsigned.jks')
+            storePassword 'jeff520'
+        }
+//        buildConfig {
+//            keyAlias 'gdx production signature'
+//            keyPassword 'gdx9234'
+//            storeFile file('E:/AndroidProject/prod.jks')
+//            storePassword 'gdx9234'
+//        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.releaseConfig
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.releaseConfig
+        }
+    }
+
+    sourceSets {
+        main {
+          java.srcDirs =['src/main/java']// ['src/main/java', 'src/main/kotlin']
+        }
+    }
+
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':BluetoothLightLib')
+    implementation project(':mylibrary')
+       androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+
+//    implementation 'com.jakewharton:butterknife:10.0.0'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    implementation'com.jakewharton:butterknife:9.0.0'
+    annotationProcessor'com.jakewharton:butterknife-compiler:9.0.0'
+
+
+    implementation 'de.greenrobot:greendao:2.1.0'
+
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //Loading
+    implementation 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
+    //时间选择
+    implementation 'com.bigkoo:pickerview:2.1.1'
+    //item侧滑
+    implementation 'com.daimajia.swipelayout:library:1.2.0'
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://jitpack.io"
+        }
+        mavenCentral()
+        google()
+        maven { url 'https://maven.google.com' }
+    }
+}
+

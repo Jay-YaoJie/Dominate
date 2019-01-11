@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="AndroidWiimuSDK1.7.2A-Upnp">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../crazyboaMobile/libs/AndroidWiimuSDK1.7.2A-Upnp.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

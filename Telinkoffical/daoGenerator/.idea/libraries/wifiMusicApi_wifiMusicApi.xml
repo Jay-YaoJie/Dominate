@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="wifiMusicApi.wifiMusicApi">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../wifiMusicApi/build/libs/wifiMusicApi.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

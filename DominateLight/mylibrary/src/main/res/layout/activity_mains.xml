@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="jeff.bases.MainActivityDB" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_VP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tabs_RG"
+            android:layout_weight="1" />
+
+        <RadioGroup
+            android:id="@+id/tabs_RG"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/theme_positive_color"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/main_RB"
+                style="@style/Custom.TabRadioButton"
+                android:checked="true"
+                android:drawableTop="@drawable/tab_model"
+                android:text="@string/main" />
+
+            <RadioButton
+                android:id="@+id/group_RB"
+                style="@style/Custom.TabRadioButton"
+                android:drawableTop="@drawable/tab_group"
+                android:text="@string/group" />
+
+            <RadioButton
+                android:id="@+id/device_RB"
+                style="@style/Custom.TabRadioButton"
+                android:drawableTop="@drawable/tab_device"
+                android:text="@string/device" />
+
+            <RadioButton
+                android:id="@+id/me_RB"
+                style="@style/Custom.TabRadioButton"
+                android:drawableTop="@drawable/tab_account"
+                android:text="@string/me" />
+        </RadioGroup>
+    </LinearLayout>
+</layout>
