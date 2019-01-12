@@ -29,7 +29,7 @@ object PermissionUtils {
                     isChecked = false;
                 }
             }, Manifest.permission.BLUETOOTH)
-            PermissionsUtil.requestPermission(instance, object : PermissionListener {
+          /*  PermissionsUtil.requestPermission(instance, object : PermissionListener {
                 override fun permissionGranted(permissions: Array<String>) {
                     isChecked = true;
                     //Toast.makeText(MainActivity.this, "访问蓝牙", Toast.LENGTH_LONG).show();
@@ -39,7 +39,7 @@ object PermissionUtils {
                     ToastUtil.show("用户拒绝了访问蓝牙")
                     isChecked = false;
                 }
-            }, Manifest.permission.BLUETOOTH_ADMIN)
+            }, Manifest.permission.BLUETOOTH_ADMIN)*/
 
             /*访问位置**********************/
             PermissionsUtil.requestPermission(instance, object : PermissionListener {
@@ -53,7 +53,7 @@ object PermissionUtils {
                     isChecked = false;
                 }
             }, Manifest.permission.ACCESS_FINE_LOCATION)
-            PermissionsUtil.requestPermission(instance, object : PermissionListener {
+         /*   PermissionsUtil.requestPermission(instance, object : PermissionListener {
                 override fun permissionGranted(permissions: Array<String>) {
                     isChecked = true;
                     // Toast.makeText(MainActivity.this, "访问位置", Toast.LENGTH_LONG).show();
@@ -64,7 +64,7 @@ object PermissionUtils {
                     isChecked = false;
                 }
             }, Manifest.permission.ACCESS_COARSE_LOCATION)
-
+*/
 
             /*访问网络*************************************/
             PermissionsUtil.requestPermission(instance, object : PermissionListener {
