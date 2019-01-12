@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="60dp"
-        android:src="@mipmap/xlink_logo" />
+        android:src="@drawable/logo" />
 
     <EditText
         android:id="@+id/act_login_email"

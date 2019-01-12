@@ -20,12 +20,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <cn.xlink.telinkoffical.view.TitleBar
+        <com.jeff.dominatelight.view.TitleBar
             android:id="@+id/main_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </cn.xlink.telinkoffical.view.TitleBar>
+        </com.jeff.dominatelight.view.TitleBar>
 
         <RelativeLayout
             android:layout_width="match_parent"

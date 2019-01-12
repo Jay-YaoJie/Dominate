@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="pinyin">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../crazyboaMobile/libs/pinyin.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

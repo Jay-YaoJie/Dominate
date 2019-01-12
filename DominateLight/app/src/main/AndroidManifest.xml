@@ -21,14 +21,25 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
-    <application android:allowBackup="true"
+    <application
+            android:name=".MyApp"
+            android:allowBackup="true"
                  android:icon="@drawable/ic_launcher"
                  android:label="@string/app_name"
                  android:roundIcon="@drawable/ic_launcher_round"
                  android:supportsRtl="true"
                  android:theme="@style/AppTheme">
 
-
+    <!--       <provider
+                    android:name="android.support.v4.content.FileProvider"
+                    android:authorities="com.jeff.dominatelight.FileProvider"
+                    android:exported="false"
+                    tools:replace="android:authorities"
+                    android:grantUriPermissions="true">
+                    <meta-data
+                        android:name="android.support.FILE_PROVIDER_PATHS"
+                        android:resource="@xml/file_paths" />
+                </provider>-->
         <service android:name=".service.TelinkLightService"
                  android:enabled="true"/>
 

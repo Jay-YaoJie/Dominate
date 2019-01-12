@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="library-2.4.3">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../crazyboaMobile/build/intermediates/exploded-aar/com.inkapplications.viewpageindicator/library/2.4.3/res" />
+      <root url="jar://$PROJECT_DIR$/../crazyboaMobile/build/intermediates/exploded-aar/com.inkapplications.viewpageindicator/library/2.4.3/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.inkapplications.viewpageindicator/library/2.4.3/bd37c6fc8f0fe4a6cde2c2b3367c339ac442d9c3/library-2.4.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
